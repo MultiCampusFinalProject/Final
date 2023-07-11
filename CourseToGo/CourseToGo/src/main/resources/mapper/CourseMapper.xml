@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.spring.mapper.CourseMapper">
+
+ 	<insert id="insertCourse" parameterType="com.spring.dto.CourseDTO">
+ 		INSERT INTO course (COURSE_ID, USER_ID, COURSE_NAME, COURSE_AVG_SCORE, COURSE_NUMBER)
+ 		VALUES (course_seq.nextval, #{userId}, #{courseName}, 0, #{courseNumber})
+ 	</insert>
+ 	<select id="getAllCourses"  resultType="com.spring.dto.CourseInformDTO">
+SELECT
+  c.course_id AS courseId,
+  c.user_id AS userId,
+  c.course_name AS courseName,
+  c.course_avg_score AS courseAvgScore,
+  c.course_number AS courseNumber,
+  LISTAGG(cp.place_id, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseIdList,
+  LISTAGG(pl.place_name, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseList
+FROM
+  Course c
+JOIN
+  Course_place cp ON c.course_id = cp.course_id
+JOIN
+  place pl ON cp.place_id = pl.place_id
+GROUP BY
+  c.course_id,
+  c.user_id,
+  c.course_name,
+  c.course_avg_score,
+  c.course_number
+ 	</select>
+ 	<select id="getCourseById" parameterType="_int" resultType="com.spring.dto.CourseDTO">
+ 	
+ 	SELECT
+  course_id AS courseId,
+  user_id AS userId,
+  course_name AS courseName,
+  course_avg_score AS courseAvgScore,
+  course_number AS courseNumber
+FROM
+  COURSE 
+WHERE
+course_id = #{courseId}
+ 	
+ 	
+ 	</select>
+ 	
+ 	
+
+ </mapper>

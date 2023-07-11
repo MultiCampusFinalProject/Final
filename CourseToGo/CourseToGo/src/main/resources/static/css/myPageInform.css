@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+.sidebar {
+	font-family: 'Paytone One', sans-serif;
+}
+
+button:hover, input:hover {
+	cursor: pointer;
+}
+
+/* 사이드바 스타일 */
+.myPageInform {
+    position: fixed;
+    top: 100px;
+    left: 250px;
+}
+
+.signupDone{
+    position: fixed;
+    top: 100px;
+    left: 250px;
+}
+
+.button {
+    display: block;
+    text-decoration: none;
+    color: #1e90ff;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #fff;
+    width: 170px;
+    margin:auto;
+}
+
+.profileH3 {
+	text-align: left;
+}
+
+input[type="text"] {
+  display: block; /* 블록 레벨 요소로 설정하여 줄 바꿈 */
+  text-align: left; /* 왼쪽 정렬 */
+  width: 300px;	
+
+}
+
+.introduce {
+	height: 50px;
+}
+
+ td {
+   vertical-align: middle; /* TOP 정렬 */
+ }
+ 

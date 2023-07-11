@@ -1,0 +1,14 @@
+home.jsp 		: 메인화면 페이지
+sidebar.jsp		: 전체 페이지 사이드바 부분
+search.jsp 		: 메인화면 검색창 부분
+loginbtn.jsp	: 세션無 > 네이버 로그인 버튼 / 세션有 > 사용자 정보(이름 및 이메일 / 추후 프로필사진 추가) 부분
+banner.jsp		: 메인화면이벤트 및 광고 배너 부분
+recommendCourse.jsp	: 메인화면 추천코스 부분
+recommendPlace.jsp	: 메인화면 추천장소 부분
+
+myPage.jsp		: 초기 회원가입 시 닉네임, 소개글 작성하는 페이지
+setUser.jsp		: 초기 회원가입 시 닉네임, 소개글 작성하는 페이지 메인부분
+myPageInformModify 	: 개인 정보 수정 페이지
+
+naverLogin.jsp	: 네이버 로그인 api 요청 페이지
+callback.jsp	: 네이버 로그인 api 요청 정보 받아오는 페이지

@@ -1,0 +1,79 @@
+package com.spring.service;
+
+import java.sql.SQLException;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.spring.dto.CourseReview;
+import com.spring.mapper.CourseReviewMapper;
+
+
+@Service
+public class CourseReviewService {
+	
+	@Autowired
+	CourseReviewMapper mapper;
+
+	
+	/* 코스 리뷰 아이디 검색 */ 
+	public List<CourseReview> getCourseReviewByCourseId(int courseId) throws Exception { 
+		List<CourseReview> coursereview = mapper.getCourseReviewByCourseId(courseId);
+		
+		return coursereview; 
+	}
+
+	
+	/* 코스 리뷰 등록 */
+	public boolean insertCourseReview(CourseReview coursereview) throws SQLException, Exception {
+		
+		boolean result = false;
+		
+		int res = mapper.insertCourseReview(coursereview);
+		
+		if(res != 0) {
+			result = true;
+		} else {
+			throw new Exception("리뷰 등록 실패");
+		}
+		
+		return result;
+	}
+
+	
+	/* 코스 리뷰 수정 */
+	public boolean updateCourseReview(CourseReview coursereview) throws SQLException, Exception {
+		boolean result = false;
+		
+		int res = mapper.updateCourseReview(coursereview);
+		
+		if(res != 0) {
+			result = true;
+		} else {
+			throw new Exception("리뷰 수정 실패");
+		}
+		
+		return result;
+	}
+	
+	/* 코스 리뷰 삭제 */
+	public boolean deleteCourseReviewByCourseId(int courseReviewId) throws SQLException, Exception {
+		boolean result = false;
+		
+		int res = mapper.deleteCourseReviewByCourseId(courseReviewId);
+		
+		if(res != 0) {
+			result = true;
+		} else {
+			throw new Exception("리뷰 삭제 실패");
+		}
+		
+		return result;
+	}
+
+
+	public CourseReview getCourseReviewByReviewId(int courseReviewId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+}
