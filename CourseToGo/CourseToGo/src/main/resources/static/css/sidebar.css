@@ -25,6 +25,7 @@ button {
     flex-direction: column;
     align-items: center;
     box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3); /* 우측에 그림자 효과 추가 */
+    z-index: 1;
 }
 
 /* 로고 스타일 */
@@ -44,10 +45,11 @@ ul {
 }
 
 ul li {
+	margin-top: 15px;
     margin-bottom: 10px;
 }
 
-ul li a {
+.home, .course, .create-course, .mypage {
     display: block;
     text-decoration: none;
     color: #1e90ff;
@@ -56,6 +58,8 @@ ul li a {
     border-radius: 10px;
     text-align: center;
     background-color: #fff;
+    width: 170px;
+    margin:auto;
 }
 
 .profile {
@@ -63,6 +67,7 @@ ul li a {
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
+    margin-top: 60px;
 }
 
 .profile img {
@@ -91,6 +96,8 @@ ul li a {
     text-align: center;
     padding: 10px;
     border-radius: 10px; 
-    margin-bottom: 10px;
-    font-size:5px
+    margin-bottom: 5px;
+    font-size:5px;
+    width: 170px;
+    margin:auto;
 }
