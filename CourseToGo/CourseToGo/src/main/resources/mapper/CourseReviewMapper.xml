@@ -7,7 +7,7 @@
 
  	
  	<!-- 코스 리뷰 아이디 검색 -->
- 	<select id="getCourseReviewByCourseId" parameterType="int" resultType="com.spring.dto.CourseReview">
+ 	<select id="getCourseReviewByReviewId" parameterType="int" resultType="com.spring.dto.CourseReview">
  		SELECT course_score as courseScore, content, course_review_id as courseReviewId
  		FROM course_review
  		WHERE course_id = #{courseId}
@@ -29,9 +29,23 @@
  	</update>
  	
  	<!-- 코스 리뷰 삭제 -->
+ 	<delete id="deleteCourseReviewByReviewId" parameterType="_int">
+ 		DELETE FROM course_review
+ 		WHERE course_review_id = #{courseReviewId}
+ 	</delete>
+ 	
+ 	
+ 	<select id="getCourseReviewByCourseId" parameterType="int" resultType="com.spring.dto.CourseReview">
+ 		SELECT course_score as courseScore, content, course_review_id as courseReviewId
+ 		FROM course_review
+ 		WHERE course_id = #{courseId}
+ 	</select>
+ 	
+ 	
  	<delete id="deleteCourseReviewByCourseId" parameterType="_int">
  		DELETE FROM course_review
  		WHERE course_review_id = #{courseReviewId}
  	</delete>
+ 	
  	
  </mapper>

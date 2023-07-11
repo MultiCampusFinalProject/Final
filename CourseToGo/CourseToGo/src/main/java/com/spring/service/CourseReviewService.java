@@ -16,12 +16,12 @@ public class CourseReviewService {
 
 	
 	/* 코스 리뷰 아이디 검색 */ 
-	public CourseReview getCourseReviewByReviewId(int courseReviewId) throws Exception { 
-		CourseReview coursereview = mapper.getCourseReviewByReviewId(courseReviewId)
-							.orElseThrow(Exception::new);
+	public CourseReview getCourseReviewByReviewId(int courseId) throws Exception { 
+		  CourseReview coursereview = mapper.getCourseReviewByReviewId(courseId);
 		
 		return coursereview; 
 	}
+
 
 	
 	/* 코스 리뷰 등록 */
@@ -70,5 +70,26 @@ public class CourseReviewService {
 		
 		return result;
 	}
+
+	public boolean deleteCourseReviewByCourseId(int courseReviewId) throws SQLException, Exception {
+		boolean result = false;
+		
+		int res = mapper.deleteCourseReviewByCourseId(courseReviewId);
+		
+		if(res != 0) {
+			result = true;
+		} else {
+			throw new Exception("리뷰 삭제 실패");
+		}
+		
+		return result;
+	}
 	
+	public List<CourseReview> getCourseReviewByCourseId(int courseId) throws Exception { 
+		List<CourseReview> coursereview = mapper.getCourseReviewByCourseId(courseId);
+		
+		return coursereview; 
+	}
+	
+
 }
