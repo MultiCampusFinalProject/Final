@@ -81,7 +81,7 @@ public class CourseController {
 	    int[] placeIdList = new int[5]; 
 	    placeIdList[0]= placeId1;
 	    placeIdList[1]=placeId2;
-	    placeIdList[2]= placeId3;
+	    if(placeId3 !=null)placeIdList[2]= placeId3;
 	    if(placeId4 !=null)placeIdList[3]= placeId4;
 	    if(placeId5 !=null)placeIdList[4]= placeId5;
 	   
@@ -96,35 +96,9 @@ public class CourseController {
 			}
 	    }
 	    System.out.println("---");
-//		System.out.println(mongoTemplate.getDb().getName());
-		
-		// boot <-> spring-data-mongodb
-//		Query query = new Query();
-//		System.out.println(courseId);
-//		Criteria criteria = Criteria.where("_id").is(Integer.parseInt(courseId));
-//		query.addCriteria(criteria);
-//		Query query1 =new Query();
-//		Criteria criteria1 = Criteria.where("_id").is(2);
-//		query1.addCriteria(criteria1);
-////		List<Document>  ratingList1 = mongoTemplate.find(query1, Document.class, "directions");
-//		List<Document>  ratingList = mongoTemplate.find(query, Document.class, "directions");
-//		System.out.println(ratingList);
-////		System.out.println(ratingList1);
-//		List<DirectionPoint> DirectionList = new ArrayList<>();
+
 		List<DirectionDTO> DirectionList = directionService.getDirectionsByCourseId(Integer.parseInt(courseId));
-				//이후에 document list가 아니라 directionPointlist로 받아 처리 변경 수행하겠음
-//		System.out.println(ratingList.size());
-	
-//		for (Document document : ratingList) {
-//		    ArrayList<Document> directionPointList = (ArrayList<Document>) document.get("directionPointList");
-//		    System.out.println(directionPointList.size());
-//		    for (Document location : directionPointList) {
-//		        Double latitude = location.getDouble("mapYCoordinate");
-//		        Double longitude = location.getDouble("mapXCoordinate");
-//		        DirectionList.add(new DirectionPoint(latitude, longitude));
-//		        System.out.println("Latitude: " + latitude + ", Longitude: " + longitude);
-//		    }
-//		}
+
 		
 		List<CourseReview> courseReview = null;
 		try {
@@ -134,6 +108,7 @@ public class CourseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println(DirectionList);
 		model.addAttribute("DirectionList", DirectionList);
 //		System.out.println(placeList);
 		model.addAttribute("PlaceList", placeList);

@@ -5,9 +5,12 @@
   
  <mapper namespace="com.spring.mapper.CourseMapper">
 
- 	<insert id="insertCourse" parameterType="com.spring.dto.CourseDTO">
- 		INSERT INTO course (COURSE_ID, USER_ID, COURSE_NAME, COURSE_AVG_SCORE, COURSE_NUMBER)
- 		VALUES (course_seq.nextval, #{userId}, #{courseName}, 0, #{courseNumber})
+ 	<insert id="insertCourse" parameterType="com.spring.dto.CourseDTO" useGeneratedKeys="true" keyProperty="courseId">
+ 	 <selectKey keyProperty="courseId" resultType="int" order="AFTER">
+    SELECT course_seq.currval FROM dual
+  </selectKey>
+ 		INSERT INTO course (COURSE_ID, USER_ID, COURSE_NAME, COURSE_AVG_SCORE, COURSE_NUMBER,COURSE_CONTENT)
+ 		VALUES (course_seq.nextval, #{userId}, #{courseName}, 0, #{courseNumber}, #{courseContent})
  	</insert>
  	<select id="getAllCourses"  resultType="com.spring.dto.CourseInformDTO">
 SELECT
@@ -16,6 +19,7 @@ SELECT
   c.course_name AS courseName,
   c.course_avg_score AS courseAvgScore,
   c.course_number AS courseNumber,
+  c.course_content AS courseContent,
   LISTAGG(cp.place_id, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseIdList,
   LISTAGG(pl.place_name, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseList
 FROM
@@ -28,6 +32,7 @@ GROUP BY
   c.course_id,
   c.user_id,
   c.course_name,
+  c.course_content,
   c.course_avg_score,
   c.course_number
  	</select>
@@ -37,6 +42,7 @@ GROUP BY
   course_id AS courseId,
   user_id AS userId,
   course_name AS courseName,
+  course_content AS courseContent,
   course_avg_score AS courseAvgScore,
   course_number AS courseNumber
 FROM

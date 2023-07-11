@@ -1,9 +1,4 @@
 package com.spring.service;
-
-
-
-
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,28 +16,29 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CourseService {
 	@Autowired
-	CourseMapper mapper;
+	CourseMapper courseMapper;
 	
 
 
-	public boolean insertCourse(CourseDTO course) throws Exception {
-		boolean result = false;
+	public int insertCourse(CourseDTO course) throws Exception {
+		int courseId = -1;
 				
-				int res = mapper.insertCourse(course);
+		 courseMapper.insertCourse(course);
+		 courseId = course.getCourseId();	
+		 System.out.println();
+			if(courseId == -1) {
+				throw new Exception("no sequence");
+			} else {
+			
+			}
 				
-				if(res != 0) {
-					result = true;
-				} else {
-					throw new Exception("");
-				}
-				
-				return result;
+			return courseId;
 		
 	}
 	public List<CourseInformDTO>  getAllCourses() throws Exception {
 	
 		List<CourseInformDTO> res=new ArrayList<>();
-				 res= mapper.getAllCourses();
+				 res= courseMapper.getAllCourses();
 				System.out.println(res);
 				if(!res.isEmpty()) {
 					
@@ -56,7 +52,7 @@ public class CourseService {
 	public CourseDTO getCourseById(int courseId) throws SQLException {
 		CourseDTO res;
 //		System.out.println("service = " +courseId);
-		 res= mapper.getCourseById(courseId);
+		 res= courseMapper.getCourseById(courseId);
 		System.out.println(res);
 		if(res==null
 				) {

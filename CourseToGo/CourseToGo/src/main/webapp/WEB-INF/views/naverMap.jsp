@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.spring.dto.PlaceDTO" %> 
 <%@ page import="java.util.List" %>
@@ -24,7 +24,7 @@ window.onload = function() {
 var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
 
-var areaName = urlParams.get('areaName'); // "È«´ë"
+var areaName = urlParams.get('areaName'); // "í™ëŒ€"
 document.getElementById("area").innerHTML = areaName;
 
 };
@@ -32,16 +32,16 @@ document.getElementById("area").innerHTML = areaName;
 <body>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
-<!-- ÇÕÃÄÁö°í ÃÖ¼ÒÈ­µÈ ÃÖ½Å CSS -->
+<!-- í•©ì³ì§€ê³  ìµœì†Œí™”ëœ ìµœì‹  CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-<!-- ºÎ°¡ÀûÀÎ Å×¸¶ -->
+<!-- ë¶€ê°€ì ì¸ í…Œë§ˆ -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
-<!-- Á¦ÀÌÄõ¸® -->
+<!-- ì œì´ì¿¼ë¦¬ -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<!-- ÇÕÃÄÁö°í ÃÖ¼ÒÈ­µÈ ÃÖ½Å ÀÚ¹Ù½ºÅ©¸³Æ® -->
+<!-- í•©ì³ì§€ê³  ìµœì†Œí™”ëœ ìµœì‹  ìë°”ìŠ¤í¬ë¦½íŠ¸ -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <div  class='middle'>
 
@@ -49,33 +49,59 @@ document.getElementById("area").innerHTML = areaName;
 
 
 
-<div><form id="saveMark" action="/saveMarker" method="POST">
+<div><form id="saveMark" action="/saveMarker" method="POST" accept-charset="UTF-8">
         <input type="hidden" name="placeId1" value="1">
         <input type="hidden" name="placeId2" value="2">
         <input type="hidden" name="placeId3" value="3">
         <input type="hidden" name="placeId4" value="4">
         <input type="hidden" name="placeId5" value="5">
-        <input type="hidden" name="courseName" value="myCourse">
+        <input id= "courseName" type="text" name="courseName" value="myCourse">
         <input id= "courseNumber" type="hidden" name="courseNumber" >
-        <button type="submit">Àü¼Û</button>
+      
+          	<textarea id="courseContent" style="width: 100%" class = "text" name = "courseContent" required> ì½”ìŠ¤ì— ëŒ€í•œ ì„¤ëª…ì„ ì‘ì„±í•´ì£¼ì„¸ìš”. </textarea>
+	</div>
+		   
+	   
+        <button type="submit">ì „ì†¡</button>
     </form>
     
     </div>
+    
+    <!--  ì „ì†¡ ë²„íŠ¼ì— ëŒ€í•œ ìŠ¤í¬ë¦½íŠ¸ -->
     <script>
     
-    
+    var form = document.getElementById("saveMark");
+    form.acceptCharset = 'UTF-8';
     
     document.getElementById("saveMark").addEventListener("submit", function(event) {
-        // Ãß°¡ µ¿ÀÛÀ» ¼öÇàÇÕ´Ï´Ù.
+        // ì¶”ê°€ ë™ì‘ì„ ìˆ˜í–‰í•©ë‹ˆë‹¤.
        
         event.preventDefault();
-        console.log("°Ë»ö ¹öÆ°ÀÌ ´­·È½À´Ï´Ù!");
+        console.log("ì „ì†¡ ë²„íŠ¼ì´ ëˆŒë ¸ìŠµë‹ˆë‹¤!");
+        var courseNameInput = document.getElementById("courseName");
+        var courseNameValue = courseNameInput.value.trim();
+        if (courseNameValue === "") {
+            alert("ì´ë¦„ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+            return;
+          }
+        var courseContentField = document.getElementById("courseContent");
+      
+       // courseContentField.value = encodeURIComponent(courseContentField.value);
+        var courseContentValue = courseContentField.value;
+        if (courseContentValue === "") {
+            alert("ì½”ìŠ¤ë‚´ìš©ì„ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+            return;
+          }
+        if(placeName.length===0){
+        	alert("ìµœì†Œ 1ê°œ ì´ìƒì˜ ì¥ì†Œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”.");
+        	return
+        }
         var inputElement = document.getElementById("courseNumber");
         inputElement.value = placeName.length;
-      	
+        this.submit();
 
         
-         // ±âº» µ¿ÀÛÀ» ¸·±â À§ÇØ ÀÌº¥Æ®ÀÇ ±âº» µ¿ÀÛÀ» Ãë¼ÒÇÕ´Ï´Ù.
+         // ê¸°ë³¸ ë™ì‘ì„ ë§‰ê¸° ìœ„í•´ ì´ë²¤íŠ¸ì˜ ê¸°ë³¸ ë™ì‘ì„ ì·¨ì†Œí•©ë‹ˆë‹¤.
     });
     </script>
     
@@ -89,8 +115,8 @@ document.getElementById("area").innerHTML = areaName;
 		});
         var map = new naver.maps.Map("map", {});
         var markerList = [];
-        var MAX_MARKER_COUNT = 5; // ÃÖ´ë ¸¶Ä¿ °³¼ö
-        var selectedMarker = null; // ¼±ÅÃµÈ ¸¶Ä¿
+        var MAX_MARKER_COUNT = 5; // ìµœëŒ€ ë§ˆì»¤ ê°œìˆ˜
+        var selectedMarker = null; // ì„ íƒëœ ë§ˆì»¤
         var myList = [];
 		var placeName=[];
         if (myList === null) {
@@ -98,7 +124,7 @@ document.getElementById("area").innerHTML = areaName;
             myList = myList.slice(0, MAX_MARKER_COUNT);
         }
         
-        // ±âÁ¸¿¡ »ı¼ºµÈ ¸¶Ä¿µéÀ» Áöµµ¿¡ Ç¥½ÃÇÕ´Ï´Ù.
+        // ê¸°ì¡´ì— ìƒì„±ëœ ë§ˆì»¤ë“¤ì„ ì§€ë„ì— í‘œì‹œí•©ë‹ˆë‹¤.
         for (var i = 0; i < myList.length; i++) {
             var lat = myList[i][0];
             var lng = myList[i][1];
@@ -116,7 +142,7 @@ document.getElementById("area").innerHTML = areaName;
             var markerInputs = '';
             for(var i = 0; i <placeName.length; i++) {
                 var name = placeName[i];
-                markerInputs += '¸¶Ä¿' + (i + 1) + ': (' + name + ')<br>';
+                markerInputs += 'ë§ˆì»¤' + (i + 1) + ': (' + name + ')<br>';
             }
             document.getElementById('markerInputs').innerHTML = markerInputs;
         }
@@ -151,9 +177,9 @@ document.getElementById("area").innerHTML = areaName;
                 myList = [];
             } else if (myList.length >= MAX_MARKER_COUNT) {
             	console.log(myList);
-                return; // ¸¶Ä¿ °³¼ö°¡ Á¦ÇÑ¿¡ µµ´ŞÇÑ °æ¿ì ¸¶Ä¿ »ı¼ºÇÏÁö ¾ÊÀ½
+                return; // ë§ˆì»¤ ê°œìˆ˜ê°€ ì œí•œì— ë„ë‹¬í•œ ê²½ìš° ë§ˆì»¤ ìƒì„±í•˜ì§€ ì•ŠìŒ
             }
-            for(var i = 0 ; i < myList.length; i++){ // ¸¶Ä¿°¡ ÀÌ¹Ì ÂïÈùÁö ºñ±³
+            for(var i = 0 ; i < myList.length; i++){ // ë§ˆì»¤ê°€ ì´ë¯¸ ì°íŒì§€ ë¹„êµ
             	if(name ==placeName[i])return;
             }
            
@@ -169,7 +195,7 @@ document.getElementById("area").innerHTML = areaName;
             updateMarkerInputs();
             addMarkerEventListeners(marker);
 
-            // Ã¹ ¹øÂ° ¸¶Ä¿·Î Áöµµ¸¦ ÀÌµ¿ÇÕ´Ï´Ù. -x
+            // ì²« ë²ˆì§¸ ë§ˆì»¤ë¡œ ì§€ë„ë¥¼ ì´ë™í•©ë‹ˆë‹¤. -x
           
             map.setCenter(marker.getPosition());
         
@@ -177,35 +203,35 @@ document.getElementById("area").innerHTML = areaName;
     </script>
 </div>
 
-    <h2>Áö¿ª¸í,¾÷Á¾º° °Ë»ö</h2>
+    <h2>ì§€ì—­ëª…,ì—…ì¢…ë³„ ê²€ìƒ‰</h2>
    <form id="searchForm" method="get" action="/jSearchAC" accept-charset="utf-8">
-    <input type="text" id="areaName" name="areaName" placeholder="°Ë»ö¾î¸¦ ÀÔ·ÂÇÏ¼¼¿ä">
-    <input type="text" id="categoryName" name="categoryName" placeholder="°Ë»ö¾î¸¦ ÀÔ·ÂÇÏ¼¼¿ä">
-    <button type="submit">°Ë»ö</button>
+    <input type="text" id="areaName" name="areaName" placeholder="ê²€ìƒ‰ì–´ë¥¼ ì…ë ¥í•˜ì„¸ìš”">
+    <input type="text" id="categoryName" name="categoryName" placeholder="ê²€ìƒ‰ì–´ë¥¼ ì…ë ¥í•˜ì„¸ìš”">
+    <button type="submit">ê²€ìƒ‰</button>
 </form>
 
 <script>
     document.getElementById("searchForm").addEventListener("submit", function(event) {
-        // Ãß°¡ µ¿ÀÛÀ» ¼öÇàÇÕ´Ï´Ù.
+        // ì¶”ê°€ ë™ì‘ì„ ìˆ˜í–‰í•©ë‹ˆë‹¤.
         event.preventDefault(); 
-        console.log("°Ë»ö ¹öÆ°ÀÌ ´­·È½À´Ï´Ù!");
+        console.log("ê²€ìƒ‰ ë²„íŠ¼ì´ ëˆŒë ¸ìŠµë‹ˆë‹¤!");
         var elements = document.getElementsByClassName("well well-sm");
         while (elements.length > 0) {
             elements[0].parentNode.removeChild(elements[0]);
           }
         this.submit();
       
-        // ÆûÀ» ¼­¹ö·Î Á¦ÃâÇÕ´Ï´Ù.
+        // í¼ì„ ì„œë²„ë¡œ ì œì¶œí•©ë‹ˆë‹¤.
       
 
         
-       // ±âº» µ¿ÀÛÀ» ¸·±â À§ÇØ ÀÌº¥Æ®ÀÇ ±âº» µ¿ÀÛÀ» Ãë¼ÒÇÕ´Ï´Ù.
+       // ê¸°ë³¸ ë™ì‘ì„ ë§‰ê¸° ìœ„í•´ ì´ë²¤íŠ¸ì˜ ê¸°ë³¸ ë™ì‘ì„ ì·¨ì†Œí•©ë‹ˆë‹¤.
     });
     
     
 </script>
 
-    <h2 id ="area"></h2><h2>   °Ë»ö°á°ú</h2>
+    <h2 id ="area"></h2><h2>   ê²€ìƒ‰ê²°ê³¼</h2>
     <ul>
         <%
             List<PlaceDTO> places = (List<PlaceDTO>) request.getAttribute("placesByAreaOrCategory");
@@ -213,7 +239,7 @@ document.getElementById("area").innerHTML = areaName;
                 int count = 0;
                 for (PlaceDTO place : places) {
                     if (count >= 10) {
-                        break; // 5¹ø ÀÌ»ó ¹İº¹ÇÏÁö ¾Êµµ·Ï Á¾·á
+                        break; // 5ë²ˆ ì´ìƒ ë°˜ë³µí•˜ì§€ ì•Šë„ë¡ ì¢…ë£Œ
                   }
         %>
         <div style="text-align: center; width: 200px; left:20px;height: 40px;" class="well well-sm">
