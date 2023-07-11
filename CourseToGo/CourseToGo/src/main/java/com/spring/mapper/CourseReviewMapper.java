@@ -1,11 +1,8 @@
 package com.spring.mapper;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
-
 import org.apache.ibatis.annotations.Mapper;
-
 import com.spring.dto.CourseReview;
 
 
@@ -13,7 +10,7 @@ import com.spring.dto.CourseReview;
 public interface CourseReviewMapper {
 	
 	/* 코스 리뷰 아이디 검색 */
-	public List<CourseReview> getCourseReviewByCourseId (int courseId);
+	public Optional<CourseReview> getCourseReviewByReviewId (int coure_review_id);
 	
 	/* 코스 리뷰 작성하기 */
 	public int insertCourseReview(CourseReview coursereview) throws SQLException;
@@ -22,8 +19,9 @@ public interface CourseReviewMapper {
     public int updateCourseReview(CourseReview coursereview) throws SQLException;
     
 	/* 코스 리뷰  삭제하기 */
-	public int deleteCourseReviewByCourseId(int courseReviewId)throws SQLException;
+	public int deleteCourseReviewByReviewId(int courseReviewId)throws SQLException;
 	
 	
 
 }
+

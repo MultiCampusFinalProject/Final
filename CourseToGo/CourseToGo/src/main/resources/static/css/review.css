@@ -1,37 +1,79 @@
 @charset "UTF-8";
 
-
-/* 별점  영역 */
-.starsscore{
- text-align:center;
- display:flex;
- direction: rtl;
- justify-content: flex-end;
- font-size:1.5em;
- padding:0 .2em;
+/* 이미지 영역 */
+.place1 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+	top : 50px;
+    left : 260px;
 }
 
-.starsscore input{
-display:none;
+.place2 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+	top: 50px;
+    left : 550px;
 }
 
-.starsscore label {
-  color:#ccc;
-  cursor:pointer;
+.place3 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+	top: 250px;
+    left : 260px;
 }
 
-.starsscore :checked ~ label {
-  color:#ffd400;
+.place4 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+    top: 250px;
+    left :550px;
+	
 }
 
-.starsscore label:hover,
-.starsscore label:hover ~ label {
-  color:#ffd700;
+.place5 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+	top : 450px;
+    left : 260px;
+	
 }
 
-.starsscore input: checked ~ label.half:before {
-	content : '/OOBD/2605';
+/* 이미지  별점 영역 */
+.starsscore1 {
+	top: 200px;
+	left : 260px;
+	position: fixed;
 }
+
+.starsscore2 {
+	top: 200px;
+	left : 550px;
+	position: fixed;
+}
+
+.starsscore3 {
+	top: 400px;
+	left : 260px;
+	position: fixed;
+}
+
+.starsscore4 {
+	top: 400px;
+	left : 550px;
+	position: fixed;
+}
+
+.starsscore5 {
+	top: 600px;
+	left : 260px;
+	position: fixed;
+}
+
 
 /* 버튼  영역 */
 .insert-button {
@@ -74,10 +116,37 @@ flex-direction: column;
 }
 
 .coursereview {
-	position: fixed;
-    top: 0;
-    right: 0;
+   position: fixed;
+   top: 0;
+   right: 0;
     
 	
 }
 
+/* 별점  영역 */ 
+div[class^=starsscore]{
+ text-align:center;
+ display:flex;
+ direction: rtl;
+ justify-content: flex-end;
+ font-size:28px;
+ padding:0 .2em;
+}
+
+div[class^=starsscore] input{
+display:none;
+}
+
+div[class^=starsscore] label {
+  color:#ccc;
+  cursor:pointer;
+}
+
+div[class^=starsscore] :checked ~ label{
+  color:#ffd400;
+}
+
+div[class^=starsscore] label:hover,
+div[class^=starsscore] label:hover ~ label {
+  color:#ffd700;
+}
