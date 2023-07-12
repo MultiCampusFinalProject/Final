@@ -30,9 +30,9 @@
 						<div align="center" class="right-column">
 							<div>
 								<h3 class="profileH3">닉네임</h3>
-								<input type="text" name="userNickname" value="${sessionScope.userNickname}">
+								<input type="text" name="userNickname" value="${sessionScope.userNickname}" maxlength="6">
 								<h3 class="profileH3">자기소개</h3>
-								<input class="introduce" type="text" name="userIntroduce" value="${sessionScope.userIntroduce}"><br>
+								<input class="introduce" type="text" name="userIntroduce" value="${sessionScope.userIntroduce}" maxlength="15"><br>
 								<br><br>
 								<input type="hidden" name="userPhoto" id="userPhoto" value="${sessionScope.userPhoto}">
 							</div>

@@ -12,27 +12,19 @@ import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.dto.CtgUserDTO;
 
-import lombok.extern.slf4j.Slf4j;
-
 @Controller
-@Slf4j
 public class NaverAPIProfileController {
 
 		// 접근 토큰을 전달받아 유저 회원가입 진행하고 user 객체를 돌려주는 컨트롤러
 		
 		@Value("${naver.api.member.profile.apiURL}")			
 		private String memberProfileApiURL;
-		
-		@Autowired
-		private CtgUserController userController;
 		
 		// 1. apiURL을 통해 httpURLConnection 객체를 불러오는 static 메서드
 	    private static HttpURLConnection connect(String apiUrl){
@@ -90,7 +82,6 @@ public class NaverAPIProfileController {
 		public CtgUserDTO getMemberProfile(JSONObject jsonOb) {
 			
 			String accessToken = "";
-			String refreshToken = "";
 				 
 			accessToken = jsonOb.getString("access_token");
 			String header = "Bearer " + accessToken;

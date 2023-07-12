@@ -7,8 +7,8 @@
    
     <!-- 네이버 회원 정보가 맵핑된 CtgUser객체를 받아와 회원 가입 진행하는 메서드 -->
     <insert id="insertCtgUser" parameterType="CtgUserDTO">
-        INSERT INTO ctg_user (user_id, naver_id, user_name, user_nickname, user_email, user_birthyear, user_admin, user_photo, user_signdate)
-        VALUES (ctg_user_seq.nextval, #{naverId}, #{userName}, #{userNickname}, #{userEmail}, #{userBirthYear}, #{userAdmin},#{userPhoto}, TO_CHAR(SYSDATE, 'YYYYMMDD'))
+        INSERT INTO ctg_user (user_id, naver_id, user_name, user_nickname, user_email, user_birthyear, user_admin, user_photo, user_introduce, user_signdate)
+        VALUES (ctg_user_seq.nextval, #{naverId}, #{userName}, #{userNickname}, #{userEmail}, #{userBirthYear}, #{userAdmin}, #{userPhoto}, #{userIntroduce}, TO_CHAR(SYSDATE, 'YYYYMMDD'))
 	</insert>
  	
  	<!-- 네이버 회원 정보가 맵핑된 CtgUser객체에서 받아온 naverId, userName 이용하여 기존에 존재하는 회원인지 확인하는 메서드 -->

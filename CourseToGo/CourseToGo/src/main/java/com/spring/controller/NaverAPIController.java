@@ -3,11 +3,9 @@ package com.spring.controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.security.SecureRandom;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,10 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.dto.CtgUserDTO;
@@ -36,9 +30,6 @@ public class NaverAPIController {
 	
 	@Value("${naver.api.login.client.secret}")			
 	private String clientSecret;			
-				
-	@Value("${naver.api.login.apiURL}")			
-	private String apiURL;	
 	
 	@Value("${naver.api.login.callbackURL}")			
 	private String callbackURL;	
@@ -53,34 +44,8 @@ public class NaverAPIController {
 	@Autowired
 	private CtgUserController userController;
 
-	// /home으로 접속시 네이버 로그인 화면으로 이동하는  "apiURL"주소를 세션에 저장하여 home.jsp로 이동.
-	// "접근 토큰 요청" 메서드
-	@GetMapping(value = "/home")			
-	public String login(HttpSession session) {			
-		log.info("home 화면 출력");	
-			
-		String redirectURI="";			
-				
-		try {		
-			redirectURI = URLEncoder.encode(callbackURL, "UTF-8");	
-		} catch (UnsupportedEncodingException e) {		
-			e.printStackTrace();	
-		}		
-				
-		SecureRandom random = new SecureRandom();			
-		String state = new BigInteger(130, random).toString();			
-					
-		apiURL += "&client_id=" + clientId;			
-		apiURL += "&redirect_uri=" + redirectURI;			
-		apiURL += "&state=" + state;			
-					
-		session.setAttribute("apiURL", apiURL);			
-					
-		return "home";		
-	}
-
 	// localhost:----/test 로 callback URL을 설정. 출력해줄 jsp는 myPage.jsp입니다
-	@GetMapping(value = "/test")
+	@GetMapping(value = "/callback")
 	public String loginPOSTNaver(@RequestParam("code") String code,
 								 @RequestParam("state") String state,
 								 HttpSession session) {
@@ -147,28 +112,21 @@ public class NaverAPIController {
 		
 		// 등록된 회원이 아니면
 		if (searchUser == null) {
-			userController.insertCtgUser(user);
-			CtgUserDTO newUser = userController.getCtgUserByNaverIdAndName(user.getNaverId().substring(0, 10),
-			   		   user.getNaverId().substring(user.getNaverId().length() -10),
-					   user.getUserName());
-			
-			session.setAttribute("userId", newUser.getUserId());
-			session.setAttribute("userName", newUser.getUserName());
-			session.setAttribute("userEmail", newUser.getUserEmail());
-			session.setAttribute("userNickname", newUser.getUserNickname());
-			session.setAttribute("userIntroduce", newUser.getUserIntroduce());
-			session.setAttribute("userPhoto", newUser.getUserPhoto());
-
-			return "signupDone";
+			session.setAttribute("naverId", user.getNaverId());
+			session.setAttribute("userName", user.getUserName());
+			session.setAttribute("userEmail", user.getUserEmail());
+			session.setAttribute("userNickname", user.getUserNickname());
+			session.setAttribute("userBirthYear", user.getUserBirthYear());
+			return "myPage";
 		}else {
 			
 		// 등록된 회원이라면	
 			session.setAttribute("userId", searchUser.getUserId());
-			session.setAttribute("userName", searchUser.getUserName());
-			session.setAttribute("userEmail", searchUser.getUserEmail());
-			session.setAttribute("userNickname", searchUser.getUserNickname());
-			session.setAttribute("userIntroduce", searchUser.getUserIntroduce());
-			session.setAttribute("userPhoto", searchUser.getUserPhoto());
+//			session.setAttribute("userName", searchUser.getUserName());
+//			session.setAttribute("userEmail", searchUser.getUserEmail());
+//			session.setAttribute("userNickname", searchUser.getUserNickname());
+//			session.setAttribute("userIntroduce", searchUser.getUserIntroduce());
+//			session.setAttribute("userPhoto", searchUser.getUserPhoto());
 			return "redirect:/home";
 		}	
 	}

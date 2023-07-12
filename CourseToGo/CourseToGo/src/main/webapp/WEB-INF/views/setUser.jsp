@@ -19,11 +19,9 @@
 					<td style="width: 400px;">
 						<div align="center" class="left-column" width="500px">
 							<h1>프로필</h1>
-							<img src="https://cdn-icons-png.flaticon.com/512/10367/10367442.png" alt="profileImage" width="80" height="80" >
+							<img src="https://github.com/S2ll/S2ll/blob/main/userProfile1.png?raw=true" alt="profileImage" width="80" height="80" >
 							<p><h3>${sessionScope.userName}</h3></p>
 							<p><h4 style="color: grey;">${sessionScope.userEmail}</h4></p><br>
-							<button class="button">프로필 사진 수정하기</button><br>
-							<button class="button">프로필 사진 삭제하기</button>
 						</div>
 					</td>
 					<td>
@@ -32,11 +30,11 @@
 								<h3 class = "profileH3" >${sessionScope.userName}님 반갑습니다.</h3>
 								<p>CourseToGo에서 사용하실 닉네임을 작성해주세요.</p>
 								
-								<input type="text" name="userNickname" value="${sessionScope.userNickname}">
+								<input type="text" name="userNickname" value="${sessionScope.userNickname}" maxlength="6">
 								<h3 class = "profileH3" > 자기소개</h3>
 								<p>프로필에 표시될 자기소개를 작성해주세요.</p>
-								<input class = "introduce" type="text" name="userIntroduce" value="${sessionScope.userIntroduce}"><br>
-								<br><input class ="button" type="submit" value="작성완료" >
+								<input class = "introduce" type="text" name="userIntroduce" value="${sessionScope.userIntroduce}" maxlength="15"><br>
+								<br><input class ="button" type="submit" value="회원가입" >
 							</div>
 							<br/>
 						</div>
@@ -44,7 +42,9 @@
 				</tr>
 			</table>
 		</div>
-	</form>
+	</form>	
+	
 
+	
 </body>
 </html>
