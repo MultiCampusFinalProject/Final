@@ -20,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.dto.CourseDTO;
 import com.spring.dto.CoursePlaceDTO;
@@ -49,10 +50,15 @@ public class MarkerController {
 							@RequestParam(value = "placeId2", required = false) Integer placeId2, 
 							@RequestParam(value = "placeId3", required = false) Integer placeId3, 
 							@RequestParam(value = "placeId4", required = false) Integer placeId4, 
-							@RequestParam(value = "placeId5", required = false) Integer placeId5) 
+							@RequestParam(value = "placeId5", required = false) Integer placeId5,
+     RedirectAttributes redirectAttributes)
 	 						
 	{
-	        
+		redirectAttributes.addAttribute("placeId1", placeId1);
+		redirectAttributes.addAttribute("placeId2", placeId2);
+		redirectAttributes.addAttribute("placeId3", placeId3);
+		redirectAttributes.addAttribute("placeId4", placeId4);
+		redirectAttributes.addAttribute("placeId5", placeId5);    
         HttpSession session = request.getSession();
 //        int userId = (int) session.getAttribute("userId");
         int userId = 1;
@@ -182,6 +188,7 @@ public class MarkerController {
         String responseBody = responseEntity.getBody();
         System.out.println(responseBody);
         directionService.insertDirections(responseBody, courseId);// 경로 저장
-        return "CourseList";
+//        redirectAttributes.addAttribute("placeId1", placeId1);
+        return "courseList";
     }
 }

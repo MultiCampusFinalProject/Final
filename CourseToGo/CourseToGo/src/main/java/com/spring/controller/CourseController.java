@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 import com.spring.dto.CourseDTO;
@@ -91,7 +92,11 @@ public class CourseController {
              @RequestParam(value = "placeId2", required = false) Integer placeId2,
              @RequestParam(value = "placeId3", required = false)Integer placeId3,
              @RequestParam(value = "placeId4", required = false) Integer placeId4,
-             @RequestParam(value = "placeId5", required = false) Integer placeId5)  {
+             @RequestParam(value = "placeId5", required = false) Integer placeId5
+			)  {
+		
+
+		
 	    // Map 페이지를 표시하는 로직 작성
 		if (courseId == null) {
 	        // courseId가 null인 경우 처리 로직 작성
