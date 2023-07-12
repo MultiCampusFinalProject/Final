@@ -23,7 +23,7 @@ public class CtgUserController {
 	// 네이버 회원 정보가 맵핑된 CtgUser객체를 받아와 회원 가입 진행하는 메서드---------------------------------------------------------------
 	// 성공:true 실패:false	
 	public boolean insertCtgUser(CtgUserDTO user) {
-		user.setUserPhoto("https://github.com/S2ll/S2ll/blob/main/userProfile1.png?raw=true");
+		user.setUserPhoto("https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile1.png?raw=true");
 		user.setUserAdmin(1);
 		boolean result = false;
 		

@@ -73,28 +73,36 @@
 
 
 <li class="list-group-item d-flex justify-content-between align-items-start">
-							<div class="ms-2 me-auto">
-								<a href="/courseList/Map?<%= query %>">
-    	     <h2>Course Id: <%= courseId %></h2>
-    	  
-    	      <span>Course Name: <%= courseName %></span>
+  <div class="ms-2 me-auto">
+    <a href="/courseList/Map?<%= query %>">
+      <h2>Course Id: <span class="course-id"><%= courseId %></span></h2>
 
-			 <span>UserId: <%= userId %></span>            
-            <%-- placeIds 배열을 활용하여 필요한 작업 수행 --%>
-            
-              <% for (String placeId : placeNames) { %>
-            	<span class="well"><%= placeId %></span>
-            	
-        <% }      %>
-         	
-						
-								</a>
-								<div>소개글: <%= courseContent %></div>   
-							</div> <span class="badge bg-primary rounded-pill">${notice.hit}</span>
-						</li>   
+      <span>Course Name: <%= courseName %></span>
+
+      <span>UserId: <%= userId %></span>
+      <%-- placeIds 배열을 활용하여 필요한 작업 수행 --%>
+
+      <% for (String placeId : placeNames) { %>
+      <span class="well"><%= placeId %></span>
+
+      <% }      %>
+
+
+    </a>
+    <div>소개글: <%= courseContent %></div>
+  </div> 
+	<form action="courseList" method="POST">
+		<div>
+			<button type="submit" class="add-button">찜하기</button>
+		</div>
+		<input type="hidden" name="courseId" id="courseIdInput" value="<%= courseId %>" >
+	</form>
+  </div>
+
+</li>
 <%
-        }
     }
+  }
 %>
     	
     
@@ -162,8 +170,13 @@
 	//step03 : 요청
 	
 
-
-
+	// bookmark 관련 코드=======================================================
+	 $(document).ready(function() {
+	  $('.add-button').on('click', function() {
+	    var courseId = $('#courseIdInput').val(); // courseId 값을 가져옴
+	    $('#courseForm').submit(); // 폼 제출
+	  });
+	});
 </script>
 
  

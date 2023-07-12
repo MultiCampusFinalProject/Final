@@ -53,21 +53,21 @@
 		function showSampleImages() {
 			// 이미지 주소
 			var imageUrls = [
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile2.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile3.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile4.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile5.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile6.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile7.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile8.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile9.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile10.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile11.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile12.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile13.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile14.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile15.png?raw=true",
-			 "https://github.com/S2ll/S2ll/blob/main/userProfile16.png?raw=true"
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile2.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile3.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile4.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile5.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile6.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile7.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile8.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile9.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile10.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile11.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile12.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile13.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile14.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile15.png?raw=true",
+				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile16.png?raw=true"
 			];
 			
 			// 팝업 창 화면 중앙에 출력
