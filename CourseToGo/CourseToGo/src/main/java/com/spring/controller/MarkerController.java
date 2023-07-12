@@ -54,7 +54,7 @@ public class MarkerController {
 	{
 	        
         HttpSession session = request.getSession();
-//        int userId = (int) session.getAttribute("user_id");
+//        int userId = (int) session.getAttribute("userId");
         int userId = 1;
         int courseId = -1;
         System.out.println(courseContent);
@@ -69,7 +69,7 @@ public class MarkerController {
 	    	try {
 	    		
 	    		//CourseService에 삽입
-	    	 courseId = 	courseService.insertCourse(course);
+	    	 courseId = 	courseService.insertCourse(course); // course update
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -87,7 +87,7 @@ public class MarkerController {
     		//주어진 코스에 맞게 코스 플레이스 관계형 데이터 삽입
     		CoursePlaceDTO coursePlace = CoursePlaceDTO.builder().courseId(courseId).placeId(placeIdList[i]).selectionOrder(i+1).build();
     		try {
-				cpService.insertCoursePlace(coursePlace);
+				cpService.insertCoursePlace(coursePlace); // coursePlace : update
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -181,7 +181,7 @@ public class MarkerController {
         ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
         String responseBody = responseEntity.getBody();
         System.out.println(responseBody);
-        directionService.insertDirections(responseBody, courseId);
+        directionService.insertDirections(responseBody, courseId);// 경로 저장
         return "CourseList";
     }
 }

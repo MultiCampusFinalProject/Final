@@ -14,9 +14,7 @@ import lombok.ToString;
 public class CourseDTO {
     private int courseId;
     private int userId;
-   
     private String courseName;
-    
     private String courseContent;
     private double courseAvgScore;
     private int courseNumber;
