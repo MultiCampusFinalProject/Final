@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.spring.dto.CourseDTO;
 import com.spring.dto.CourseInformDTO;
+import com.spring.dto.PageRequestDTO;
+import com.spring.dto.SearchKeyword;
 
 @Mapper
 public interface CourseMapper {
@@ -16,5 +18,11 @@ public interface CourseMapper {
 	public List<CourseInformDTO> getAllCourses() throws SQLException;
 
 	public CourseDTO getCourseById(int courseId) throws SQLException;
+
+	public List<CourseInformDTO> getCourseBySearchKeyword(SearchKeyword searchKeyword)throws SQLException;
+
+	public int getTotalCount(PageRequestDTO pageRequest)throws SQLException;
+
+	public List<CourseInformDTO> getCourseWithPageRequest(PageRequestDTO pageRequest);
 
 }

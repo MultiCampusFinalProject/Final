@@ -23,8 +23,11 @@ import com.spring.dto.DirectionDTO;
 import com.spring.dto.DirectionPoint;
 import com.spring.dto.PlaceDTO;
 import com.spring.dto.Restaurant;
+import com.spring.dto.SearchKeyword;
 import com.spring.mapper.PlaceMapper;
 import com.spring.mapper.RestaurantMapper;
+import com.spring.dto.PageRequestDTO;
+import com.spring.dto.PageResponseDTO;
 import com.spring.service.CourseReviewService;
 import com.spring.service.CourseService;
 import com.spring.service.DirectionService;
@@ -56,6 +59,31 @@ public class CourseController {
 	
 		return "CourseList";
 	}
+
+//	@RequestMapping( value = "/courseList/keyword")
+	@RequestMapping( value = "/courseListWithPagination")
+	public String naverMap(PageRequestDTO pageRequest ,Model model) {
+		List<CourseInformDTO> courseInformList=new ArrayList<>();
+		System.out.println(pageRequest);
+
+		
+		int total = 0;
+		try {
+			courseInformList = courseService.getCourseWithPageRequest(pageRequest);
+//		acourseInformList	 =  courseService.getCourseBySearchKeyword(searchKeyword);
+			total = courseService.getTotalCount(pageRequest);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		PageResponseDTO pageResponse = new PageResponseDTO(total, 10, pageRequest);
+		System.out.println(pageResponse);
+		model.addAttribute("CourseInformList", courseInformList);
+		model.addAttribute("pageInfo", pageResponse);
+		System.out.println(courseInformList);
+		return "CourseList";
+	}
+	
 	@RequestMapping(value = "/courseList/Map", method = RequestMethod.GET)
 	public String showMapPage(Model model,
 	         @RequestParam(value = "courseId", required = false) String courseId,
