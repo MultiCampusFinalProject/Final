@@ -10,7 +10,7 @@
  	<select id="getCourseReviewByReviewId" parameterType="int" resultType="com.spring.dto.CourseReview">
  		SELECT course_score as courseScore, content, course_review_id as courseReviewId
  		FROM course_review
- 		WHERE course_id = #{courseId}
+ 		WHERE course_review_id = #{courseReviewId}
  	</select>
  	
     <!-- 코스 리뷰 등록 -->
@@ -41,11 +41,6 @@
  		WHERE course_id = #{courseId}
  	</select>
  	
- 	
- 	<delete id="deleteCourseReviewByCourseId" parameterType="_int">
- 		DELETE FROM course_review
- 		WHERE course_review_id = #{courseReviewId}
- 	</delete>
  	
  	
  </mapper>
