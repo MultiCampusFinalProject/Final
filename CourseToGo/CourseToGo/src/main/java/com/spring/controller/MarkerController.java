@@ -54,7 +54,7 @@ public class MarkerController {
 	{
 	        
         HttpSession session = request.getSession();
-//        int userId = (int) session.getAttribute("user_id");
+//        int userId = (int) session.getAttribute("userId");
         int userId = 1;
         int courseId = -1;
         System.out.println(courseContent);

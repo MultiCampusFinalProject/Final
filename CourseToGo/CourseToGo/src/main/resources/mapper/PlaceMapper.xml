@@ -48,7 +48,7 @@
 		LEFT JOIN category_place cp ON p.place_id = cp.place_id
 		LEFT JOIN category c ON (c.category_name = #{categoryName} OR #{categoryName} IS NULL) AND cp.category_id = c.category_id
 		WHERE (a.area_name = #{areaName} OR (#{areaName} IS NULL OR #{areaName} = '')) OR (c.category_name = #{categoryName} OR (#{categoryName} IS NULL OR #{categoryName} = ''))
-		ORDER BY p.place_avg_score ASC
+		ORDER BY p.place_avg_score DESC
 	</select>
  	
  	
