@@ -88,6 +88,7 @@ public class CourseController {
 	@RequestMapping(value = "/courseList/Map", method = RequestMethod.GET)
 	public String showMapPage(Model model,
 	         @RequestParam(value = "courseId", required = false) String courseId,
+	         @RequestParam(value = "courseNumber", required = false) String courseNumber,
              @RequestParam(value = "placeId1", required = false) Float placeId1,
              @RequestParam(value = "placeId2", required = false) Float placeId2,
              @RequestParam(value = "placeId3", required = false) Float placeId3,
