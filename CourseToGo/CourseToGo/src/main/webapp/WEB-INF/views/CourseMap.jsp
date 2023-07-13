@@ -112,6 +112,18 @@ header
         }
     </style>
     <script>
+    var submitButtonClicked = false;
+	
+    function submitForm() {
+        if (submitButtonClicked) {
+            return false; // 이미 중복 클릭된 경우 중단
+        }
+        submitButtonClicked = true; // 버튼 클릭 상태로 설정
+        var form = document.getElementById("saveMark");
+        
+        form.submit(); // 폼 제출
+        
+    }
         window.onload = function() {
             var sliderMenu = document.getElementById("slider-menu");
             var sliderButton = document.getElementById("slider-button");
@@ -133,6 +145,8 @@ header
                 toggleSliderMenu();
             };
         };
+        
+    
     </script>
     <div id="slider-menu" class="slider-menu">
         <!-- 슬라이드 메뉴 내용 -->
@@ -195,9 +209,14 @@ header
    	       <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
    	        <script src="sidebars.js"></script>
    	        <div id="slider-button" href= style="font-weight: bold;">리뷰 보러가기</div>
-   	    </div>
+   	        
+   	        
+   	  </div>      
+   	  
   </span>
-   
+     
+   	    
+  	
 
 </div>
 
@@ -208,6 +227,48 @@ header
 <script>
 //polyline
 
+ var submitButtonClicked = false;
+	
+	    function submitForm() {
+	        if (submitButtonClicked) {
+	            return false; // 이미 중복 클릭된 경우 중단
+	        }
+	        submitButtonClicked = true; // 버튼 클릭 상태로 설정
+	        var form = document.getElementById("saveMark");
+	        
+	        form.submit(); // 폼 제출
+	        
+	    }
+    document.getElementById("review").addEventListener("submit", function(event) {
+	        // 추가 동작을 수행합니다. 
+	        var urlParams = new URLSearchParams(window.location.search);
+
+	        document.getElementById("courseId").value = urlParams.get('courseId');
+			 document.getElementById("courseNumber").value = urlParams.get('courseNumber');
+	        // placeId에 저장된 값을 input 박스안에 각각 집어넣어졌는지 확인.
+			  document.getElementById("placeId1").value = courseNumber >=1 ?urlParams.get('placeId1'):null ;
+			  document.getElementById("placeId2").value  =courseNumber >=2 ?urlParams.get('placeId2'):null;
+			  document.getElementById("placeId3").value =courseNumber >=3  ?urlParams.get('placeId3'): null;
+			  document.getElementById("placeId4").value = courseNumber >=4  ?urlParams.get('placeId4'): null;
+			  document.getElementById("placeId5").value = courseNumber >=5  ? urlParams.get('placeId5'): null;
+	        event.preventDefault();
+	        console.log("전송 버튼이 눌렸습니다!");
+	        console.log(placeId);
+	        
+	        var courseNameInput = document.getElementById("courseName");
+	        
+	        var courseNameValue = courseNameInput.value.trim();
+	
+	  
+	      
+	
+	 
+	
+	       
+	        
+	        submitForm(); // 폼 제출
+	       
+	    });
 init();
 
 //지도를 그려주는 함수 실행
@@ -409,6 +470,19 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 </script>
 
 <div class="sidebar">
-          
+              <div style="" class="">
+   	     <form id="review" action="/review" method="GET" accept-charset="UTF-8">
+   	      <button type="submit"><h2>리뷰 작성 버튼</h2></button>
+      <input type="hidden" id="placeId1" name="placeId1" value=>
+      <input type="hidden" id="placeId2" name="placeId2" value=>
+      <input type="hidden" id="placeId3" name="placeId3" value=>
+      <input type="hidden" id="placeId4" name="placeId4" value=>
+      <input type="hidden" id="placeId5" name="placeId5" value=>
+      <input type="hidden" id="courseId" name="courseId" value=>
+      <input id="courseNumber" type="hidden" name="courseNumber">
+	
+     
+    </form>
+   	       </div>
         </div>
 </html>
