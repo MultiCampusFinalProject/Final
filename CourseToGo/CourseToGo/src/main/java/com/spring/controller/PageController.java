@@ -4,19 +4,26 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.spring.dto.CourseDTO;
+import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CtgUserDTO;
+import com.spring.service.CourseService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +35,9 @@ public class PageController {
 	
 	@Autowired
 	private CtgUserController userController;
+	
+	@Autowired
+	private CourseService courseService;
 	
 	@Value("${naver.api.login.client.id}")
 	private String clientId;	
@@ -73,46 +83,23 @@ public class PageController {
 	@PostMapping(value = "/signupDone")
 	public String signupDone(@ModelAttribute("userNickname") String newUserNickname,
 							 @ModelAttribute("userIntroduce") String newUserIntroduce,
-						 	 HttpSession session) {
-		
-		String newUserNaverId = (String)session.getAttribute("naverId");
-		String newUserName = (String)session.getAttribute("userName");
-			
-		CtgUserDTO newUser = new CtgUserDTO(newUserNaverId, newUserName, newUserNickname, (String)session.getAttribute("userEmail"),
-										    (int)session.getAttribute("userBirthYear"), newUserIntroduce);
-
-// 위에 생성자로는 정상작동하는데 아래 빌더로는 작동이 안됨. 추후 프로젝트 완료 후 고쳐볼 예정.-PSY		
-//		CtgUserDTO newUser = CtgUserDTO.builder()
-//										.naverId(newUserNaverId)
-//										.userName(newUserName)
-//										.userNickname(newUserNickname)
-//										.userEmail((String)session.getAttribute("userEmail"))
-//										.userBirthYear((int)session.getAttribute("userBirthYear"))
-//										.userIntroduce(newUserIntroduce)
-//										.build();
+						 	 Model model, HttpSession session) {
+	
+		CtgUserDTO newUser = (CtgUserDTO)session.getAttribute("newUser");
+		newUser.setUserNickname(newUserNickname);
+		newUser.setUserIntroduce(newUserIntroduce);
 		
 		boolean result = userController.insertCtgUser(newUser);
 		
-		if (result) {
-			session.removeAttribute("naverId");
-			session.removeAttribute("userName");
-			session.removeAttribute("userEmail");
-			session.removeAttribute("userNickname");
-			session.removeAttribute("userBirthYear");
-	
-			
-			CtgUserDTO user = userController.getCtgUserByNaverIdAndName(newUserNaverId.substring(0, 10),
-																		newUserNaverId.substring(newUserNaverId.length() -10),
-																		newUserName);
-			
-			
-			session.setAttribute("userId", user.getUserId());
-			session.setAttribute("userName", user.getUserName());
-			session.setAttribute("userEmail", user.getUserEmail());
-			session.setAttribute("userNickname", user.getUserNickname());
-			session.setAttribute("userPhoto", user.getUserPhoto());
-			session.setAttribute("userIntroduce", user.getUserIntroduce());
-			
+		if (result) {	
+			CtgUserDTO user = userController.getCtgUserByNaverIdAndName(newUser.getNaverId().substring(0, 10),
+																		newUser.getNaverId().substring(newUser.getNaverId().length() -10),
+																		newUser.getUserName());
+			CtgUserDTO userForSession = new CtgUserDTO(user.getUserId(), user.getUserName(),
+													   user.getUserNickname(), user.getUserEmail(),
+													   user.getUserPhoto(), user.getUserIntroduce());
+					
+			session.setAttribute("user", userForSession);			
 			return "signupDone";
 		}
 		return "home";
@@ -135,25 +122,63 @@ public class PageController {
 								@ModelAttribute("userIntroduce") String userIntroduce,
 								@ModelAttribute("userPhoto") String userPhoto,
 								HttpSession session) { 
-		CtgUserDTO user = userController.getCtgUserByUserId((int) session.getAttribute("userId"));
+		CtgUserDTO user =  (CtgUserDTO) session.getAttribute("user");
+		CtgUserDTO DBuser = userController.getCtgUserByUserId(user.getUserId());
+		
+		DBuser.setUserNickname(userNickname);
 		user.setUserNickname(userNickname);
+		DBuser.setUserIntroduce(userIntroduce);
 		user.setUserIntroduce(userIntroduce);
+		DBuser.setUserPhoto(userPhoto);
 		user.setUserPhoto(userPhoto);
 		
 		boolean result = false;
 		
 		try {
-			result = userController.updateCtgUser(user);
+			result = userController.updateCtgUser(DBuser);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		if(result) {
-			session.setAttribute("userNickname", userNickname);
-			session.setAttribute("userIntroduce", userIntroduce);
-			session.setAttribute("userPhoto", userPhoto);
+			session.setAttribute("user", user);
 			return "myPageInformModify"; 
 		}
 		return "redirect:/home"; 
+
 	}
+	
+	@GetMapping(value = "/courseList")
+	public String getCourseListPage(HttpSession session,
+									HttpServletRequest request,
+									HttpServletResponse response) {
+		
+		List<CourseInformDTO> courseInformList = null;
+		
+		try {
+			courseInformList = courseService.getAllCourses();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("CourseInformList", courseInformList);
+		return "CourseList";
+	}
+	
+	@GetMapping(value = "/naverMap")
+	public String getCourseMakePage(HttpSession session) {
+//		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+//		System.out.println(user);		
+		
+		return "naverMap";
+	}
+	
+	@GetMapping(value = "/userContents")
+	public String getUserContentsPage(HttpSession session) {
+//		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+//		System.out.println(user);
+		
+		return "userContents";
+	}
+	
 }

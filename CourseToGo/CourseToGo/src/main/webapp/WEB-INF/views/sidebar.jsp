@@ -13,17 +13,17 @@
 		    <ul>
 		    	<!-- 전체적인 링크 수정해야함(onclick) -->
 		    	<li><input type="button" class="home" value="홈" onclick="location.href='/home'"></li>
-		    	<li><input type="button" class="course" value="코스" onclick="location.href='/home'"></li>
-		    	<c:if test="${empty sessionScope.userId}">
+		    	<li><input type="button" class="course" value="코스" onclick="location.href='/courseList'"></li>
+		    	<c:if test="${empty sessionScope.user.userId}">
 		    		<li><input type="button" class="create-course" value="코스 제작" onclick="showAlertAndRedirect()"></li>
-		    		<li><input type="button" class="mypage" value="마이페이지" onclick="showAlertAndRedirect()"></li>
+		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
 		    	</c:if>
-		    	<c:if test="${not empty sessionScope.userId}">
-		    		<li><input type="button" class="create-course" value="코스 제작" onclick="location.href='/home'"></li>
-		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/home'"></li>
-		    		<li class="profile"><img src="${sessionScope.userPhoto}" alt="프로필 사진"></li>
-			        <li class="name">${sessionScope.userNickname} 님</li>
-			        <li class="email">${sessionScope.userEmail}</li>
+		    	<c:if test="${not empty sessionScope.user.userId}">
+		    		<li><input type="button" class="create-course" value="코스 제작" onclick="location.href='/naverMap'"></li>
+		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
+		    		<li class="profile"><img src="${sessionScope.user.userPhoto}" alt="프로필 사진"></li>
+			        <li class="name">${sessionScope.user.userNickname} 님</li>
+			        <li class="email">${sessionScope.user.userEmail}</li>
 			        <li><input type="button" class="logout-btn" value="로그아웃" onclick="location.href='/logout'"></li>
 			        <li><input type="button" class="edit-profile-btn" value="개인정보 수정" onclick="location.href='/myPageInformModify'"></li>
 		    	</c:if>

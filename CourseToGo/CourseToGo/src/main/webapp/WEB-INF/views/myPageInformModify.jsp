@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="com.spring.dto.CtgUserDTO" %>
+<c:set var="userId" value="${sessionScope.user.userId}" />
 
 
 <!DOCTYPE html>
@@ -19,9 +21,9 @@
 					<td style="width: 400px;">
 						<div align="center" class="left-column" width="500px">
 							<h1>프로필</h1>
-							<img id="profileImage" src="${sessionScope.userPhoto}" alt="profileImage" width="80" height="80">
+							<img id="profileImage" src="${sessionScope.user.userPhoto}" alt="profileImage" width="80" height="80">
 							<p><h3>${sessionScope.userName}</h3></p>
-							<p><h4 style="color: grey;">${sessionScope.userEmail}</h4></p><br>
+							<p><h4 style="color: grey;">${sessionScope.user.userEmail}</h4></p><br>
 							<button class="button" id="fix" onclick="showSampleImages()">프로필 사진 수정하기</button>
 							<button class="button" id="delete" onclick="deleteProfileImage()">프로필 사진 삭제하기</button>
 						</div>
@@ -30,11 +32,11 @@
 						<div align="center" class="right-column">
 							<div>
 								<h3 class="profileH3">닉네임</h3>
-								<input type="text" name="userNickname" value="${sessionScope.userNickname}" maxlength="6">
+								<input type="text" name="userNickname" value="${sessionScope.user.userNickname}" maxlength="6">
 								<h3 class="profileH3">자기소개</h3>
-								<input class="introduce" type="text" name="userIntroduce" value="${sessionScope.userIntroduce}" maxlength="15"><br>
+								<input class="introduce" type="text" name="userIntroduce" value="${sessionScope.user.userIntroduce}" maxlength="15"><br>
 								<br><br>
-								<input type="hidden" name="userPhoto" id="userPhoto" value="${sessionScope.userPhoto}">
+								<input type="hidden" name="userPhoto" id="userPhoto" value="${sessionScope.user.userPhoto}">
 							</div>
 							<br/>
 							<div>
@@ -48,26 +50,27 @@
 		</div>
 	</form>
 
+	
 	<script>
 		// 이미지 선택 팝업 창
 		function showSampleImages() {
 			// 이미지 주소
 			var imageUrls = [
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile2.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile3.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile4.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile5.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile6.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile7.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile8.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile9.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile10.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile11.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile12.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile13.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile14.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile15.png?raw=true",
-				"https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile16.png?raw=true"
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile2.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile3.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile4.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile5.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile6.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile7.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile8.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile9.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile10.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile11.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile12.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile13.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile14.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile15.png?raw=true",
+                "https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile16.png?raw=true"
 			];
 			
 			// 팝업 창 화면 중앙에 출력
@@ -129,7 +132,7 @@
 		
 		// 알림창에서 확인버튼 클릭 시 회원탈퇴
 	    function unsignUser() {
-	        var userId = '<%= session.getAttribute("userId") %>';
+	    	var userId = parseInt('<%= pageContext.getAttribute("userId") %>');
 	
 	        var form = document.createElement('form');
 	        form.method = 'POST';

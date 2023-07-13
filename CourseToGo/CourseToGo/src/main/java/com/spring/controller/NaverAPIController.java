@@ -48,13 +48,10 @@ public class NaverAPIController {
 	@GetMapping(value = "/callback")
 	public String loginPOSTNaver(@RequestParam("code") String code,
 								 @RequestParam("state") String state,
-								 HttpSession session) {
-		int sessionTime = 60 * 60; // 1시간
-		session.setMaxInactiveInterval(sessionTime);
-		
+								 HttpSession session) {	
 		log.info("login 시도");
 		String redirectURI = "";
-		      
+		
 		try {
 			redirectURI = URLEncoder.encode(callbackURL, "UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -112,22 +109,16 @@ public class NaverAPIController {
 		
 		// 등록된 회원이 아니면
 		if (searchUser == null) {
-			session.setAttribute("naverId", user.getNaverId());
-			session.setAttribute("userName", user.getUserName());
-			session.setAttribute("userEmail", user.getUserEmail());
-			session.setAttribute("userNickname", user.getUserNickname());
-			session.setAttribute("userBirthYear", user.getUserBirthYear());
+			session.setAttribute("newUser", user);
 			return "myPage";
-		}else {
-			
+		}else {		
 		// 등록된 회원이라면	
-			session.setAttribute("userId", searchUser.getUserId());
-//			session.setAttribute("userName", searchUser.getUserName());
-//			session.setAttribute("userEmail", searchUser.getUserEmail());
-//			session.setAttribute("userNickname", searchUser.getUserNickname());
-//			session.setAttribute("userIntroduce", searchUser.getUserIntroduce());
-//			session.setAttribute("userPhoto", searchUser.getUserPhoto());
-			return "redirect:/home";
+			CtgUserDTO userForSession = new CtgUserDTO(searchUser.getUserId(), searchUser.getUserName(),
+													   searchUser.getUserNickname(), searchUser.getUserEmail(),
+													   searchUser.getUserPhoto(), searchUser.getUserIntroduce());
+
+			session.setAttribute("user", userForSession);		
+			return "home";
 		}	
 	}
 }

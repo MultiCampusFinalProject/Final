@@ -64,5 +64,15 @@ public class CtgUserDTO {
 		this.userIntroduce = userIntroduce;
     }
     
+    @Builder // 세션부여용 builder
+    public CtgUserDTO(int userId, String userName, String userNickname,
+    				  String userEmail, String userPhoto, String userIntroduce) {
+    	this.userId = userId;
+    	this.userName = userName;
+    	this.userNickname = userNickname;
+		this.userEmail = userEmail;
+		this.userPhoto = userPhoto;
+		this.userIntroduce = userIntroduce;
+    }
     
 }

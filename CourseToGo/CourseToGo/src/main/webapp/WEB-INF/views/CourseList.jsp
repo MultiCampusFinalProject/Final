@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
 <body>
+
+        <div class="sidebar">
+            <%@ include file="sidebar.jsp" %>
+        </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
 <!-- 합쳐지고 최소화된 최신 CSS -->
@@ -91,7 +96,7 @@
     </a>
     <div>소개글: <%= courseContent %></div>
   </div> 
-	<form action="courseList" method="POST">
+	<form action="/courseBookmark" method="POST">
 		<div>
 			<button type="submit" class="add-button">찜하기</button>
 		</div>
