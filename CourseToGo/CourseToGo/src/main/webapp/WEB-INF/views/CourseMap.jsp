@@ -223,7 +223,22 @@ header
 </body>
 <!-- footer -->
 <h3 style="font-weight: bold; bottom:0px">${Course.courseContent}</h3>
-
+<div class="sidebar">
+              <div style="" class="">
+   	     <form id="review" action="/review" method="GET" accept-charset="UTF-8">
+   	      <button type="submit"><h2>리뷰 작성 버튼</h2></button>
+      <input type="hidden" id="placeId1" name="placeId1" value=>
+      <input type="hidden" id="placeId2" name="placeId2" value=>
+      <input type="hidden" id="placeId3" name="placeId3" value=>
+      <input type="hidden" id="placeId4" name="placeId4" value=>
+      <input type="hidden" id="placeId5" name="placeId5" value=>
+      <input type="hidden" id="courseId" name="courseId" value=>
+      <input id="courseNumber" type="hidden" name="courseNumber">
+	
+     
+    </form>
+   	       </div>
+        </div>
 <script>
 //polyline
 
@@ -234,31 +249,30 @@ header
 	            return false; // 이미 중복 클릭된 경우 중단
 	        }
 	        submitButtonClicked = true; // 버튼 클릭 상태로 설정
-	        var form = document.getElementById("saveMark");
+	        var form = document.getElementById("review");
 	        
 	        form.submit(); // 폼 제출
 	        
 	    }
     document.getElementById("review").addEventListener("submit", function(event) {
 	        // 추가 동작을 수행합니다. 
+	        event.preventDefault();
 	        var urlParams = new URLSearchParams(window.location.search);
 
 	        document.getElementById("courseId").value = urlParams.get('courseId');
 			 document.getElementById("courseNumber").value = urlParams.get('courseNumber');
 	        // placeId에 저장된 값을 input 박스안에 각각 집어넣어졌는지 확인.
-			  document.getElementById("placeId1").value = courseNumber >=1 ?urlParams.get('placeId1'):null ;
-			  document.getElementById("placeId2").value  =courseNumber >=2 ?urlParams.get('placeId2'):null;
-			  document.getElementById("placeId3").value =courseNumber >=3  ?urlParams.get('placeId3'): null;
-			  document.getElementById("placeId4").value = courseNumber >=4  ?urlParams.get('placeId4'): null;
-			  document.getElementById("placeId5").value = courseNumber >=5  ? urlParams.get('placeId5'): null;
-	        event.preventDefault();
+	   
+			  document.getElementById("placeId1").value = urlParams.get('placeId1');
+			  document.getElementById("placeId2").value  =urlParams.get('placeId2');
+			  document.getElementById("placeId3").value =urlParams.get('placeId3');
+			  document.getElementById("placeId4").value = urlParams.get('placeId4');
+			  document.getElementById("placeId5").value = urlParams.get('placeId5');
+	      
 	        console.log("전송 버튼이 눌렸습니다!");
-	        console.log(placeId);
+	      
 	        
-	        var courseNameInput = document.getElementById("courseName");
-	        
-	        var courseNameValue = courseNameInput.value.trim();
-	
+	     
 	  
 	      
 	
@@ -469,20 +483,5 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 
 </script>
 
-<div class="sidebar">
-              <div style="" class="">
-   	     <form id="review" action="/review" method="GET" accept-charset="UTF-8">
-   	      <button type="submit"><h2>리뷰 작성 버튼</h2></button>
-      <input type="hidden" id="placeId1" name="placeId1" value=>
-      <input type="hidden" id="placeId2" name="placeId2" value=>
-      <input type="hidden" id="placeId3" name="placeId3" value=>
-      <input type="hidden" id="placeId4" name="placeId4" value=>
-      <input type="hidden" id="placeId5" name="placeId5" value=>
-      <input type="hidden" id="courseId" name="courseId" value=>
-      <input id="courseNumber" type="hidden" name="courseNumber">
-	
-     
-    </form>
-   	       </div>
-        </div>
+
 </html>
