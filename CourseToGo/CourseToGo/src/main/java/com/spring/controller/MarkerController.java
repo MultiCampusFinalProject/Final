@@ -89,11 +89,11 @@ public class MarkerController {
 			}
 		    	
 		    	Integer[] placeIdList = new Integer[5]; 
-		    	  if(!placeId1.equals("undefined"))placeIdList[0] = Integer.parseInt(placeId1);
-		    	  if(!placeId2.equals("undefined"))placeIdList[1] = Integer.parseInt(placeId2);
-		    	  if(!placeId3.equals("undefined"))	placeIdList[2] = Integer.parseInt(placeId3);
-		    	  if(!placeId4.equals("undefined"))	placeIdList[3] = Integer.parseInt(placeId4);
-		    	  if(!placeId5.equals("undefined"))placeIdList[4] = Integer.parseInt(placeId5);
+		    	  if(!placeId1.equals("")&&placeId5.equals("undefined"))placeIdList[0] = Integer.parseInt(placeId1);
+		    	  if(!placeId2.equals("")&&placeId5.equals("undefined"))placeIdList[1] = Integer.parseInt(placeId2);
+		    	  if(!placeId3.equals("")&&placeId5.equals("undefined"))placeIdList[2] = Integer.parseInt(placeId3);
+		    	  if(!placeId4.equals("")&&placeId5.equals("undefined"))placeIdList[3] = Integer.parseInt(placeId4);
+		    	  if(!placeId5.equals("")&&placeId5.equals("undefined"))placeIdList[4] = Integer.parseInt(placeId5);
     			
     	System.out.println(courseId);
     	redirectAttributes.addAttribute("courseId", courseId); 
