@@ -53,7 +53,7 @@ JOIN
 JOIN
   place pl ON cp.place_id = pl.place_id
 WHERE
-	course_id = #{courseId}
+	c.course_id = #{courseId}
 GROUP BY
   c.course_id,
   c.user_id,
