@@ -25,4 +25,8 @@ public interface CourseMapper {
 
 	public List<CourseInformDTO> getCourseWithPageRequest(PageRequestDTO pageRequest);
 
+	public CourseInformDTO getCourseInformByCourseId(int courseId);
+
+	
+
 }
