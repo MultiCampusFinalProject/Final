@@ -57,11 +57,11 @@ document.getElementById("area").innerHTML = areaName;
   </div>
   <div class="right">
     <form id="saveMark" action="/saveMarker" method="POST" accept-charset="UTF-8">
-      <input type="hidden" name="placeId1" value="1">
-      <input type="hidden" name="placeId2" value="2">
-      <input type="hidden" name="placeId3" value="3">
-      <input type="hidden" name="placeId4" value="4">
-      <input type="hidden" name="placeId5" value="5">
+      <input type="hidden" id="placeId1" name="placeId1" value=>
+      <input type="hidden" id="placeId2" name="placeId2" value=>
+      <input type="hidden" id="placeId3" name="placeId3" value=>
+      <input type="hidden" id="placeId4" name="placeId4" value=>
+      <input type="hidden" id="placeId5" name="placeId5" value=>
       <input id="courseName" type="text" name="courseName" value="myCourse">
       <input id="courseNumber" type="hidden" name="courseNumber">
       <textarea id="courseContent" style="width: 50%" class="text" name="courseContent" required>코스에 대한 설명을 작성해주세요.</textarea>
@@ -81,19 +81,30 @@ document.getElementById("area").innerHTML = areaName;
 	        }
 	        submitButtonClicked = true; // 버튼 클릭 상태로 설정
 	        var form = document.getElementById("saveMark");
+	        
 	        form.submit(); // 폼 제출
+	        
 	    }
 	    
 	    document.getElementById("saveMark").addEventListener("submit", function(event) {
-	        // 추가 동작을 수행합니다.
-	       
+	        // 추가 동작을 수행합니다. 
+	        // placeId에 저장된 값을 input 박스안에 각각 집어넣어졌는지 확인.
+			  document.getElementById("placeId1").value = placeId.length >=1 ?placeId[0]:null ;
+			  document.getElementById("placeId2").value = placeId.length >=2 ? placeId[1] : null;
+			  document.getElementById("placeId3").value = placeId.length >=3  ? placeId[2] : null;
+			  document.getElementById("placeId4").value = placeId.length >=4  ? placeId[3] : null;
+			  document.getElementById("placeId5").value = placeId.length >=5  ? placeId[4] : null;
 	        event.preventDefault();
 	        console.log("전송 버튼이 눌렸습니다!");
+	        console.log(placeId);
+	        
 	        var courseNameInput = document.getElementById("courseName");
+	        
 	        var courseNameValue = courseNameInput.value.trim();
 	        if (courseNameValue === "") {
 	            alert("이름을 입력해주세요.");
 	            submitButtonClicked = false; // 버튼 클릭 상태 초기화
+	            
 	            return;
 	        }
 	        var courseContentField = document.getElementById("courseContent");
@@ -108,9 +119,13 @@ document.getElementById("area").innerHTML = areaName;
 	            submitButtonClicked = false; // 버튼 클릭 상태 초기화
 	            return;
 	        }
+	 
 	        var inputElement = document.getElementById("courseNumber");
 	        inputElement.value = placeName.length;
+	       
+	        
 	        submitForm(); // 폼 제출
+	       
 	    });
 	</script>
 	
@@ -135,40 +150,44 @@ document.getElementById("area").innerHTML = areaName;
         
        // 기본 동작을 막기 위해 이벤트의 기본 동작을 취소합니다.
     });
-    
-    
 </script>
-<div style="text-align:left;">
-    <h2 id ="area"></h2>
-    <%-- <h3>검색결과</h3>--%>
-    <ul>
-        <%
-            List<PlaceDTO> places = (List<PlaceDTO>) request.getAttribute("placesByAreaOrCategory");
-            if (places != null) {
-                int count = 0;
-                for (PlaceDTO place : places) {
-                    if (count >= 10) {
-                        break; // 5번 이상 반복하지 않도록 종료
-                  }
-        %>
-        <div style="text-align: center; width: 200px; left:20px;height: 40px;" class="well well-sm">
-        <div onclick="placeClicked('<%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>');">
-            <li><%= place.getPlaceName() %> </li>
-        </div>
-        </div>
-        <%
-                    count++;
-                }
-            }
-        %>
-    </ul>
-    <div id="markerInputs" style="width:50%; bottom:0px;left:0px; padding: 10px;"></div>
-</div>    
+
+	<div style="text-align:right;">
+	  <h2 id="area"></h2>
+	  <div class="search-results">
+	    <ul>
+	      <%
+	        List<PlaceDTO> places = (List<PlaceDTO>) request.getAttribute("placesByAreaOrCategory");
+	        if (places != null) {
+	          int count = 0;
+	          for (PlaceDTO place : places) {
+	            if (count >= 10) {
+	              break; // 5번 이상 반복하지 않도록 종료
+	            }
+	      %>
+	      <div style="text-align: center; width: 200px; left:20px; height: 40px;" class="well well-sm">
+	        <div onclick="placeClicked('<%= place.getPlaceId()%>',' <%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>');">
+	          <li><%= place.getPlaceName() %></li>
+	        </div>
+	      </div>
+	      <%
+	          count++;
+	        }
+	      }
+	      %>
+	    </ul>
+	  </div>
+	  <div id="markerInputs" style="width:50%; bottom:0px;left:0px; padding: 10px;"></div>
+	</div>   
 </body>
     
-<body>
-    <div id="map" style="width:100%;height:100vh; margin: 0 auto; float : Right">
     
+<body>
+   
+   	
+    <div id="map" style="width:100%;height:100vh; margin: 0 auto; float : Right">
+	    
+	
     
     <script type="text/javascript">
 	    map = new naver.maps.Map('map', {
@@ -234,7 +253,9 @@ document.getElementById("area").innerHTML = areaName;
             });
         }
 
-        function placeClicked(lat, lng, name) {
+        var placeId = [];
+        
+        function placeClicked(id ,lat, lng, name) {
             if (myList === null) {
                 myList = [];
             } else if (myList.length >= MAX_MARKER_COUNT) {
@@ -244,10 +265,10 @@ document.getElementById("area").innerHTML = areaName;
             for(var i = 0 ; i < myList.length; i++){ // 마커가 이미 찍힌지 비교
             	if(name ==placeName[i])return;
             }
-           
+           	
             placeName.push(name);
+            console.log(placeId.length);
             myList.push(placeName);
-            
             var marker = new naver.maps.Marker({
                 position: new naver.maps.LatLng(lat, lng),
                 map: map,
@@ -256,14 +277,23 @@ document.getElementById("area").innerHTML = areaName;
             markerList.push(marker);
             updateMarkerInputs();
             addMarkerEventListeners(marker);
-
+			
+            placeId.push(id); // 검색결과 클릭시 마커를 찍으면서 placeId값을 배열에 저장.
             // 첫 번째 마커로 지도를 이동합니다. -x
-          
+          	console.log(placeId); 
             map.setCenter(marker.getPosition());
+
         
         }
     </script>
-	
+
+<!--
+
+
+<jsp:include page="sidebar.jsp"/>
+-->
+
+
    
 </body>
 </html>

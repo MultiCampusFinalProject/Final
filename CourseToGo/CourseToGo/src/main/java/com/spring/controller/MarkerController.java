@@ -20,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.dto.CourseDTO;
 import com.spring.dto.CoursePlaceDTO;
@@ -45,14 +46,27 @@ public class MarkerController {
 							@RequestParam String courseName, 
 							@RequestParam int courseNumber, 
 							@RequestParam String courseContent, 
-							@RequestParam(value = "placeId1", required = false) Integer placeId1, 
-							@RequestParam(value = "placeId2", required = false) Integer placeId2, 
-							@RequestParam(value = "placeId3", required = false) Integer placeId3, 
-							@RequestParam(value = "placeId4", required = false) Integer placeId4, 
-							@RequestParam(value = "placeId5", required = false) Integer placeId5) 
+							@RequestParam(value = "placeId1", required = false, defaultValue = "") String placeId1, 
+							@RequestParam(value = "placeId2", required = false, defaultValue = "") String placeId2, 
+							@RequestParam(value = "placeId3", required = false, defaultValue = "") String placeId3, 
+							@RequestParam(value = "placeId4", required = false, defaultValue = "") String placeId4, 
+							@RequestParam(value = "placeId5", required = false, defaultValue = "") String placeId5,
+     RedirectAttributes redirectAttributes)
 	 						
-	{
-	        
+	{		
+		System.out.println("placeID1=" + placeId1);
+		System.out.println("placeID2=" + placeId2);
+		  if(!placeId1.equals("undefined")) redirectAttributes.addAttribute("placeId1", placeId1);
+		    if(!placeId2.equals("undefined")) redirectAttributes.addAttribute("placeId2", placeId2);
+		    if(!placeId3.equals("undefined")) redirectAttributes.addAttribute("placeId3", placeId3);
+		    if(!placeId4.equals("undefined")) redirectAttributes.addAttribute("placeId4", placeId4);
+		    if(!placeId5.equals("undefined")) redirectAttributes.addAttribute("placeId5", placeId5);    
+		    
+		
+		
+		
+		
+		
         HttpSession session = request.getSession();
 //        int userId = (int) session.getAttribute("userId");
         int userId = 1;
@@ -75,13 +89,14 @@ public class MarkerController {
 			}
 		    	
 		    	Integer[] placeIdList = new Integer[5]; 
-		    	placeIdList[0] = placeId1;
-		    	placeIdList[1] = placeId2;
-		    	placeIdList[2] = placeId3;
-		    	placeIdList[3] = placeId4;
-		    	placeIdList[4] = placeId5;
+		    	  if(!placeId1.equals("")&&placeId5.equals("undefined"))placeIdList[0] = Integer.parseInt(placeId1);
+		    	  if(!placeId2.equals("")&&placeId5.equals("undefined"))placeIdList[1] = Integer.parseInt(placeId2);
+		    	  if(!placeId3.equals("")&&placeId5.equals("undefined"))placeIdList[2] = Integer.parseInt(placeId3);
+		    	  if(!placeId4.equals("")&&placeId5.equals("undefined"))placeIdList[3] = Integer.parseInt(placeId4);
+		    	  if(!placeId5.equals("")&&placeId5.equals("undefined"))placeIdList[4] = Integer.parseInt(placeId5);
     			
     	System.out.println(courseId);
+    	redirectAttributes.addAttribute("courseId", courseId); 
     	for (int i = 0; i < courseNumber; i++) {
     		
     		//주어진 코스에 맞게 코스 플레이스 관계형 데이터 삽입
@@ -142,13 +157,14 @@ public class MarkerController {
 	      System.out.println(goal);
           System.out.println(start);
           System.out.println(waypoints);
+          if(waypoints !=null) {
           try {
 			encodedWaypoints = URLEncoder.encode(waypoints, "UTF-8");
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-          
+          }
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-NCP-APIGW-API-KEY-ID",  "eeovn23rmv");
         headers.set("X-NCP-APIGW-API-KEY", "u1LzIow7CE8uktkBnVz6oPo4utFP9fYgNMeP64zZ");
@@ -165,7 +181,7 @@ public class MarkerController {
         		  uri = new URI(apiUrl + "?start=" + start + "&goal=" + goal + "&waypoints=" + encodedWaypoints);
         	}
         	if(courseNumber ==1) {
-        		 return "CourseList";
+        		 return "redirect:/courseList/Map";
         	}
         	if(courseNumber == 2) {
         		  uri = new URI(apiUrl + "?start=" + start + "&goal=" + goal);
@@ -181,7 +197,8 @@ public class MarkerController {
         ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
         String responseBody = responseEntity.getBody();
         System.out.println(responseBody);
-        directionService.insertDirections(responseBody, courseId);// 경로 저장
-        return "CourseList";
+        if(responseBody !=null){directionService.insertDirections(responseBody, courseId);}// 경로 저장}
+//        redirectAttributes.addAttribute("placeId1", placeId1);
+        return "redirect:/courseList/Map";
     }
 }

@@ -314,14 +314,7 @@ function init(){
              strokeWeight: 6,   //선 두께
              map: map           //오버레이할 지도
          });
-         var marker = new naver.maps.Marker({
-             position: new naver.maps.LatLng(37.5112, 127.0981),
-             map: map,
-             title:'사기',
-             
-          
-             
-         });
+      
          
         
          
