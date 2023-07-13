@@ -88,14 +88,16 @@ public class CourseController {
 	@RequestMapping(value = "/courseList/Map", method = RequestMethod.GET)
 	public String showMapPage(Model model,
 	         @RequestParam(value = "courseId", required = false) String courseId,
-             @RequestParam(value = "placeId1", required = false) Integer placeId1,
-             @RequestParam(value = "placeId2", required = false) Integer placeId2,
-             @RequestParam(value = "placeId3", required = false)Integer placeId3,
-             @RequestParam(value = "placeId4", required = false) Integer placeId4,
-             @RequestParam(value = "placeId5", required = false) Integer placeId5
+             @RequestParam(value = "placeId1", required = false) Float placeId1,
+             @RequestParam(value = "placeId2", required = false) Float placeId2,
+             @RequestParam(value = "placeId3", required = false) Float placeId3,
+             @RequestParam(value = "placeId4", required = false) Float placeId4,
+             @RequestParam(value = "placeId5", required = false) Float placeId5
 			)  {
 		
-
+		if(placeId1 == null) {
+			System.out.println("id1 = null");
+		}
 		
 	    // Map 페이지를 표시하는 로직 작성
 		if (courseId == null) {
@@ -112,11 +114,12 @@ public class CourseController {
 		
 	    int courseNum = course.getCourseNumber();
 	    int[] placeIdList = new int[5]; 
-	    placeIdList[0]= placeId1;
-	    placeIdList[1]=placeId2;
-	    if(placeId3 !=null)placeIdList[2]= placeId3;
-	    if(placeId4 !=null)placeIdList[3]= placeId4;
-	    if(placeId5 !=null)placeIdList[4]= placeId5;
+	    if(placeId1!=null)placeIdList[0]= Float.valueOf(placeId1).intValue();
+	    if(placeId2!=null)placeIdList[1]= Float.valueOf(placeId2).intValue();
+	    if(placeId3!=null)placeIdList[2]= Float.valueOf(placeId3).intValue();
+	    if(placeId4!=null)placeIdList[3]= Float.valueOf(placeId4).intValue();
+	    if(placeId5!=null)placeIdList[4]= Float.valueOf(placeId5).intValue();
+	   System.out.println(placeIdList);
 	   
 	   List<PlaceDTO> placeList = new ArrayList<>();
 	    for(int i = 0 ; i < courseNum; i++) {
