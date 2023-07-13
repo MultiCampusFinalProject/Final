@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.spring.dto.CourseDTO;
 import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CtgUserDTO;
+import com.spring.dto.UserBookmarkCourseDTO;
 import com.spring.service.CourseService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,9 @@ public class PageController {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private BookmarkController bookmarkController;
 	
 	@Value("${naver.api.login.client.id}")
 	private String clientId;	
@@ -150,10 +155,9 @@ public class PageController {
 	
 	@GetMapping(value = "/courseList")
 	public String getCourseListPage(HttpSession session,
-									HttpServletRequest request,
-									HttpServletResponse response) {
+									Model model) {
 		
-		List<CourseInformDTO> courseInformList = null;
+		List<CourseInformDTO> courseInformList = new ArrayList<>();
 		
 		try {
 			courseInformList = courseService.getAllCourses();
@@ -161,7 +165,7 @@ public class PageController {
 			e.printStackTrace();
 		}
 		
-		request.setAttribute("CourseInformList", courseInformList);
+		model.addAttribute("CourseInformList", courseInformList);
 		return "CourseList";
 	}
 	
@@ -180,5 +184,46 @@ public class PageController {
 		
 		return "userContents";
 	}
+	
+	@GetMapping(value = "/userBookmarkList")
+	public String getUserBookmarkListPage(HttpSession session,
+										  Model model) {
+		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+		List<UserBookmarkCourseDTO> userBookmarkList = bookmarkController.getUserBookmarkListByUserId(user.getUserId());		
+		
+		List<CourseInformDTO> courseInformList = new ArrayList<>();
+		
+		for(UserBookmarkCourseDTO userBookmark : userBookmarkList) {
+			
+			int courseId = userBookmark.getCourseId();
+			CourseInformDTO courseInform = null;
+			
+			try {
+				courseInform = courseService.getCourseInformByCourseId(courseId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			courseInformList.add(courseInform);
+		}
+		
+		model.addAttribute("CourseInformList", courseInformList);	
+		
+		return "userBookmarkList";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
