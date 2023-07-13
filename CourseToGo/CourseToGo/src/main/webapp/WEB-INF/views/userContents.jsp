@@ -27,7 +27,7 @@
 	.my-content-box {
 	  width: 80%;
 	  max-width: calc(100% - 200px);
-	  height: 60%;
+	  height: 65%;
 	  position: absolute;
 	  margin-left: calc(3% + 200px);
 	  margin-right: 50px;
@@ -36,8 +36,9 @@
 	  padding: 20px;
 	  background-color: #f2f2f2;
 	  display: flex;
-	  justify-content: center;
-	  align-items: center;
+	  flex-direction: column;
+	  justify-content: left;
+	  align-items: left;
 	}
 	
   </style>
@@ -59,13 +60,30 @@
           <div class="button-container">
 		    <button class="button" onclick="changeContent('/userCourse')"> 나의 코스</button>
 		    <button class="button" onclick="changeContent('/userReview')">나의 리뷰</button>
-		    <button class="button" onclick="changeContent('/userBookmark')">내가 찜한 코스</button>
+		    <button class="button" onclick="changeContent('/userBookmarkList')">내가 찜한 코스</button>
 		  </div>
 		  <br>
 		  
 		<div class="my-content-box" id="myContentBox">
 		  <!-- 초기 내용 -->
 		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+		  <p>초기 내용을 보여줄 수도 있습니다.</p>
+
 		</div>
 
         
