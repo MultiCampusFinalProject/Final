@@ -29,7 +29,6 @@ public class ReviewController {
 	@Autowired
 	private PlaceReviewService placereviewservice;
 	
-	/* http://localhost:8090/review  */
 	@RequestMapping(value = "/review", method = RequestMethod.GET)
 	public String insertCourseReviewForm(@RequestParam(value = "placeId1", required = false) String placeId1, 
 			                        	 @RequestParam(value = "placeId2", required = false) String placeId2, 
@@ -37,6 +36,23 @@ public class ReviewController {
 										 @RequestParam(value = "placeId4", required = false) String placeId4, 
 										 @RequestParam(value = "placeId5", required = false) String placeId5,
 										 @RequestParam(value= "courseId") String courseId) {
+		
+		Integer[] placeIdList = new Integer[5]; //[0,0,0,0,0]
+
+		if(!placeId1.equals("")&&!placeId1.equals("undefined"))placeIdList[0] = Integer.parseInt(placeId1);
+   	    if(!placeId2.equals("")&&!placeId2.equals("undefined"))placeIdList[1] = Integer.parseInt(placeId2);
+   	    if(!placeId3.equals("")&&!placeId3.equals("undefined"))placeIdList[2] = Integer.parseInt(placeId3);
+   	    if(!placeId4.equals("")&&!placeId4.equals("undefined"))placeIdList[3] = Integer.parseInt(placeId4);
+   	    if(!placeId5.equals("")&&!placeId5.equals("undefined"))placeIdList[4] = Integer.parseInt(placeId5);
+		
+//   	    if(placeIdList[3] == 0) {
+//   	    	//place가 3개
+//   	    }
+//   	    else if (placeIdList[4] == 0) {
+//   	    	// place가 4개
+//   	    }
+//   	    
+   	    
 		
 		return "review";
 	}
@@ -46,17 +62,18 @@ public class ReviewController {
 	@RequestMapping(value = "/review", method= RequestMethod.POST)
 	public String insertCouseReview(@ModelAttribute CourseReview coursereview,
 			                        @RequestParam(value="score" , required=false) int star,
+			                        @RequestParam(value= "courseId", required=false) String courseId,
 			                        @RequestParam(value="userId" , required=false) int userId,
-			                        @RequestParam(value="score1" , required=false) int placeScore1,
-			                        @RequestParam(value="score2" , required=false) int placeScore2,
-			                        @RequestParam(value="score3" , required=false) int placeScore3,
-			                        @RequestParam(value="score4" , required=false) int placeScore4,
-			                        @RequestParam(value="score5" , required=false) int placeScore5,
-			                        @RequestParam(value = "placeId1", required = false) Integer placeId1, 
-									@RequestParam(value = "placeId2", required = false) Integer placeId2, 
-									@RequestParam(value = "placeId3", required = false) Integer placeId3, 
-									@RequestParam(value = "placeId4", required = false) Integer placeId4, 
-									@RequestParam(value = "placeId5", required = false) Integer placeId5
+			                        @RequestParam(value="score1" , required=false) String placeScore1,
+			                        @RequestParam(value="score2" , required=false) String placeScore2,
+			                        @RequestParam(value="score3" , required=false) String placeScore3,
+			                        @RequestParam(value="score4" , required=false) String placeScore4,
+			                        @RequestParam(value="score5" , required=false) String placeScore5,
+			                        @RequestParam(value = "placeId1", required = false) String placeId1, 
+									@RequestParam(value = "placeId2", required = false) String placeId2, 
+									@RequestParam(value = "placeId3", required = false) String placeId3, 
+									@RequestParam(value = "placeId4", required = false) String placeId4, 
+									@RequestParam(value = "placeId5", required = false) String placeId5
 			                        ) throws Exception { 
 		
 		System.out.println(star);
@@ -64,31 +81,55 @@ public class ReviewController {
 		coursereview.setCourseScore(star);
 		System.out.println(coursereview);
 		
+		Integer[] placeScoreList = new Integer[5];
+		
+		if(!placeScore1.equals("")&&!placeScore1.equals("undefined"))placeScoreList[0] = Integer.parseInt(placeScore1);
+   	    if(!placeScore2.equals("")&&!placeScore2.equals("undefined"))placeScoreList[1] = Integer.parseInt(placeScore2);
+   	    if(!placeScore3.equals("")&&!placeScore3.equals("undefined"))placeScoreList[2] = Integer.parseInt(placeScore3);
+   	    if(!placeScore4.equals("")&&!placeScore4.equals("undefined"))placeScoreList[3] = Integer.parseInt(placeScore4);
+   	    if(!placeScore5.equals("")&&!placeScore5.equals("undefined"))placeScoreList[4] = Integer.parseInt(placeScore5);
+   	    
+		Integer[] placeIdList = new Integer[5]; 
+		
+		if(!placeId1.equals("")&&!placeId1.equals("undefined"))placeIdList[0] = Integer.parseInt(placeId1);
+   	    if(!placeId2.equals("")&&!placeId2.equals("undefined"))placeIdList[1] = Integer.parseInt(placeId2);
+   	    if(!placeId3.equals("")&&!placeId3.equals("undefined"))placeIdList[2] = Integer.parseInt(placeId3);
+   	    if(!placeId4.equals("")&&!placeId4.equals("undefined"))placeIdList[3] = Integer.parseInt(placeId4);
+   	    if(!placeId5.equals("")&&!placeId5.equals("undefined"))placeIdList[4] = Integer.parseInt(placeId5);
+		
+   	    
+   	    System.out.println("placeIdList[4]: " + placeIdList[4]);
+   	    
 		PlaceReview pr1 = new PlaceReview();
-		pr1.setPlaceId(placeId1);
-		pr1.setPlaceScore(placeScore1);
-		pr1.setUserId(userId);
+	    pr1.setPlaceScore(placeScoreList[0]);
+	    pr1.setPlaceId(placeIdList[0]);
+	    pr1.setUserId(userId);
+
 		
 		
 		PlaceReview pr2 = new PlaceReview();
-		pr2.setPlaceId(placeId2);
-		pr2.setPlaceScore(placeScore2);
-		pr2.setUserId(userId);
+	    pr2.setPlaceScore(placeScoreList[1]);
+	    pr2.setPlaceId(placeIdList[1]);
+	    pr2.setUserId(userId);
+
 		
 		PlaceReview pr3 = new PlaceReview();
-		pr3.setPlaceId(placeId3);
-		pr3.setPlaceScore(placeScore3);
-		pr3.setUserId(userId);
+        pr3.setPlaceScore(placeScoreList[2]);
+        pr3.setPlaceId(placeIdList[2]);
+        pr3.setUserId(userId);
+
 		
 		PlaceReview pr4 = new PlaceReview();
-		pr4.setPlaceId(placeId4);
-		pr4.setPlaceScore(placeScore4);
-		pr4.setUserId(userId);
+        pr4.setPlaceScore(placeScoreList[3]);
+        pr4.setPlaceId(placeIdList[3]);
+        pr4.setUserId(userId);
+
 		
 		PlaceReview pr5 = new PlaceReview();
-		pr5.setPlaceId(placeId5);
-		pr5.setPlaceScore(placeScore5);
-		pr5.setUserId(userId);
+        pr5.setPlaceScore(placeScoreList[4]);
+        pr5.setPlaceId(placeIdList[4]);
+        pr5.setUserId(userId);
+
 		
 		coursereviewservice.insertCourseReview(coursereview);
 		
@@ -105,19 +146,15 @@ public class ReviewController {
 	/* 코스 리뷰 아이디 검색 */ // http://localhost:8090/review/21
 	@RequestMapping(value = "/review/{course_review_id}", method = RequestMethod.GET)
 	public String updateCourseForm(@PathVariable("course_review_id") int courseReviewId,
-								Model model) throws Exception {
+								   Model model) throws Exception {
 		
 		// db값에 설정된 코스 리뷰 아이디를 가져오기
 		CourseReview coursereview = coursereviewservice.getCourseReviewByReviewId(courseReviewId);
 		System.out.println(coursereview);
 		model.addAttribute("coursereview", coursereview);
+	
+
 		
-		
-		model.addAttribute("test", 3);
-		model.addAttribute("test", 5);
-		model.addAttribute("test", 3);
-		model.addAttribute("test", 4);
-		model.addAttribute("test", 5);
 		
 		return "updatereview";
 	}
@@ -126,17 +163,7 @@ public class ReviewController {
 	@RequestMapping(value = "/review/{course_review_id}", method= RequestMethod.PUT)
 	public String updateCourseReview(@PathVariable("course_review_id") int courseReviewId,
 			                         @ModelAttribute("content") String content,
-			                         @ModelAttribute("courseScore") int courseScore,
-			                         @RequestParam(value="score1" , required=false) int placescore1,
-				                     @RequestParam(value="score2" , required=false) int placescore2,
-				                     @RequestParam(value="score3" , required=false) int placescore3,
-				                     @RequestParam(value="score4" , required=false) int placescore4,
-				                     @RequestParam(value="score5" , required=false) int placescore5,
-			                         @RequestParam(value = "placeId1", required = false) Integer placeId1, 
-									 @RequestParam(value = "placeId2", required = false) Integer placeId2, 
-									 @RequestParam(value = "placeId3", required = false) Integer placeId3, 
-									 @RequestParam(value = "placeId4", required = false) Integer placeId4, 
-									 @RequestParam(value = "placeId5", required = false) Integer placeId5) throws Exception { 
+			                         @ModelAttribute("courseScore") int courseScore) throws Exception { 
 		
 		// 코스 리뷰 아이디를 통해서 수정하기 
 		CourseReview coursereview = coursereviewservice.getCourseReviewByReviewId(courseReviewId);
@@ -146,34 +173,6 @@ public class ReviewController {
 
 		coursereviewservice.updateCourseReview(coursereview);
 		
-		System.out.println("placeId: " + placeId1);
-		
-		PlaceReview pr1 = new PlaceReview();
-		pr1.setPlaceId(placeId1);
-		pr1.setPlaceScore(placescore1);
-		
-		
-		PlaceReview pr2 = new PlaceReview();
-		pr2.setPlaceId(placeId2);
-		pr2.setPlaceScore(placescore2);
-		
-		PlaceReview pr3 = new PlaceReview();
-		pr3.setPlaceId(placeId3);
-		pr3.setPlaceScore(placescore3);
-		
-		PlaceReview pr4 = new PlaceReview();
-		pr4.setPlaceId(placeId4);
-		pr4.setPlaceScore(placescore4);
-		
-		PlaceReview pr5 = new PlaceReview();
-		pr5.setPlaceId(placeId5);
-		pr5.setPlaceScore(placescore5);
-		
-		placereviewservice.updatePlaceReview(pr1);
-		placereviewservice.updatePlaceReview(pr2);
-		placereviewservice.updatePlaceReview(pr3);
-		placereviewservice.updatePlaceReview(pr4);
-		placereviewservice.updatePlaceReview(pr5);
 		
 		return "redirect:/review";
 		

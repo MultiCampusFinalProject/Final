@@ -7,11 +7,8 @@
 </head>
 <body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-   <form action="/review" method="POST">
+   <form action="/review" method="POST" id = "review">
     	<div>
-   			<div class="sidebar">
-    			<%@include file="sidebar.jsp" %>
-    		</div>
     		
   <div class = "placereview" id = "placereview">
          <div> 
@@ -29,7 +26,7 @@
 				<label for ="stars12" title = "2" class="half">★</label>
 				<input type="radio" id="stars11" name="score1" value="1" />
 				<label for ="stars11" title = "1" class="half">★</label>
-				<input type="hidden" name="placeId1" value="1">	
+				<input type="hidden" name="placeId1" id="placeId1" value="">	
 	        </div>
    		</div>
 		
@@ -48,7 +45,7 @@
 				<label for ="stars22" title = "2" class="half">★</label>
 				<input type="radio" id="stars21" name="score2" value="1" />
 				<label for ="stars21" title = "1" class="half">★</label>
-				<input type="hidden" name="placeId2" value="2">	
+				<input type="hidden" name="placeId2" id="placeId2" value="">	
         	</div>
     	</div>
 		
@@ -67,7 +64,7 @@
 				<label for ="stars32" title = "2" class="half">★</label>
 				<input type="radio" id="stars31" name="score3" value="1" />
 				<label for ="stars31" title = "1" class="half">★</label>
-				<input type="hidden" name="placeId3" value="3">	
+				<input type="hidden" name="placeId3" id="placeId3" value="">	
            	</div>
     	</div>
 			
@@ -86,7 +83,7 @@
 				<label for ="stars42" title = "2" class="half">★</label>
 				<input type="radio" id="stars41" name="score4" value="1" />
 				<label for ="stars41" title = "1" class="half">★</label>
-				<input type="hidden" name="placeId4" value="4">	
+				<input type="hidden" name="placeId4" id="placeId4" value="">	
            	</div>
     	</div>
 		 
@@ -105,7 +102,7 @@
 				<label for ="stars52" title = "2" class="half">★</label>
 				<input type="radio" id="stars51" name="score5" value="1" />
 				<label for ="stars51" title = "1" class="half">★</label>
-				<input type="hidden" name="placeId5" value="5">
+				<input type="hidden" name="placeId5" id="placeId5" value="">
            	</div>
         </div>
    </div>
@@ -129,15 +126,51 @@
 	        <div> 
 	  			<textarea class = "text" name = "content" onclick="this.value=''"> 코스 서비스에 대한 리뷰를 입력해주세요 </textarea>
 			</div>
-			<input type="hidden" name="userId" value="1">
-			<input type="hidden" name="courseId" value="1">
+			<input type="hidden" name="userId" id ="userId" value="1">
+			<input type="hidden" name="courseId" id = "courseId" value="">
 		    <div>
-		    	<input type = "submit" value ="등록" class = "insert-button">
+		    	<button type = "submit" value ="등록" class = "insert-button"> 등록 </button>
 		    </div>
 		</div> 
 	</div>
-	
-	    
+
 </form>
+<script type="text/javascript">
+
+var submitButtonClicked = false;
+
+function submitForm() {
+    if (submitButtonClicked) {
+        return false; // 이미 중복 클릭된 경우 중단
+    }
+    submitButtonClicked = true; // 버튼 클릭 상태로 설정
+    var form = document.getElementById("review");
+    
+    form.submit(); // 폼 제출
+    
+}
+
+document.getElementById("review").addEventListener("submit", function(event) {
+    // 추가 동작을 수행합니다. 
+    event.preventDefault();
+    var urlParams = new URLSearchParams(window.location.search);
+
+     document.getElementById("courseId").value = urlParams.get('courseId');
+	
+    // placeId에 저장된 값을 input 박스안에 각각 집어넣어졌는지 확인.
+
+	  document.getElementById("placeId1").value = urlParams.get('placeId1');
+	  document.getElementById("placeId2").value  =urlParams.get('placeId2');
+	  document.getElementById("placeId3").value =urlParams.get('placeId3');
+	  document.getElementById("placeId4").value = urlParams.get('placeId4');
+	  document.getElementById("placeId5").value = urlParams.get('placeId5');
+
+    submitForm(); // 폼 제출
+   
+});
+
+
+</script>	
+	    
 </body>
 </html> 
