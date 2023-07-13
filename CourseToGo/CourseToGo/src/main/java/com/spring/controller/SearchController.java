@@ -15,13 +15,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.dto.PlaceDTO;
+import com.spring.service.AreaService;
 import com.spring.service.PlaceService;
 
 @Controller
 public class SearchController {
 	@Autowired
 	private PlaceService placeService;
-	
+	@Autowired
+	private AreaService areaService;
     @GetMapping("/places")
     public ResponseEntity<List<PlaceDTO>> getAllPlaces(){
         List<PlaceDTO> places = placeService.getAllPlaces();
@@ -38,11 +40,21 @@ public class SearchController {
     public List<String> getSearchSuggestions(@RequestParam("query") String query) {
         // 검색어를 기반으로 추천 결과 생성
     	List<String> suggestions= new ArrayList<String>();
-//    	srecommendationService.getRecommendations(query)
-    	suggestions.add("test");
+    	System.out.println(query);
+    	try {
+			suggestions = areaService.getRecommendations(query);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  
         return suggestions;
     }
-
+    @GetMapping("/searchEngine")
+    public String searchEngineTest() {
+   
+        return "searchEngine";
+    }
     
     @GetMapping("/jSearchA")
     public ResponseEntity<String> searchPlacesByArea(@RequestParam("areaName") String areaName) {

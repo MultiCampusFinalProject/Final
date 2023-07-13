@@ -9,11 +9,20 @@
     <title>List View Example</title>
     <link rel="stylesheet" href="/css/bootstrap.css">
 </head>
+<style>
+#mainForm
+{ left:80px; 
+display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+</style>
 <body>
 
-        <div class="sidebar">
+    <!--   <div class="sidebar">
             <%@ include file="sidebar.jsp" %>
-        </div>
+        </div>-->   
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.js"></script>
@@ -29,9 +38,38 @@
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <h1>List View Example</h1>
+    <!-- 검색 엔진 -->
+    <script>
+    $(document).ready(function() {
+    	var suggestions = [];
+        $('#keyword').on('input', function() {
+        	suggestions=[];
+            var query = $(this).val();
+            $.ajax({
+                url: '/search',
+                data: { query: query },
+                success: function(response) {
+                    // 추천 결과를 처리하는 로직
+                    // 예: 결과를 동적으로 표시하거나 자동완성 기능 구현
+                    var suggestions = response;  // 응답으로 받은 추천 결과
+                    var suggestionsHtml = "";   // 결과를 표시할 HTML 문자열
+
+                    // 추천 결과를 HTML로 생성
+                    for (var i = 0; i < suggestions.length; i++) {
+                        suggestionsHtml += "<p>" + suggestions[i] + "</p>";
+                    }
+
+                    // 결과를 표시할 위치에 HTML 추가
+                    $('#suggestions').html(suggestionsHtml);
+                }
+            });
+        });
+    });
     
+    
+</script>
     <!-- 검색 창 -->
-    	<form id="mainForm" class="row justify-content-center g-3" action="/courseListWithPagination" method="GET">
+    	<form  id="mainForm" class="row justify-content-center g-3" action="/courseListWithPagination" method="GET">
 			<div class="col-auto">
 				
 					<input	
@@ -40,7 +78,7 @@
 						id="keyword"
 						placeholder="Keyword" 
 						name="keyword"
-						value="${pageInfo.pageRequest.keyword}">
+						value="${pageInfo.pageRequest.keyword}"><div id="suggestions"></div>
 			</div>
 			<div class="col-auto">
 				<input type="hidden" name="pageNum" value="${pageInfo.pageRequest.pageNum}" />
