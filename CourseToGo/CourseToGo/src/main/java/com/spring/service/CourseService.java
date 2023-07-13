@@ -56,7 +56,7 @@ public class CourseService {
 		CourseInformDTO res=null;
 				 res= courseMapper.getCourseInformByCourseId(courseId);
 				System.out.println(res);
-				if(res==null) {
+				if(res!=null) {
 					
 				} else {
 					throw new Exception("no data");
