@@ -115,15 +115,15 @@
     	    <span class="text-bold">별점을 선택해주세요</span>
     	    <div class="starsscore">
 				<input type="radio" id="stars5" name="score" value="5" />
-				<label for ="stars5" title = "5" class="half">★</label>
-				<input type="radio" id="stars4" name="score" value="4" />
-				<label for ="stars4" title = "4" class="half">★</label>
-				<input type="radio" id="stars3" name="score" value="3" />
-				<label for ="stars3" title = "3" class="half">★</label>
-				<input type="radio" id="stars2" name="score" value="2" />
-				<label for ="stars2" title = "2" class="half">★</label>
-				<input type="radio" id="stars1" name="score" value="1" />
-				<label for ="stars1" title = "1" class="half">★</label>	
+	            <label for ="stars5" title = "5" class="half">★</label>
+	            <input type="radio" id="stars4" name="score" value="4"/>
+	            <label for ="stars4" title = "4" class="half">★</label>
+	            <input type="radio" id="stars3" name="score" value="3" />
+	            <label for ="stars3" title = "3" class="half">★</label>
+	            <input type="radio" id="stars2" name="score" value="2" />
+	            <label for ="stars2" title = "2" class="half">★</label>
+	            <input type="radio" id="stars1" name="score" value="1" />
+	            <label for ="stars1" title = "1" class="half">★</label>
            	</div>
 	        
 	        <div> 

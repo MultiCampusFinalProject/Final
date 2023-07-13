@@ -263,7 +263,6 @@ document.getElementById("area").innerHTML = areaName;
         
         }
     </script>
-<jsp:include page="sidebar.jsp"/>
 	
    
 </body>

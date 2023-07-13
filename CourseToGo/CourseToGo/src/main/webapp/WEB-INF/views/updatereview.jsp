@@ -9,6 +9,107 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <form action="/review/${course_review_id}" method="POST" id = "reviewForm">
       <input type="hidden" name="_method" value="PUT" id="hiddenMethod" />
+      <div class="sidebar">
+    			<%@include file="sidebar.jsp" %>
+    </div>
+    
+    <div class = "placereview" id = "placereview">
+         <div> 
+         	<!-- 장소1 -->
+	    	<div class = "place1">
+	    		<img src="https://cdn.pixabay.com/photo/2022/10/15/16/44/night-view-7523474_1280.jpg" alt="남산 서울타워" ></div>
+	    	<div class="starsscore1">
+		        <input type="radio" id="stars15" name="score1" value="5" />
+				<label for ="stars15" title = "5" class="half">★</label>
+				<input type="radio" id="stars14" name="score1" value="4" />
+				<label for ="stars14" title = "4" class="half">★</label>
+				<input type="radio" id="stars13" name="score1" value="3" />
+				<label for ="stars13" title = "3" class="half">★</label>
+				<input type="radio" id="stars12" name="score1" value="2" />
+				<label for ="stars12" title = "2" class="half">★</label>
+				<input type="radio" id="stars11" name="score1" value="1" />
+				<label for ="stars11" title = "1" class="half">★</label>
+				<input type="hidden" name="placeId1" value="1">	
+	        </div>
+   		</div>
+		
+		<!-- 장소2 -->
+    	<div class = "place2">
+    		<div>
+    			<img src="https://cdn.pixabay.com/photo/2018/11/09/11/00/seoul-3804293_1280.jpg" alt="청계천" ></div>
+   			<div class="starsscore2">
+	      		<input type="radio" id="stars25" name="score2" value="5" />
+				<label for ="stars25" title = "5" class="half">★</label>
+				<input type="radio" id="stars24" name="score2" value="4" />
+				<label for ="stars24" title = "4" class="half">★</label>
+				<input type="radio" id="stars23" name="score2" value="3" />
+				<label for ="stars23" title = "3" class="half">★</label>
+				<input type="radio" id="stars22" name="score2" value="2" />
+				<label for ="stars22" title = "2" class="half">★</label>
+				<input type="radio" id="stars21" name="score2" value="1" />
+				<label for ="stars21" title = "1" class="half">★</label>
+				<input type="hidden" name="placeId2" value="2">	
+        	</div>
+    	</div>
+		
+		<!-- 장소3 -->
+    	 <div  class = "place3">
+    		<div>
+    			<img src="https://cdn.pixabay.com/photo/2014/05/02/18/07/seoul-336169_1280.jpg" alt="인사동" ></div>
+    		<div class="starsscore3">
+	      		<input type="radio" id="stars35" name="score3" value="5" />
+				<label for ="stars35" title = "5" class="half">★</label>
+				<input type="radio" id="stars34" name="score3" value="4" />
+				<label for ="stars34" title = "4" class="half">★</label>
+				<input type="radio" id="stars33" name="score3" value="3" />
+				<label for ="stars33" title = "3" class="half">★</label>
+				<input type="radio" id="stars32" name="score3" value="2" />
+				<label for ="stars32" title = "2" class="half">★</label>
+				<input type="radio" id="stars31" name="score3" value="1" />
+				<label for ="stars31" title = "1" class="half">★</label>
+				<input type="hidden" name="placeId3" value="3">	
+           	</div>
+    	</div>
+			
+		<!-- 장소4 -->	
+    	 <div  class = "place4">
+    		<div>
+		    	<img src="https://cdn.pixabay.com/photo/2015/05/02/11/39/faux-wood-749803_1280.jpg" alt="합정동" ></div>
+	    	<div class="starsscore4" >
+	     		<input type="radio" id="stars45" name="score4" value="5" />
+				<label for ="stars45" title = "5" class="half">★</label>
+				<input type="radio" id="stars44" name="score4" value="4" />
+				<label for ="stars44" title = "4" class="half">★</label>
+				<input type="radio" id="stars43" name="score4" value="3" />
+				<label for ="stars43" title = "3" class="half">★</label>
+				<input type="radio" id="stars42" name="score4" value="2" />
+				<label for ="stars42" title = "2" class="half">★</label>
+				<input type="radio" id="stars41" name="score4" value="1" />
+				<label for ="stars41" title = "1" class="half">★</label>
+				<input type="hidden" name="placeId4" value="4">	
+           	</div>
+    	</div>
+		 
+		 <!-- 장소5 -->
+    	 <div  class = "place5">
+    		<div>
+    			<img src="https://cdn.pixabay.com/photo/2017/10/01/13/35/bridge-2805540_1280.jpg" alt="한강" ></div>
+    		<div class="starsscore5">
+	     		<input type="radio" id="stars55" name="score5" value="5" />
+				<label for ="stars55" title = "5" class="half">★</label>
+				<input type="radio" id="stars54" name="score5" value="4" />
+				<label for ="stars54" title = "4" class="half">★</label>
+				<input type="radio" id="stars53" name="score5" value="3" />
+				<label for ="stars53" title = "3" class="half">★</label>
+				<input type="radio" id="stars52" name="score5" value="2" />
+				<label for ="stars52" title = "2" class="half">★</label>
+				<input type="radio" id="stars51" name="score5" value="1" />
+				<label for ="stars51" title = "1" class="half">★</label>
+				<input type="hidden" name="placeId5" value="5">
+           	</div>
+        </div>
+   </div>
+    		
     <div class = "coursereview">
     	<div>
     	    <h1>코스 리뷰 </h1>
@@ -33,22 +134,70 @@
 	    	<input type="button" value="수정" class = "update-button" onclick ="updateCourse()">
 	    	<input type="button" value="삭제" class = "delete-button" onclick ="deleteCourse()">
 	    </div>
-	   
-	   
 	 </div>
 </div>
 </form>
 <script type="text/javascript">
-     
-      // db값에 있는 별점을 가져오기 위해 제이쿼리 사용 
+    
+ 	document.addEventListener("DOMContentLoaded", () => {
+ 		// 코스 별점 
+ 		if(1 <=  ${coursereview.courseScore} && ${coursereview.courseScore} <= 5){
+      		let starId = 'stars' + ${coursereview.courseScore};     		
+      		document.getElementById(starId).checked = true;
+       	}
+ 		alert(${test});
+ 		// 장소 별점 
+ 		/*
+ 		 if(1 <=  ${placereview.placescore1} && ${placereview.placescore1} <= 5){
+      		let starId = 'stars1' + ${placereview.placescore1};     		
+      		document.getElementById(starId).checked = true;
+      		 }
+ 		
+ 	
+ 		if(1 <=  ${placereview.placescore2} && ${placereview.placescore2} <= 5){
+      		let starId = 'stars2' + ${placereview.placescore2};     		
+      		document.getElementById(starId).checked = true;
+      		 }
+
+ 		
+ 	
+ 		if(1 <=  ${placereview.placescore3} && ${placereview.placescore3} <= 5){
+      		let starId = 'stars3' + ${placereview.placescore3};     		
+      		document.getElementById(starId).checked = true;
+      		 }
+ 	
+ 		
+ 	
+ 		if(1 <=  ${placereview.placescore4} && ${placereview.placescore4} <= 5){
+      		let starId = 'stars4' + ${placereview.placescore4};     		
+      		document.getElementById(starId).checked = true;
+      		 }
+ 	
+ 		
+ 	
+ 		if(1 <=  ${placereview.placescore5} && ${placereview.placescore5} <= 5){
+      		let starId = 'stars5' + ${placereview.placescore5};     		
+      		document.getElementById(starId).checked = true;
+      		 }  
+ 		*/
+ 		
+  	});
+ 	
+   /*    // db값에 있는 별점을 가져오기 위해 제이쿼리 사용 
       $(document).ready(function () {
     	  
     	  if(1 <=  ${coursereview.courseScore} && ${coursereview.courseScore} <= 5){
       		var starId = '#stars' + ${coursereview.courseScore};     		
       		$(starId).attr("checked", true)	
       	  }
-      })
-
+    	  
+    	  
+      }) //document.ready 닫기 */
+      
+      
+      
+      
+     
       function deleteCourse(){
   	      
   	  	  let reviewForm = document.getElementById("reviewForm");

@@ -1,36 +1,106 @@
 @charset "UTF-8";
 
+/* 이미지 영역 */
+.place1 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+	top : 50px;
+    left : 260px;
+}
 
-/* 별점  영역 */
-.starsscore{
+.place2 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+	top: 50px;
+    left : 550px;
+}
+
+.place3 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+	top: 250px;
+    left : 260px;
+}
+
+.place4 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+    top: 250px;
+    left :550px;
+	
+}
+
+.place5 img {
+	width: 200px;
+    height: 150px;
+    position: fixed;
+	top : 450px;
+    left : 260px;
+	
+}
+
+/* 이미지  별점 영역 */
+.starsscore1 {
+	top: 200px;
+	left : 260px;
+	position: fixed;
+}
+
+.starsscore2 {
+	top: 200px;
+	left : 550px;
+	position: fixed;
+}
+
+.starsscore3 {
+	top: 400px;
+	left : 260px;
+	position: fixed;
+}
+
+.starsscore4 {
+	top: 400px;
+	left : 550px;
+	position: fixed;
+}
+
+.starsscore5 {
+	top: 600px;
+	left : 260px;
+	position: fixed;
+}
+
+
+/* 별점  영역 */ 
+div[class^=starsscore]{
  text-align:center;
  display:flex;
  direction: rtl;
  justify-content: flex-end;
- font-size:1.5em;
+ font-size:28px;
  padding:0 .2em;
 }
 
-.starsscore input{
+div[class^=starsscore] input{
 display:none;
 }
 
-.starsscore label {
+div[class^=starsscore] label {
   color:#ccc;
   cursor:pointer;
 }
 
-.starsscore :checked ~ label {
+div[class^=starsscore] :checked ~ label{
   color:#ffd400;
 }
 
-.starsscore label:hover,
-.starsscore label:hover ~ label {
+div[class^=starsscore] label:hover,
+div[class^=starsscore] label:hover ~ label {
   color:#ffd700;
-}
-
-.starsscore input: checked ~ label.half:before {
-	content : '/OOBD/2605';
 }
 
 /* 버튼  영역 */

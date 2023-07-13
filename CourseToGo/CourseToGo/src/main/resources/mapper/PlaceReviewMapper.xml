@@ -25,7 +25,7 @@
  		UPDATE place_review
  		SET place_score = #{placeScore}, 
  	        review_date = TO_CHAR(sysdate, 'YYYYMMDD')
- 		WHERE place_review_id = #{placeReviewId}
+ 		WHERE place_id = #{placeId}
  	</update>
  	
  	<!-- 장소 별점 삭제 -->
