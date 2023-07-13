@@ -241,7 +241,9 @@ header
         </div>
 <script>
 //polyline
-
+let markers = new Array(); //마커 정보를 담는 배열
+	let infoWindows = new Array(); // 정보창을 담는 배열  
+	var map;
  var submitButtonClicked = false;
 	
 	    function submitForm() {
@@ -289,16 +291,15 @@ init();
 function init(){
 	
 
-	var map;
-	let markers = new Array(); //마커 정보를 담는 배열
-	let infoWindows = new Array(); // 정보창을 담는 배열  
+	
+	
 	//검색정보를 테이블로 작성해주고, 지도에 마커를 찍어준다.
 	
 	var polylinePath = new Array();
     
 	 
 
-	var map = new naver.maps.Map('map', {
+	map = new naver.maps.Map('map', {
 	    center: new naver.maps.LatLng(37.3595704, 127.105399),
 	    zoom: 10
 	});
@@ -328,7 +329,7 @@ function init(){
     
 	var contentString = [
 	    '<div class="iw_inner">', '<p>place Name: ${place.placeName}</p>',
-	   ${place.latitude}, ${place.longitude},
+	 ' ${place.address}',
 	    '</div>'
 	].join('');	
     
@@ -336,15 +337,15 @@ function init(){
 
         content: contentString,
 
-        maxWidth: 140,
-        backgroundColor: "#eee",
-        borderColor: "#2db400",
-        borderWidth: 5,
-        anchorSize: new naver.maps.Size(30, 30),
-        anchorSkew: true,
-        anchorColor: "#eee",
+   //     maxWidth: 140,
+     //   backgroundColor: "#eee",
+       // borderColor: "#2db400",
+     //   borderWidth: 5,
+      //  anchorSize: new naver.maps.Size(30, 30),
+       // anchorSkew: true,
+//        anchorColor: "#eee",
 
-        pixelOffset: new naver.maps.Point(20, -20)
+  //	      pixelOffset: new naver.maps.Point(20, -20)
     });
 
     infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
@@ -373,7 +374,7 @@ function init(){
     <c:forEach var="direction" items="${DirectionList}">
     polylinePath.push(new naver.maps.LatLng( ${direction.latitude}, ${direction.longitude}));
     </c:forEach>
-    console.log(polylinePath);
+ //   console.log(polylinePath);
     
 
 
@@ -421,7 +422,7 @@ function getClickHandler(seq) {
         	
         	
             infoWindow.open(map, marker); // 표출
-            console.log(map, marker,infoWindow);
+         //   console.log(map, marker,infoWindow);
         }
 	}
 }
