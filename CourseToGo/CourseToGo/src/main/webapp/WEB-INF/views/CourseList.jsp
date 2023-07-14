@@ -6,26 +6,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>List View Example</title>
-    <link rel="stylesheet" href="/css/bootstrap.css">
+    <title class="searchList" >Searching Courses</title>
+
 </head>
 <style>
 #mainForm
-{ left:80px; 
-display: flex;
-    justify-content: space-between;
+{   
+  display: flex;
+    justify-content: center;
     align-items: center;
-    margin-top: 10px;
 }
+body{
+
+ overflow: auto;
+}
+  .searchList{
+ position: relative;
+
+  
+
+
+   top: 0;
+    left: 250px;
+    right: 600px;
+    bottom: 0;
+  }
+    #child {
+      display: flex;
+    transform: translateX(-50%);
+  }
 </style>
 <body>
 
-    <!--   <div class="sidebar">
+    <div class="sidebar" >
             <%@ include file="sidebar.jsp" %>
-        </div>-->   
-
+        </div>
+<div class="searchList" >
+ </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/bootstrap.js"></script>
+
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -37,7 +56,7 @@ display: flex;
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <h1>List View Example</h1>
+   <div class="searchList"> <h1 >"어디"로 갈지 모르시겠나요? 다른 이들과 저희의 추천을 받아보세요.</h1></div>
     <!-- 검색 엔진 -->
     <script>
     $(document).ready(function() {
@@ -69,10 +88,12 @@ display: flex;
     
 </script>
     <!-- 검색 창 -->
-    	<form  id="mainForm" class="row justify-content-center g-3" action="/courseListWithPagination" method="GET">
+    
+    <div  class="searchList">
+    	<form id="mainForm" class="row justify-content-center g-3" action="/courseListWithPagination" method="GET">
 			<div class="col-auto">
 				
-					<input	
+					<input	 style="width: 300px;"
 						type="text" 
 						class="form-control" 
 						id="keyword"
@@ -83,9 +104,10 @@ display: flex;
 			<div class="col-auto">
 				<input type="hidden" name="pageNum" value="${pageInfo.pageRequest.pageNum}" />
 				<input type="hidden" name="amount" value="${pageInfo.pageRequest.amount}" />
-				<input type="submit" class="btn btn-primary mb-3" value="Search" />
+				<input  type="submit" class="btn btn-primary mb-3" value="Search" />
 			</div>
 		</form>
+		</div>
     	<%
     List<CourseInformDTO> courseInformList = (List<CourseInformDTO>) request.getAttribute("CourseInformList");
     if (courseInformList != null) {
@@ -114,30 +136,37 @@ display: flex;
          
 %>
 
-
-<li class="list-group-item d-flex justify-content-between align-items-start">
-  <div class="ms-2 me-auto">
+    <div class="searchList">
+<li class="list-group-item" style="width:100%;">
+  <div class=" ">
     <a href="/courseList/Map?<%= query %>">
-      <h2>Course Id: <span class="course-id"><%= courseId %></span></h2>
+      <h2>Course Id: <span class="course-id"><%= courseId %></span> &nbsp <span> <%= courseName %></span>&nbsp	<span>제작자: <%= userId %></span></h2>
 
-      <span>Course Name: <%= courseName %></span>
-
-      <span>UserId: <%= userId %></span>
+      
+		<br>
+      
       <%-- placeIds 배열을 활용하여 필요한 작업 수행 --%>
 
-      <% for (String placeId : placeNames) { %>
-      <span class="well"><%= placeId %></span>
+      <% for (String placeName : placeNames) { %>
+     &nbsp &nbsp &nbsp &nbsp &nbsp
+      <span class="well" stle="padding:20px"><%= placeName %>   </span>
+      &nbsp &nbsp &nbsp &nbsp &nbsp
 
       <% }      %>
 
 
     </a>
-    <div>소개글: <%= courseContent %></div>
+    <br>
+    
+       <br>
+      
+    <h3>소개글: <%= courseContent %></h3>
   </div> 
 	<form action="/courseBookmark" method="POST">
-		<div>
+		<div style="float:right;">
 			<button type="submit" class="add-button">찜하기</button>
 		</div>
+		<br>
 		<input type="hidden" name="courseId" id="courseIdInput" value="<%= courseId %>" >
 	</form>
   </div>
@@ -147,10 +176,11 @@ display: flex;
     }
   }
 %>
+</div>
     	
     
-    
-    <div class="row justify-content-center">
+      <div class="searchList">
+    <div class="row justify-content-center" >
 		<div class="col-6">
 			<nav class="page navigation">
 				<ul class="pagination">
@@ -179,7 +209,7 @@ display: flex;
 			</nav>
 		</div>
 	</div>
-    
+    </div>
    <script type="text/javascript">
 	//step01 : 페이징 버튼 클릭시 지정 url 요청갈수 있도록 이벤트 등록
 	console.log()
@@ -223,6 +253,6 @@ display: flex;
 </script>
 
  
-	 
+	
 </body>
 </html>

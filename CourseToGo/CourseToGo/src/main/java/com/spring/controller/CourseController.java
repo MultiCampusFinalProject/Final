@@ -72,7 +72,9 @@ public class CourseController {
 		try {
 			courseInformList = courseService.getCourseWithPageRequest(pageRequest);
 //		acourseInformList	 =  courseService.getCourseBySearchKeyword(searchKeyword);
+			//collectSearchKeyword - 
 			total = courseService.getTotalCount(pageRequest);
+//		s	searchService.saveSearchKeyword(userId, keyword);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

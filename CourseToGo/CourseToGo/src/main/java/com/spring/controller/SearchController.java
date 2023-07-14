@@ -43,6 +43,7 @@ public class SearchController {
     	System.out.println(query);
     	try {
 			suggestions = areaService.getRecommendations(query);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

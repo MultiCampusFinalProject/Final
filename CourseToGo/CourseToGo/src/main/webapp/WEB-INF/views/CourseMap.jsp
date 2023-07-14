@@ -7,10 +7,22 @@
 <%@ page import="com.spring.dto.CourseReview" %>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="http://localhost:8090/css/sidebar2.css">
  <style>
+#map{
+right:200px;
 
+
+width:100%;}
  .header{
  height:50px;}
+footer{
+	height: 10rem; /* footer 높이 */
+	  text-align: center;
+	  margin: 2em auto;
+padding:2em;
+background-color:#E5F2F1;
+}
 body {
 
 	height: 100%;
@@ -52,19 +64,24 @@ background-clip: content-box;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=eeovn23rmv&submodules=geocoder&callback=init"></script>
-	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<!-- <script  src="http://code.jquery.com/jquery-latest.min.js"></script> -->
 	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-
+ <div class="sidebar">
+            <%@ include file="sidebar.jsp" %>
+        </div>
 </head>
 
 <header class="header">
 header
   <title>List View Example</title>
-    <link rel="stylesheet" href="/css/bootstrap.css">
+   
 </header>
 <body>
+
+
+      
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/bootstrap.js"></script>
+
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
@@ -80,21 +97,33 @@ header
 
 
 
-<div style="display: flex;position: fixed;width:100%; left: 50px;
-            ">
-  <div class="test" id="map" style="float: left;"></div>
+<div style="width:100%;left:200px">
+  <div class="test" id="map" style=""></div>
   
    <title>슬라이드 메뉴</title>
     <style>
         /* 슬라이드 메뉴 스타일 */
         .slider-menu {
-        
+        	position: fixed;
+    top: 0;
+   
+    height: 100%;
+    background-color: #87ceeb;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  
+    box-sizing: border-box;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3); /* 우측에 그림자 효과 추가 */
+    z-index: 1;
             position: fixed;
-            top: 10%;
-            right: 350px; /* 초기에는 왼쪽에 숨겨진 상태 */
+          background-color: #ccc;
+            right: 200px; /* 초기에는 왼쪽에 숨겨진 상태 */
             width: 200px;
-            height: 90%;
-            background-color: #f1f1f1;
+           
+           
             transition: right 0.3s ease;
         }
         
@@ -104,9 +133,9 @@ header
             top: 50%;
             right: 0;
             transform: translateY(-50%);
-            width: 30px;
+            width: 200px;
             height: 30px;
-            background-color: #ccc;
+     
             cursor: pointer;
             z-index: 9999;
         }
@@ -130,12 +159,12 @@ header
             
             // 슬라이드 메뉴를 토글하는 함수
             function toggleSliderMenu() {
-                if (sliderMenu.style.right === "350px") {
+                if (sliderMenu.style.right === "200px") {
                     sliderMenu.style.right = "0";
                     sliderMenu.style.display = "none";
                    
                 } else {
-                    sliderMenu.style.right = "350px";
+                    sliderMenu.style.right = "200px";
                     sliderMenu.style.display = "block";
                 }
             }
@@ -151,7 +180,7 @@ header
     <div id="slider-menu" class="slider-menu">
         <!-- 슬라이드 메뉴 내용 -->
         <div style="text-align: center; width: 200px; height: 80px;margin : 0"" class="well well-sm">
-        <h3>리뷰 슬라이드</h3>
+        <h3>REVIEW</h3>
           </div>
        <%
     List<CourseReview> reviewList = (List<CourseReview>)request.getAttribute("CourseReview");
@@ -175,24 +204,23 @@ header
     
 
   <span class="contain">
- 
-   <div style="text-align: center; width: 200px; height: 80px;margin : 0 " class="well well-sm">
-   	        <h3 style="font-weight: bold;">${Course.courseName}</h3>
-   	        
-   	    </div>
-   	    <div style="text-align: center; width: 200px; height: 80px;margin : 0" class="well well-sm">
-   	        <h3 style="font-weight: bold;">${Course.courseId}</h3>
-   	    </div>
-   	    <div style="text-align: center; width: 200px; height: 80px;margin : 0"" class="well well-sm">
-   	        <h3 style="font-weight: bold;">${Course.courseAvgScore}</h3>
-   	    </div>
+ <div class="sidebar2">
+		    <div class="logo">Track</div>
+		    <ul>
+		    	<!-- 전체적인 링크 수정해야함(onclick) -->
+		    	<li></li>
+		    	<li><input type="button" class="course" value=${Course.courseName} ></li>
+		    
+		    		<li><input type="button" class="create-course" value="CourseId : ${Course.courseId}"></li>
+		    		<li><input type="button" class="create-course" value="score :${Course.courseAvgScore}" ></li>
+
     <%
     List<PlaceDTO> placeList = (List<PlaceDTO>) request.getAttribute("PlaceList");
    	for(int i = 0 ; i < placeList.size(); i++){
    		%>
-   	    <div style="text-align: center; width: 200px; height: 80px;margin : 0"" class="well well-sm">
-   	        <h3 style="font-weight: bold;"><%= placeList.get(i).getPlaceName() %></h3>
-   	    </div>
+
+   	      <li><input type="button" class="course" value="<%= placeList.get(i).getPlaceName() %>"></li>
+   	  
    	     <%
    	    if(i != placeList.size()-1){
    	 	%>
@@ -205,28 +233,18 @@ header
 
     }
 %>
-<div style="text-align: center; width: 200px; height: 80px;" class="well well-sm">
-   	       <script src="/docs/5.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script> 
-   	        <script src="sidebars.js"></script>
-   	        <div id="slider-button" href= style="font-weight: bold;">리뷰 보러가기</div>
+
+   	      
+   	     
+   	         <li><input id="slider-button" type="button" class="create-course" value="작성된 리뷰보기" ></li>
    	        
    	        
-   	  </div>      
+   	 
    	  
-  </span>
-     
-   	    
-  	
-
-</div>
-
-</body>
-<!-- footer -->
-<h3 style="font-weight: bold; bottom:0px">${Course.courseContent}</h3>
-<div class="sidebar">
-              <div style="" class="">
+   	  	   <div style="" class="">
    	     <form id="review" action="/review" method="GET" accept-charset="UTF-8">
-   	      <button type="submit"><h2>리뷰 작성 버튼</h2></button>
+   	     
+   	      <li><input id="slider-button" type="button" class="create-course" value="리뷰 작성 버튼" ></li>
       <input type="hidden" id="placeId1" name="placeId1" value=>
       <input type="hidden" id="placeId2" name="placeId2" value=>
       <input type="hidden" id="placeId3" name="placeId3" value=>
@@ -238,7 +256,26 @@ header
      
     </form>
    	       </div>
-        </div>
+   	    </ul>
+		</div>
+   
+  </span>
+     
+   	    
+  	
+
+</div>
+
+</body>
+<footer style="font-weight: bold; right:500px;bottom:0px">
+
+<h2 >코스 소개글 : ${Course.courseContent}</h2>
+</footer>
+<!-- footer -->
+
+
+             
+      
 <script>
 //polyline
 let markers = new Array(); //마커 정보를 담는 배열
@@ -256,7 +293,7 @@ let markers = new Array(); //마커 정보를 담는 배열
 	        form.submit(); // 폼 제출
 	        
 	    }
-    document.getElementById("review").addEventListener("submit", function(event) {
+    document.getElementById("review").onclick = function() {
 	        // 추가 동작을 수행합니다. 
 	        event.preventDefault();
 	        var urlParams = new URLSearchParams(window.location.search);
@@ -284,7 +321,7 @@ let markers = new Array(); //마커 정보를 담는 배열
 	        
 	        submitForm(); // 폼 제출
 	       
-	    });
+	    };
 init();
 
 //지도를 그려주는 함수 실행

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="css/sidebar.css">
+	<link rel="stylesheet" href="http://localhost:8090/css/sidebar.css">
 </head>
 <body>
 	<form action="/home" method="GET" name="sidebarForm" id="sidebarForm">
