@@ -103,7 +103,8 @@ public class PageController {
 			CtgUserDTO userForSession = new CtgUserDTO(user.getUserId(), user.getUserName(),
 													   user.getUserNickname(), user.getUserEmail(),
 													   user.getUserPhoto(), user.getUserIntroduce());
-					
+
+			session.setMaxInactiveInterval(3600);		
 			session.setAttribute("user", userForSession);			
 			return "signupDone";
 		}

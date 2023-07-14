@@ -116,7 +116,7 @@ public class NaverAPIController {
 			CtgUserDTO userForSession = new CtgUserDTO(searchUser.getUserId(), searchUser.getUserName(),
 													   searchUser.getUserNickname(), searchUser.getUserEmail(),
 													   searchUser.getUserPhoto(), searchUser.getUserIntroduce());
-
+			session.setMaxInactiveInterval(3600);
 			session.setAttribute("user", userForSession);		
 			return "home";
 		}	
