@@ -190,6 +190,7 @@ public class PageController {
 	public String getUserBookmarkListPage(HttpSession session,
 										  Model model) {
 		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+
 		List<UserBookmarkCourseDTO> userBookmarkList = bookmarkController.getUserBookmarkListByUserId(user.getUserId());		
 		
 		List<CourseInformDTO> courseInformList = new ArrayList<>();

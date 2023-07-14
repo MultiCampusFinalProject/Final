@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.dto.CourseDTO;
 import com.spring.dto.CoursePlaceDTO;
+import com.spring.dto.CtgUserDTO;
 import com.spring.dto.PlaceDTO;
 import com.spring.service.CoursePlaceService;
 import com.spring.service.CourseService;
@@ -51,10 +53,13 @@ public class MarkerController {
 							@RequestParam(value = "placeId3", required = false, defaultValue = "") String placeId3, 
 							@RequestParam(value = "placeId4", required = false, defaultValue = "") String placeId4, 
 							@RequestParam(value = "placeId5", required = false, defaultValue = "") String placeId5,
-     RedirectAttributes redirectAttributes)
+     RedirectAttributes redirectAttributes,
+     HttpSession session)
 	 						
 	{		
-
+		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+		System.out.println(user);
+		
 		  if(!placeId1.equals("")&&!placeId1.equals("undefined")) redirectAttributes.addAttribute("placeId1", placeId1);
 		    if(!placeId2.equals("")&&!placeId2.equals("undefined")) redirectAttributes.addAttribute("placeId2", placeId2);
 		    if(!placeId3.equals("")&&!placeId3.equals("undefined")) redirectAttributes.addAttribute("placeId3", placeId3);
@@ -67,9 +72,9 @@ public class MarkerController {
 		
 		
 		
-        HttpSession session = request.getSession();
-//        int userId = (int) session.getAttribute("userId");
-        int userId = 1;
+        session = request.getSession();
+        int userId = (int)user.getUserId();
+//        int userId = 1;
         int courseId = -1;
         System.out.println(courseContent);
         //CourseDTO 생성
