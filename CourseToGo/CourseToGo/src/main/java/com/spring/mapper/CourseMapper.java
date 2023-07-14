@@ -27,6 +27,8 @@ public interface CourseMapper {
 
 	public CourseInformDTO getCourseInformByCourseId(int courseId);
 
+	public List<CourseInformDTO> getCourseInformByUserId(int userId)throws SQLException;
+
 	
 
 }

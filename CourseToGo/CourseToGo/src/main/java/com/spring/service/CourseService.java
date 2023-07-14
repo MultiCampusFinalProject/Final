@@ -65,6 +65,20 @@ public class CourseService {
 				return res;
 		
 	}
+	public List<CourseInformDTO>  getCourseInformByUserId(int userId) throws Exception {
+		
+		List<CourseInformDTO> res=null;
+				 res= courseMapper.getCourseInformByUserId(userId);
+				System.out.println(res);
+				if(res!=null) {
+					
+				} else {
+					throw new Exception("no data");
+				}
+				
+				return res;
+		
+	}
 	public CourseDTO getCourseById(int courseId) throws SQLException {
 		CourseDTO res;
 //		System.out.println("service = " +courseId);
