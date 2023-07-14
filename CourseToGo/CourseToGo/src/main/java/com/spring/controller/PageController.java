@@ -193,7 +193,7 @@ public class PageController {
 
 		List<UserBookmarkCourseDTO> userBookmarkList = bookmarkController.getUserBookmarkListByUserId(user.getUserId());		
 		
-		List<CourseInformDTO> courseInformList = new ArrayList<>();
+		List<CourseInformDTO> courseInformList = new ArrayList<CourseInformDTO>();
 		
 		for(UserBookmarkCourseDTO userBookmark : userBookmarkList) {
 			
@@ -215,8 +215,22 @@ public class PageController {
 	}
 	
 	
-	
-	
+	@GetMapping(value = "/userCourse")
+	public String getUserCourseListPage(HttpSession session, Model model) {
+		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+
+		List<CourseInformDTO> courseInformList = new ArrayList<CourseInformDTO>();
+		
+		try {
+			courseInformList = courseService.getCourseInformByUserId(user.getUserId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("CourseInformList", courseInformList);	
+		
+		return "userBookmarkList";
+	}
 	
 	
 	
