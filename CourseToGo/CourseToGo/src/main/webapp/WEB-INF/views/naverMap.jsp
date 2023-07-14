@@ -152,9 +152,9 @@ document.getElementById("area").innerHTML = areaName;
     });
 </script>
 
-	<div style="text-align:right;">
+	<div class="searchResults">
 	  <h2 id="area"></h2>
-	  <div class="search-results">
+	  <div>
 	    <ul>
 	      <%
 	        List<PlaceDTO> places = (List<PlaceDTO>) request.getAttribute("placesByAreaOrCategory");
@@ -165,7 +165,7 @@ document.getElementById("area").innerHTML = areaName;
 	              break; // 5번 이상 반복하지 않도록 종료
 	            }
 	      %>
-	      <div style="text-align: center; width: 200px; left:20px; height: 40px;" class="well well-sm">
+	      <div style="text-align: center; width: 200px; left:20px; height: 60px;" class="well well-sm">
 	        <div onclick="placeClicked('<%= place.getPlaceId()%>',' <%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>');">
 	          <li><%= place.getPlaceName() %></li>
 	        </div>
@@ -177,16 +177,18 @@ document.getElementById("area").innerHTML = areaName;
 	      %>
 	    </ul>
 	  </div>
-	  <div id="markerInputs" style="width:50%; bottom:0px;left:0px; padding: 10px;"></div>
+	 <div class="markerInputs">
+	  <div id="markerInputs"></div>
+	 </div>
 	</div>   
 </body>
     
     
 <body>
    
-   	
-    <div id="map" style="width:100%;height:100vh; margin: 0 auto; float : Right">
-	    
+   	<div class="displayMap">
+    <div id="map" style="width:100%;height:92vh; margin: 0 auto; float : Right">
+ 
 	
     
     <script type="text/javascript">
@@ -252,7 +254,7 @@ document.getElementById("area").innerHTML = areaName;
                 updateMarkerInputs();
             });
         }
-
+		
         var placeId = [];
         
         function placeClicked(id ,lat, lng, name) {
@@ -287,13 +289,9 @@ document.getElementById("area").innerHTML = areaName;
         }
     </script>
 
-<!--
+	</div>   
 
-
-<jsp:include page="sidebar.jsp"/>
--->
-
-
+<jsp:include page="sidebar.jsp"></jsp:include>
    
 </body>
 </html>
