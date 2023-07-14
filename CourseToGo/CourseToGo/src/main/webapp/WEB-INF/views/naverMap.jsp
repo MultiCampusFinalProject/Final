@@ -64,7 +64,7 @@ document.getElementById("area").innerHTML = areaName;
       <input type="hidden" id="placeId5" name="placeId5" value=>
       <input id="courseName" type="text" name="courseName" value="myCourse">
       <input id="courseNumber" type="hidden" name="courseNumber">
-      <textarea id="courseContent" style="width: 50%" class="text" name="courseContent" required>코스에 대한 설명을 작성해주세요.</textarea>
+      <textarea id="courseContent" style="width: 50%; resize: none;" class="text" name="courseContent" required>코스에 대한 설명을 작성해주세요.</textarea>
       <button type="submit">전송</button>
     </form>
   </div>
@@ -152,31 +152,24 @@ document.getElementById("area").innerHTML = areaName;
     });
 </script>
 
-	<div class="searchResults">
-	  <h2 id="area"></h2>
-	  <div>
-	    <ul>
-	      <%
-	        List<PlaceDTO> places = (List<PlaceDTO>) request.getAttribute("placesByAreaOrCategory");
-	        if (places != null) {
-	          int count = 0;
-	          for (PlaceDTO place : places) {
-	            if (count >= 10) {
-	              break; // 5번 이상 반복하지 않도록 종료
-	            }
-	      %>
-	      <div style="text-align: center; width: 200px; left:20px; height: 60px;" class="well well-sm">
-	        <div onclick="placeClicked('<%= place.getPlaceId()%>',' <%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>');">
-	          <li><%= place.getPlaceName() %></li>
-	        </div>
-	      </div>
-	      <%
-	          count++;
-	        }
-	      }
-	      %>
-	    </ul>
-	  </div>
+<div class="searchResults">
+  <h2 id="area"></h2>
+  <hr style="border-width:1px 0 0 0; border-color:#000;">
+  <hr style="border-width:1px 0 0 0; border-color:#000;">
+  <div>
+    <ul style="display: flex; flex-direction: column; align-items: center;">
+      <% List<PlaceDTO> places = (List<PlaceDTO>) request.getAttribute("placesByAreaOrCategory");
+      if (places != null) {
+        for (PlaceDTO place : places) { %>
+          <div style="display: flex; justify-content: center; align-items: center; width: 200px; height: 60px;" class="well well-sm">
+            <div onclick="placeClicked('<%= place.getPlaceId()%>',' <%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>');">
+              <li><%= place.getPlaceName() %></li>
+            </div>
+          </div>
+      <% } } %>
+    </ul>
+  </div>
+</div>
 	 <div class="markerInputs">
 	  <div id="markerInputs"></div>
 	 </div>

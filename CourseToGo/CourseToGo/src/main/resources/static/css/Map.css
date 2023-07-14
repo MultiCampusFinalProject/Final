@@ -58,6 +58,20 @@
   	text-align: left;
   	margin-left: 250px;
   	font-weight: bold;
+  	height: 400px;
+  	width: 250px;
+  	overflow-y: auto;
+ 	background-color: #ffffff;
+  }
+  
+  .searchResults::-webkit-scrollbar {
+    width: 10px;
+  }
+  .searchResults::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+  }
+  .searchResults::-webkit-scrollbar-track {
+    background-color: grey;
   }
   
   .markerInputs{
@@ -67,4 +81,10 @@
   	margin-right: 20px;
   	font-weight: 900;
   	  	
+  }
+  
+  .hr{
+  background:black;
+  height: 2px;
+  border: 1;
   }
