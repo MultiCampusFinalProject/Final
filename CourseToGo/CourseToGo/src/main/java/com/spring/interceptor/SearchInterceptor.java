@@ -2,10 +2,12 @@ package com.spring.interceptor;
 
 import org.apache.ibatis.plugin.Intercepts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.spring.dto.PageRequestDTO;
 import com.spring.dto.PageResponseDTO;
+//import com.spring.service.ChooseService;
 import com.spring.service.SearchService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.util.Date;
-
+@Component
 public class SearchInterceptor implements HandlerInterceptor {
 
     private final SearchService searchService;
@@ -23,7 +25,9 @@ public class SearchInterceptor implements HandlerInterceptor {
         this.searchService = searchService;
     }
 
-    @Override
+
+
+	@Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 요청이 컨트롤러에 도달하기 전에 실행됩니다.
         // 검색 키워드를 추출하여 로깅 작업을 수행합니다.
@@ -44,8 +48,7 @@ public class SearchInterceptor implements HandlerInterceptor {
            
 
             // 가져온 값을 로깅 또는 다른 처리에 활용
-      
-                 searchService.saveSearchKeyword(1, keyword);
+      if(keyword !=null)searchService.saveSearchKeyword(userId, keyword);
         
 
         return true; // true를 반환하여 요청을 계속 진행합니다.

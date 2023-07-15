@@ -35,6 +35,20 @@ body{
       display: flex;
     transform: translateX(-50%);
   }
+  
+ .recommendedSearchList{
+ position: relative;
+
+  
+
+
+   top: 0;
+    left: 250px;
+    right: 600px;
+    bottom: 0;
+
+  }
+  
 </style>
 <body>
 
@@ -75,7 +89,8 @@ body{
 
                     // 추천 결과를 HTML로 생성
                     for (var i = 0; i < suggestions.length; i++) {
-                        suggestionsHtml += "<p>" + suggestions[i] + "</p>";
+                        suggestionsHtml += "<p stye=' position: relative; z-index: 1;'>" + suggestions[i] + "</p>";
+                        
                     }
 
                     // 결과를 표시할 위치에 HTML 추가
@@ -108,6 +123,86 @@ body{
 			</div>
 		</form>
 		</div>
+	   <!--추천 코스 리스트 -->	
+		    	<%
+    List<CourseInformDTO> recommandedCourseInformList = (List<CourseInformDTO>) request.getAttribute("recommandedCourseInformList");
+    if (recommandedCourseInformList != null) {
+        for (CourseInformDTO course : recommandedCourseInformList) {
+        	int courseId = course.getCourseId();
+        
+            String courseName = course.getCourseName();
+            int userId = course.getUserId();
+          	double AvgScore = course.getCourseAvgScore();
+            String courseList = course.getCourseList();
+            String courseIdList = course.getCourseIdList();
+            String courseContent = course.getCourseContent();
+            String[] placeNames = courseList.split(",");
+            String[] placeIds = courseIdList.split(",");
+            String query="";
+            int courseNumber = course.getCourseNumber();
+         
+            query+=("courseId="+ String.valueOf(courseId)+"&");
+            for(int i= 0; i< courseNumber; i++){
+            	query+="placeId"+(i+1) + "="+placeIds[i];
+            	if(i!= courseNumber-1)query+="&";
+            	else{
+            	
+            	}
+            }
+         
+%>
+
+    <div class="recommendedSearchList">
+<li class="list-group-item" style="width:100%;animation: spin 2s linear infinite; background-color: #6fadcf;	border-radius: 20px 20px 20px 20px;">
+  <div class=" " >
+    <a href="/courseList/Map?<%= query %>">
+      <h2>Course Id: <span class="course-id"><%= courseId %></span> &nbsp <span> <%= courseName %></span>&nbsp	<span>제작자: <%= userId %></span></h2>
+
+      
+		<br>
+      
+      <%-- placeIds 배열을 활용하여 필요한 작업 수행 --%>
+
+      <% for (String placeName : placeNames) { %>
+     &nbsp &nbsp &nbsp &nbsp &nbsp
+      <span class="well" stle="padding:20px"><%= placeName %>   </span>
+      &nbsp &nbsp &nbsp &nbsp &nbsp
+
+      <% }      %>
+
+
+    </a>
+    <br>
+    
+       <br>
+      
+    <h3>소개글: <%= courseContent %></h3>
+  </div> 
+	<form action="/courseBookmark" method="POST">
+		<div style="float:right;">
+			<button type="submit" class="add-button">찜하기</button>
+		</div>
+		<br>
+		<input type="hidden" name="courseId" id="courseIdInput" value="<%= courseId %>" >
+	</form>
+  </div>
+
+</li>
+<%
+    }
+  }
+%>
+</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!--  사용자 코스 제작 리스트 -->
     	<%
     List<CourseInformDTO> courseInformList = (List<CourseInformDTO>) request.getAttribute("CourseInformList");
     if (courseInformList != null) {

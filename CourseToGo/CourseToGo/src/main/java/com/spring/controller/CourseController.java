@@ -23,6 +23,7 @@ import com.spring.dto.CourseReview;
 import com.spring.dto.DirectionDTO;
 import com.spring.dto.DirectionPoint;
 import com.spring.dto.PlaceDTO;
+import com.spring.dto.RankingItem;
 import com.spring.dto.Restaurant;
 import com.spring.dto.SearchKeyword;
 import com.spring.mapper.PlaceMapper;
@@ -33,6 +34,7 @@ import com.spring.service.CourseReviewService;
 import com.spring.service.CourseService;
 import com.spring.service.DirectionService;
 import com.spring.service.PlaceService;
+import com.spring.service.RankingService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -44,6 +46,7 @@ import lombok.RequiredArgsConstructor;
 public class CourseController {
 	final DirectionService directionService;
 	final private MongoTemplate mongoTemplate;
+	private final RankingService rankingService;
 	final PlaceService placeService;
 	final private CourseService courseService;
 	final private CourseReviewService reviewService;
@@ -83,7 +86,22 @@ public class CourseController {
 		System.out.println(pageResponse);
 		model.addAttribute("CourseInformList", courseInformList);
 		model.addAttribute("pageInfo", pageResponse);
-		System.out.println(courseInformList);
+		//추천 코스 id
+		List<String> recommandedCourses = rankingService.sortCourseIdByCount();
+		List<CourseInformDTO> recommandedCourseInformList = new ArrayList<CourseInformDTO>();
+		System.out.println(recommandedCourses);
+		
+		for(String temp : recommandedCourses) {
+			try {
+			CourseInformDTO recommandedCourseinform	= courseService.getCourseInformByCourseId(Integer.parseInt(temp));
+			recommandedCourseInformList.add(recommandedCourseinform);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		model.addAttribute("recommandedCourseInformList",recommandedCourseInformList);
+		
 		return "CourseList";
 	}
 	
@@ -152,11 +170,23 @@ public class CourseController {
 //		System.out.println(placeList);
 		model.addAttribute("PlaceList", placeList);
 //		model.add
+
 		model.addAttribute("Course", course);
 		model.addAttribute("CourseReview", courseReview);
+//		List<RankingItem> topRankingItems = rankingService.getTopRankingItems();
+//	    model.addAttribute("topRankingItems", topRankingItems);
+//	    System.out.println(topRankingItems);
+	   
+	    
 	    return "CourseMap"; // 뷰 이름 반환 (map.html 또는 map.jsp 등)
 	}
 		return "CourseMap";
 		}
-	
+	   @GetMapping("/topRanking")
+	    public String getTopRanking(Model model) {
+	        
+//	        model.addAttribute("topRankingItems", topRankingItems);
+//	        System.out.println(topRankingItems);
+	        return "test"; // Return the name of your view page
+	    }
 }
