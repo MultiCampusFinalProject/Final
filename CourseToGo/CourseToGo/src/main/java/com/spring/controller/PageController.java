@@ -184,6 +184,7 @@ public class PageController {
 
 		List<CourseInformDTO> courseInformList = new ArrayList<CourseInformDTO>();
 		List<String> courseMakerUserNameList = new ArrayList<String>();
+		List<String> courseDetailPageList = new ArrayList<String>();
 		
 		try {
 			courseInformList = courseService.getCourseInformByUserId(user.getUserId());
@@ -198,12 +199,31 @@ public class PageController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
+		for (CourseInformDTO course : courseInformList) {
+        	int courseId = course.getCourseId();
+            String courseIdList = course.getCourseIdList();
+            String[] placeIds = courseIdList.split(",");
+            String query = "";
+            int courseNumber = course.getCourseNumber();
+         
+            query += ("courseId="+ String.valueOf(courseId)+"&");
+            
+            for(int i= 0; i< courseNumber; i++) {
+            	query+="placeId"+(i+1) + "="+placeIds[i];
+	            	if (i!= courseNumber-1) {
+	            		query+="&";
+	            	}
+	            	else{
+	            	}
+            }
+            courseDetailPageList.add(query);    
+	}			
 		
 		
 		model.addAttribute("courseInformList", courseInformList);
 		model.addAttribute("courseMakerUserNameList", courseMakerUserNameList);
-
+		model.addAttribute("courseDetailPageList", courseDetailPageList);
 		
 		
 		return "userContents";
@@ -218,6 +238,7 @@ public class PageController {
 		
 		List<CourseInformDTO> courseInformList = new ArrayList<CourseInformDTO>();
 		List<String> courseMakerUserNameList = new ArrayList<String>();
+		List<String> courseDetailPageList = new ArrayList<String>();
 		
 		for(UserBookmarkCourseDTO userBookmark : userBookmarkList) {
 			
@@ -238,9 +259,30 @@ public class PageController {
 			String userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
 			courseMakerUserNameList.add(userNickname);
 		}
+
+		for (CourseInformDTO course : courseInformList) {
+        	int courseId = course.getCourseId();
+            String courseIdList = course.getCourseIdList();
+            String[] placeIds = courseIdList.split(",");
+            String query = "";
+            int courseNumber = course.getCourseNumber();
+         
+            query += ("courseId="+ String.valueOf(courseId)+"&");
+            
+            for(int i= 0; i< courseNumber; i++) {
+            	query+="placeId"+(i+1) + "="+placeIds[i];
+	            	if (i!= courseNumber-1) {
+	            		query+="&";
+	            	}
+	            	else{
+	            	}
+            }
+            courseDetailPageList.add(query);    
+	}			
 		
 		model.addAttribute("courseInformList", courseInformList);	
 		model.addAttribute("courseMakerUserNameList", courseMakerUserNameList);
+		model.addAttribute("courseDetailPageList", courseDetailPageList);
 		
 		return "userCourseList";
 	}
@@ -252,6 +294,7 @@ public class PageController {
 
 		List<CourseInformDTO> courseInformList = new ArrayList<CourseInformDTO>();
 		List<String> courseMakerUserNameList = new ArrayList<String>();
+		List<String> courseDetailPageList = new ArrayList<String>();
 		
 		try {
 			courseInformList = courseService.getCourseInformByUserId(user.getUserId());
@@ -265,8 +308,29 @@ public class PageController {
 			courseMakerUserNameList.add(userNickname);
 		}
 		
+		for (CourseInformDTO course : courseInformList) {
+	        	int courseId = course.getCourseId();
+	            String courseIdList = course.getCourseIdList();
+	            String[] placeIds = courseIdList.split(",");
+	            String query = "";
+	            int courseNumber = course.getCourseNumber();
+	         
+	            query += ("courseId="+ String.valueOf(courseId)+"&");
+	            
+	            for(int i= 0; i< courseNumber; i++) {
+	            	query+="placeId"+(i+1) + "="+placeIds[i];
+		            	if (i!= courseNumber-1) {
+		            		query+="&";
+		            	}
+		            	else{
+		            	}
+	            }
+	            courseDetailPageList.add(query);    
+		}	
+		
 		model.addAttribute("courseInformList", courseInformList);	
 		model.addAttribute("courseMakerUserNameList", courseMakerUserNameList);
+		model.addAttribute("courseDetailPageList", courseDetailPageList);
 		
 		return "userCourseList";
 	}

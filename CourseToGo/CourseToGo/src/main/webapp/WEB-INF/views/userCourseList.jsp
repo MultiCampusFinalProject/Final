@@ -52,7 +52,13 @@
 					    	 			</c:if>
 					    	 		</c:forEach>
 					    	 		
-				    	 			<a href=""><b><font color="blue">${courseInformDTO.courseName} </font></b></a> Course: ${courseInformDTO.courseContent} <br>
+					    	 		<c:forEach items="${requestScope.courseDetailPageList}" var="coursePage" varStatus="pageSt">
+					    	 			<c:if test="${courseSt.index eq pageSt.index}">
+					    	 				<c:set var="query" value="${coursePage}" scope="request" />
+					    	 			</c:if>
+					    	 		</c:forEach>
+					    	 		
+				    	 			<a href="/courseList/Map?${query}" style="color: blue;"><b>${courseInformDTO.courseName} </b></a> Course: ${courseInformDTO.courseContent} <br>
 				    	 			
 					                <div class="inline-items">
 					                    <c:forEach items="${fn:split(courseInformDTO.courseList, ',')}" var="place">
