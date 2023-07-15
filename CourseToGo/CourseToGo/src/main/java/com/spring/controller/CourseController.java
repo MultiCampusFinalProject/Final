@@ -100,6 +100,7 @@ public class CourseController {
 				e.printStackTrace();
 			}
 		}
+		System.out.println(recommandedCourseInformList);
 		model.addAttribute("recommandedCourseInformList",recommandedCourseInformList);
 		
 		return "CourseList";

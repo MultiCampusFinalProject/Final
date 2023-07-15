@@ -12,51 +12,68 @@
  		INSERT INTO course (COURSE_ID, USER_ID, COURSE_NAME, COURSE_AVG_SCORE, COURSE_NUMBER,COURSE_CONTENT)
  		VALUES (course_seq.nextval, #{userId}, #{courseName}, 0, #{courseNumber}, #{courseContent})
  	</insert>
- 	<select id="getAllCourses"  resultType="com.spring.dto.CourseInformDTO">
-SELECT
-  c.course_id AS courseId,
-  c.user_id AS userId,
-  c.course_name AS courseName,
-  c.course_avg_score AS courseAvgScore,
-  c.course_number AS courseNumber,
-  c.course_content AS courseContent,
-  LISTAGG(cp.place_id, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseIdList,
-  LISTAGG(pl.place_name, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseList
-FROM
-  Course c
-JOIN
-  Course_place cp ON c.course_id = cp.course_id
-JOIN
-  place pl ON cp.place_id = pl.place_id
-GROUP BY
-  c.course_id,
-  c.user_id,
-  c.course_name,
-  c.course_content,
-  c.course_avg_score,
-  c.course_number
- 	</select>
+ <select id="getAllCourses" resultType="com.spring.dto.CourseInformDTO">
+  SELECT
+    c.course_id AS courseId,
+    u.user_nickname AS userNickName,
+    c.course_name AS courseName,
+    c.course_avg_score AS courseAvgScore,
+    c.course_number AS courseNumber,
+    c.course_content AS courseContent,
+    LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
+    LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
+    LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
+    LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList
+  FROM
+    Course c
+    JOIN Course_place ON c.course_id = Course_place.course_id
+    JOIN place ON Course_place.place_id = place.place_id
+    JOIN area_place ON place.place_id = area_place.place_id
+    JOIN category_place ON place.place_id = category_place.place_id
+    JOIN area ON area_place.area_id = area.area_id
+    JOIN category ON category_place.category_id = category.category_id
+    JOIN ctg_user u ON c.user_id = u.user_id
+  GROUP BY
+    c.course_id,
+    u.user_nickname,
+    c.course_name,
+    c.course_content,
+    c.course_avg_score,
+    c.course_number
+</select>
+
  		<select id="getCourseInformByCourseId" parameterType="_int"  resultType="com.spring.dto.CourseInformDTO">
 SELECT
-  c.course_id AS courseId,
-  c.user_id AS userId,
-  c.course_name AS courseName,
-  c.course_avg_score AS courseAvgScore,
-  c.course_number AS courseNumber,
-  c.course_content AS courseContent,
-  LISTAGG(cp.place_id, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseIdList,
-  LISTAGG(pl.place_name, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseList
+   c.course_id as  courseId,
+       u.user_nickname AS userNickName,
+        c.course_name  AS courseName,
+        c.course_avg_score  AS courseAvgScore,
+        c.course_number AS courseNumber,
+        c.course_content AS courseContent,
+        LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
+        LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
+      	LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
+        LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList
 FROM
   Course c
-JOIN
-  Course_place cp ON c.course_id = cp.course_id
-JOIN
-  place pl ON cp.place_id = pl.place_id
+     JOIN
+        Course_place ON c.course_id = Course_place.course_id
+      JOIN
+        place ON Course_place.place_id = place.place_id
+   JOIN
+        area_place ON place.place_id = area_place.place_id
+    JOIN
+        category_place ON place.place_id = category_place.place_id
+      JOIN
+        area ON area_place.area_id = area.area_id
+         JOIN
+        category ON category_place.category_id = category.category_id
+         JOIN ctg_user u ON c.user_id = u.user_id
 WHERE
 	c.course_id = #{courseId}
 GROUP BY
   c.course_id,
-  c.user_id,
+  u.user_nickname,
   c.course_name,
   c.course_content,
   c.course_avg_score,
@@ -64,25 +81,38 @@ GROUP BY
  	</select>
  		<select id="getCourseInformByUserId" parameterType="_int"  resultType="com.spring.dto.CourseInformDTO">
 SELECT
-  c.course_id AS courseId,
-  c.user_id AS userId,
-  c.course_name AS courseName,
-  c.course_avg_score AS courseAvgScore,
-  c.course_number AS courseNumber,
-  c.course_content AS courseContent,
-  LISTAGG(cp.place_id, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseIdList,
-  LISTAGG(pl.place_name, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseList
+  c.course_id as  courseId,
+        u.user_nickname AS userNickName,
+        c.course_name  AS courseName,
+        c.course_avg_score  AS courseAvgScore,
+        c.course_number AS courseNumber,
+        c.course_content AS courseContent,
+        LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
+        LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
+      	LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
+        LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList
 FROM
   Course c
-JOIN
-  Course_place cp ON c.course_id = cp.course_id
-JOIN
-  place pl ON cp.place_id = pl.place_id
+
+  
+       JOIN
+        Course_place ON c.course_id = Course_place.course_id
+      JOIN
+        place ON Course_place.place_id = place.place_id
+   JOIN
+        area_place ON place.place_id = area_place.place_id
+    JOIN
+        category_place ON place.place_id = category_place.place_id
+      JOIN
+        area ON area_place.area_id = area.area_id
+         JOIN
+        category ON category_place.category_id = category.category_id
+         JOIN ctg_user u ON c.user_id = u.user_id
 WHERE
 	c.user_id = #{userId}
 GROUP BY
   c.course_id,
-  c.user_id,
+   u.user_nickname,
   c.course_name,
   c.course_content,
   c.course_avg_score,
@@ -138,58 +168,57 @@ GROUP BY
 <select id="getCourseWithPageRequest" parameterType="com.spring.dto.PageRequestDTO" resultType="com.spring.dto.CourseInformDTO">
   SELECT
     Course.course_id AS courseId,
-    Course.user_id AS userId,
+    Course.user_nickname AS userNickName,
     Course.course_name AS courseName,
     Course.course_avg_score AS courseAvgScore,
     Course.course_number AS courseNumber,
     Course.course_content AS courseContent,
     Course.courseIdList AS courseIdList,
-    Course.courseList AS courseList
-    
-    
-  FROM
-    (
-      SELECT
-        c.course_id,
-        c.user_id,
-        c.course_name,
-        c.course_avg_score,
-        c.course_number,
-        c.course_content,
-        LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
-        LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
-      	ROW_NUMBER() OVER (ORDER BY c.course_id) AS rn
-      FROM
-        Course c
-      JOIN
-        Course_place ON c.course_id = Course_place.course_id
-      JOIN
-        place ON Course_place.place_id = place.place_id
-   JOIN
-        area_place ON place.place_id = area_place.place_id
-      JOIN
-        area ON area_place.area_id = area.area_id
-      <trim prefix="WHERE" prefixOverrides="AND |OR">
-        <if test="keyword != null and keyword !=''">
-          AND (c.course_content LIKE '%'||#{keyword}||'%'
-          OR place.place_name LIKE '%'||#{keyword}||'%' 
-          OR area.area_name LIKE '%'||#{keyword}||'%' )
-          
-          
-        </if>
-      </trim>
+    Course.courseList AS courseList,
+    Course.areaNameList AS areaNameList,
+    Course.categoryNameList AS categoryNameList
+  FROM (
+    SELECT
+      c.course_id,
+      u.user_nickname AS user_nickname,
+      c.course_name,
+      c.course_avg_score,
+      c.course_number,
+      c.course_content,
+      LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
+      LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
+      LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
+      LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList,
+      ROW_NUMBER() OVER (ORDER BY c.course_id) AS rn
+    FROM
+      Course c
+      JOIN Course_place ON c.course_id = Course_place.course_id
+      JOIN place ON Course_place.place_id = place.place_id
+      JOIN area_place ON place.place_id = area_place.place_id
+      JOIN category_place ON place.place_id = category_place.place_id
+      JOIN area ON area_place.area_id = area.area_id
+      JOIN category ON category_place.category_id = category.category_id
+         JOIN ctg_user u ON c.user_id = u.user_id
+    <trim prefix="WHERE" prefixOverrides="AND |OR">
+      <if test="keyword != null and keyword !=''">
+        AND (c.course_content LIKE '%'||#{keyword}||'%'
+        OR place.place_name LIKE '%'||#{keyword}||'%'
+        OR area.area_name LIKE '%'||#{keyword}||'%'
+        OR category.category_name LIKE '%'||#{keyword}||'%')
+      </if>
+    </trim>
       GROUP BY
-        c.course_id,
-        c.user_id,
-        c.course_name,
-        c.course_avg_score,
-        c.course_number,
-        c.course_content
-    ) Course
-
+    c.course_id,
+      u.user_nickname,
+    c.course_name,
+    c.course_content,
+    c.course_avg_score,
+    c.course_number
+  ) Course
   WHERE
- <![CDATA[   rn <= #{pageNum} * #{amount} AND rn > (#{pageNum} - 1) *  #{amount} 	]]>
+    <![CDATA[   rn <= #{pageNum} * #{amount} AND rn > (#{pageNum} - 1) *  #{amount} 	]]>
 </select>
+
 
 
 
@@ -198,15 +227,19 @@ GROUP BY
  <select id="getTotalCount" parameterType="com.spring.dto.PageRequestDTO" resultType="java.lang.Integer">
   SELECT COUNT(DISTINCT c.course_id) AS totalCount
   FROM Course c
-  JOIN Course_place ON c.course_id = Course_place.course_id
-  JOIN place ON Course_place.place_id = place.place_id
-  JOIN area_place ON place.place_id = area_place.place_id
-  JOIN area ON area_place.area_id = area.area_id
+   JOIN Course_place ON c.course_id = Course_place.course_id
+      JOIN place ON Course_place.place_id = place.place_id
+      JOIN area_place ON place.place_id = area_place.place_id
+      JOIN category_place ON place.place_id = category_place.place_id
+      JOIN area ON area_place.area_id = area.area_id
+      JOIN category ON category_place.category_id = category.category_id
+      
   <trim prefix="WHERE" prefixOverrides="AND |OR">
     <if test="keyword != null and keyword !=''">
-      AND (c.course_content LIKE '%'||#{keyword}||'%'
-      OR place.place_name LIKE '%'||#{keyword}||'%'
-      OR area.area_name LIKE '%'||#{keyword}||'%')
+    AND (c.course_content LIKE '%'||#{keyword}||'%'
+        OR place.place_name LIKE '%'||#{keyword}||'%'
+        OR area.area_name LIKE '%'||#{keyword}||'%'
+        OR category.category_name LIKE '%'||#{keyword}||'%')
     </if>
   </trim>
 </select>

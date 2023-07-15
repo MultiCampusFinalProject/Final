@@ -3,6 +3,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.spring.dto.CourseInformDTO" %>
+<%@ page import="java.util.HashSet" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Set" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,8 +16,7 @@
 #mainForm
 {   
   display: flex;
-    justify-content: center;
-    align-items: center;
+ 
 }
 body{
 
@@ -24,7 +26,7 @@ body{
  position: relative;
 
   
-
+font-weight: bold;
 
    top: 0;
     left: 250px;
@@ -39,7 +41,7 @@ body{
  .recommendedSearchList{
  position: relative;
 
-  
+  font-weight: bold;
 
 
    top: 0;
@@ -85,14 +87,14 @@ body{
                     // 추천 결과를 처리하는 로직
                     // 예: 결과를 동적으로 표시하거나 자동완성 기능 구현
                     var suggestions = response;  // 응답으로 받은 추천 결과
-                    var suggestionsHtml = "";   // 결과를 표시할 HTML 문자열
-
+                    var suggestionsHtml = " &nbsp  검색 키워드    :";   // 결과를 표시할 HTML 문자열
+                    
                     // 추천 결과를 HTML로 생성
                     for (var i = 0; i < suggestions.length; i++) {
-                        suggestionsHtml += "<p stye=' position: relative; z-index: 1;'>" + suggestions[i] + "</p>";
+                    	 suggestionsHtml += "<span stye='position: relative; z-index: 1;'>" + suggestions[i]+" " + "</span>";
                         
                     }
-
+              
                     // 결과를 표시할 위치에 HTML 추가
                     $('#suggestions').html(suggestionsHtml);
                 }
@@ -100,26 +102,45 @@ body{
         });
     });
     
-    
+    function getUserLocation() {
+    	  // 위치 정보를 가져오는 로직을 작성합니다.
+    	  // 예: Geolocation API를 사용하여 사용자 위치를 가져옴
+    	  if (navigator.geolocation) {
+    	    navigator.geolocation.getCurrentPosition(function(position) {
+    	      // 위치 정보를 사용하여 필요한 작업을 수행합니다.
+    	      // 예: 위도와 경도를 얻어온 후 다른 기능에 활용
+    	      var latitude = position.coords.latitude;
+    	      var longitude = position.coords.longitude;
+    	      console.log(latitude, longitude);
+    	      // 여기서 필요한 로직을 추가하세요.
+    	    });
+    	  } else {
+    	    console.log("Geolocation is not supported by this browser.");
+    	  }
+    	}
 </script>
     <!-- 검색 창 -->
-    
+   
     <div  class="searchList">
+    
+
     	<form id="mainForm" class="row justify-content-center g-3" action="/courseListWithPagination" method="GET">
-			<div class="col-auto">
-				
-					<input	 style="width: 300px;"
+			<div class="col-auto" style="display: flex; ">
+					<input  type="submit" class="btn btn-primary mb-3 " style="margin-left: 100px; value="검색" />
+					<input	 style="width: 400px; height: 40px;"
+					
 						type="text" 
 						class="form-control" 
 						id="keyword"
 						placeholder="Keyword" 
 						name="keyword"
 						value="${pageInfo.pageRequest.keyword}"><div id="suggestions"></div>
+					
 			</div>
 			<div class="col-auto">
 				<input type="hidden" name="pageNum" value="${pageInfo.pageRequest.pageNum}" />
 				<input type="hidden" name="amount" value="${pageInfo.pageRequest.amount}" />
-				<input  type="submit" class="btn btn-primary mb-3" value="Search" />
+				
 			</div>
 		</form>
 		</div>
@@ -131,11 +152,15 @@ body{
         	int courseId = course.getCourseId();
         
             String courseName = course.getCourseName();
-            int userId = course.getUserId();
+            String userNickName = course.getUserNickName();
           	double AvgScore = course.getCourseAvgScore();
             String courseList = course.getCourseList();
             String courseIdList = course.getCourseIdList();
             String courseContent = course.getCourseContent();
+            String areaString = course.getAreaNameList();
+            String categoryString = course.getCategoryNameList();
+            Set<String> areaSet =  new HashSet<>(Arrays.asList(areaString.split(",")));
+            Set<String> categorySet =  new HashSet<>(Arrays.asList(categoryString.split(",")));
             String[] placeNames = courseList.split(",");
             String[] placeIds = courseIdList.split(",");
             String query="";
@@ -156,7 +181,20 @@ body{
 <li class="list-group-item" style="width:100%;animation: spin 2s linear infinite; background-color: #6fadcf;	border-radius: 20px 20px 20px 20px;">
   <div class=" " >
     <a href="/courseList/Map?<%= query %>">
-      <h2>Course Id: <span class="course-id"><%= courseId %></span> &nbsp <span> <%= courseName %></span>&nbsp	<span>제작자: <%= userId %></span></h2>
+      <h1>No. <span class="course-id"><%= courseId %></span> &nbsp <span> 
+      <%= courseName %></span>&nbsp	
+      <span>제작자: <%= userNickName %></span>
+         <%for (String area : areaSet) {%>
+      <span>
+      #<%= area %> </span><%} 
+      %>
+      
+      
+            <%for (String category : categorySet) {%>
+      <span>
+      #<%= category %> </span><%} 
+      %>
+      </h1>
 
       
 		<br>
@@ -210,11 +248,15 @@ body{
         	int courseId = course.getCourseId();
         
             String courseName = course.getCourseName();
-            int userId = course.getUserId();
+            String userNickname = course.getUserNickName();
           	double AvgScore = course.getCourseAvgScore();
             String courseList = course.getCourseList();
             String courseIdList = course.getCourseIdList();
-            String courseContent = course.getCourseContent();
+            String areaString = course.getAreaNameList();
+            String categoryString = course.getCategoryNameList();
+            String courseContent =course.getCourseContent();
+            Set<String> areaSet =  new HashSet<>(Arrays.asList(areaString.split(",")));
+            Set<String> categorySet =  new HashSet<>(Arrays.asList(categoryString.split(",")));
             String[] placeNames = courseList.split(",");
             String[] placeIds = courseIdList.split(",");
             String query="";
@@ -232,10 +274,24 @@ body{
 %>
 
     <div class="searchList">
-<li class="list-group-item" style="width:100%;">
+<li class="list-group-item" style="width:100%;border-radius: 20px 20px 20px 20px;">
   <div class=" ">
     <a href="/courseList/Map?<%= query %>">
-      <h2>Course Id: <span class="course-id"><%= courseId %></span> &nbsp <span> <%= courseName %></span>&nbsp	<span>제작자: <%= userId %></span></h2>
+      <h1>No. <span class="course-id"><%= courseId %></span> &nbsp 
+      <span> <%= courseName %></span>&nbsp
+      	<span>제작자: <%= userNickname  %></span>
+       <%for (String area : areaSet) {%>
+      <span>
+       <%= area %> </span><%} 
+      %>
+      
+      
+         <%for (String category : categorySet) {%>
+      <span>
+      #<%= category %> </span><%} 
+      %>
+      
+      </h1>
 
       
 		<br>
