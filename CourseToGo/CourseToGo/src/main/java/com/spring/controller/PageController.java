@@ -179,13 +179,36 @@ public class PageController {
 	}
 	
 	@GetMapping(value = "/userContents")
-	public String getUserContentsPage(HttpSession session) {
-//		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
-//		System.out.println(user);
+	public String getUserContentsPage(HttpSession session, Model model) {	
+		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+
+		List<CourseInformDTO> courseInformList = new ArrayList<CourseInformDTO>();
+		List<String> courseMakerUserNameList = new ArrayList<String>();
+		
+		try {
+			courseInformList = courseService.getCourseInformByUserId(user.getUserId());
+			
+			for(CourseInformDTO courseInformDTO : courseInformList) {
+				int userId = courseInformDTO.getUserId();
+				String userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+				courseMakerUserNameList.add(userNickname);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		model.addAttribute("courseInformList", courseInformList);
+		model.addAttribute("courseMakerUserNameList", courseMakerUserNameList);
+
+		
 		
 		return "userContents";
 	}
-	
+
 	@GetMapping(value = "/userBookmarkList")
 	public String getUserBookmarkListPage(HttpSession session,
 										  Model model) {
@@ -194,6 +217,7 @@ public class PageController {
 		List<UserBookmarkCourseDTO> userBookmarkList = bookmarkController.getUserBookmarkListByUserId(user.getUserId());		
 		
 		List<CourseInformDTO> courseInformList = new ArrayList<CourseInformDTO>();
+		List<String> courseMakerUserNameList = new ArrayList<String>();
 		
 		for(UserBookmarkCourseDTO userBookmark : userBookmarkList) {
 			
@@ -209,9 +233,16 @@ public class PageController {
 			courseInformList.add(courseInform);
 		}
 		
-		model.addAttribute("CourseInformList", courseInformList);	
+		for(CourseInformDTO courseInformDTO : courseInformList) {
+			int userId = courseInformDTO.getUserId();
+			String userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+			courseMakerUserNameList.add(userNickname);
+		}
 		
-		return "userBookmarkList";
+		model.addAttribute("courseInformList", courseInformList);	
+		model.addAttribute("courseMakerUserNameList", courseMakerUserNameList);
+		
+		return "userCourseList";
 	}
 	
 	
@@ -220,6 +251,7 @@ public class PageController {
 		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
 
 		List<CourseInformDTO> courseInformList = new ArrayList<CourseInformDTO>();
+		List<String> courseMakerUserNameList = new ArrayList<String>();
 		
 		try {
 			courseInformList = courseService.getCourseInformByUserId(user.getUserId());
@@ -227,9 +259,16 @@ public class PageController {
 			e.printStackTrace();
 		}
 		
-		model.addAttribute("CourseInformList", courseInformList);	
+		for(CourseInformDTO courseInformDTO : courseInformList) {
+			int userId = courseInformDTO.getUserId();
+			String userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+			courseMakerUserNameList.add(userNickname);
+		}
 		
-		return "userBookmarkList";
+		model.addAttribute("courseInformList", courseInformList);	
+		model.addAttribute("courseMakerUserNameList", courseMakerUserNameList);
+		
+		return "userCourseList";
 	}
 	
 	
