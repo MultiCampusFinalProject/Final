@@ -190,8 +190,7 @@ public class PageController {
 			courseInformList = courseService.getCourseInformByUserId(user.getUserId());
 			
 			for(CourseInformDTO courseInformDTO : courseInformList) {
-				int userId = courseInformDTO.getUserId();
-				String userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+				String userNickname = courseInformDTO.getUserNickName();
 				courseMakerUserNameList.add(userNickname);
 			}
 			
@@ -255,8 +254,7 @@ public class PageController {
 		}
 		
 		for(CourseInformDTO courseInformDTO : courseInformList) {
-			int userId = courseInformDTO.getUserId();
-			String userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+			String userNickname = courseInformDTO.getUserNickName();
 			courseMakerUserNameList.add(userNickname);
 		}
 
@@ -303,8 +301,7 @@ public class PageController {
 		}
 		
 		for(CourseInformDTO courseInformDTO : courseInformList) {
-			int userId = courseInformDTO.getUserId();
-			String userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+			String userNickname = courseInformDTO.getUserNickName();
 			courseMakerUserNameList.add(userNickname);
 		}
 		
