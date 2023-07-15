@@ -1,90 +1,222 @@
 @charset "UTF-8";
 
-  .middle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  .left {
-    flex: 1;
-    text-align: left;
-    margin-left: 220px;
-     margin-bottom: 10px;
-  }
-
-  .right {
-    flex: 1;
-    text-align: right;
-    display: flex;
-    align-items: center;
-
-  }
-
-  .right form {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    flex-wrap: nowrap;
-    width: 100%;
-  }
-
-  .right input[type="text"] {
-    flex-grow: 1;
+	.middle {
+	  display: flex;
+	  justify-content: space-between;
+	  align-items: center;
+	  margin-top: 10px;
+	  margin-bottom: 10px;
+	  position: fixed;
+	  z-index: 3;
+	  top: 0;
+	  left: 220px;
+	  right: 220px;
+	  padding: 10px;
+	}
+	
+	.left {
+	  flex: 1;
+	  text-align: left;
+	}
+	
+	.right {
+	  flex: 1;
+	  text-align: right;
+	  display: flex;
+	  align-items: center;
+	  justify-content: flex-end;
+	}
+	
+	.right form {
+	  display: flex;
+	  align-items: center;
+	  gap: 5px;
+	  flex-wrap: nowrap;
+	  width: 100%;
+	}
+	
+	.right input[type="text"] {
+	  flex-grow: 1;
+	  box-sizing: border-box;
+	}
+	
+	.right textarea {
+	  flex-grow: 1;
+	  box-sizing: border-box;
+	  height: 26px;
+	}
+	
+	.right button[type="submit"] {
+	  flex-grow: 1;
+	  box-sizing: border-box;
+	}
+	
+	.displayMap {
+	  margin-left: 220px;
+	  margin-right: 220px;
+	}
+	
+	
+	.map {
+	width: 100%;
+	height: 100vh;
+	margin: 0 auto;
+	float: right;
+	z-index: 2;
+	}
+	
+	.searchResults {
+	position: absolute;
+	z-index: 5;
+	text-align: left;
+	margin-left: 250px;
+	margin-top: 50px;
+	font-weight: bold;
+	max-height: 400px;
+	width: 250px;
+	overflow-y: auto;
+	background-color: #ffffff;
+	  
+	}
+	
+	.searchResults.noResults::-webkit-scrollbar {
+	width: 10px;
+	 
+	}
+	
+	.searchResults::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	}
+	
+	.searchResults::-webkit-scrollbar-track {
+	background-color: grey;
+	}
+	
+	.markerInputs {
+	position: fixed;
+	bottom: 20px;
+	left: 50%;
+	transform: translateX(-50%);
+	font-weight: 900;
+	z-index: 10;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 60px;
+	}
+	
+	.horizontal-list {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	}
+	
+	.horizontal-list li {
+	margin-right: 10px;
+	background-color: #f5f5f5;
+	padding: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	min-width: 100px;
+	border: 2px solid #e3e3e3;
+	border-radius: 10px;
+	box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3);
+	}
+	
+	.hr {
+	  background: black;
+	  height: 2px;
+	  border: 1;
+	}
+	
+	
+	.sidebar2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 100%;
+    background-color: #87ceeb;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 20px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   	box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+	}
+	
+	.input{
+	margin-top:50px;
+}
+	
+	.text{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 100%;
+	resize: none;
+	height: 500px;
+	}
+	
+  .sidebar2 {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* sidebar2의 높이를 설정하여 부모 요소에 맞게 확장될 수 있도록 합니다. */
   }
+  
+  .sidebar2 form {
+  	margin-top:150px;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* form 요소의 높이를 설정하여 부모 요소에 맞게 확장될 수 있도록 합니다. */
+  }
+  
+.cs_mapbridge {
+  position: relative;
+  width: 40px;
+  height: 60px;
+}
 
-  .right textarea {
-    flex-grow: 1;
-    box-sizing: border-box;
-    height: 26px;
-  }
+.map_group {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 
-  .right button[type="submit"] {
-    flex-grow: 1;
-    box-sizing: border-box;
-  }
-  
-  .displayMap{
-  	z-index: 2;
-  	margin-left: 220px;
-  }
-  
-  .searchResults{
-  	position: absolute;
-  	z-index: 3;
-  	text-align: left;
-  	margin-left: 250px;
-  	font-weight: bold;
-  	height: 400px;
-  	width: 250px;
-  	overflow-y: auto;
- 	background-color: #ffffff;
-  }
-  
-  .searchResults::-webkit-scrollbar {
-    width: 10px;
-  }
-  .searchResults::-webkit-scrollbar-thumb {
-    background-color: #2f3542;
-  }
-  .searchResults::-webkit-scrollbar-track {
-    background-color: grey;
-  }
-  
-  .markerInputs{
-  	position: fixed;
-  	top:100px;
-  	right: 0;
-  	margin-right: 20px;
-  	font-weight: 900;
-  	  	
-  }
-  
-  .hr{
-  background:black;
-  height: 2px;
-  border: 1;
-  }
+.map_marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 60px;
+}
+
+._icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: #ff0000;
+  border-radius: 50%;
+}
+
+.shd {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+  background-color: #000000;
+  opacity: 0.2;
+  border-radius: 50%;
+}
