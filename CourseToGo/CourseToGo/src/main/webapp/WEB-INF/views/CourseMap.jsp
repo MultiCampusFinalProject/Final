@@ -216,12 +216,26 @@ header
 
     <%
     List<PlaceDTO> placeList = (List<PlaceDTO>) request.getAttribute("PlaceList");
+    double latitudeSum = 0.0;
+    double longitudeSum =0.0;
+    double minlat = 999;
+    double minlong = 999;
+    double maxlat =0;
+    double maxlong = 0;
    	for(int i = 0 ; i < placeList.size(); i++){
    		%>
 
    	      <li><input type="button" class="course" value="<%= placeList.get(i).getPlaceName() %>"></li>
    	  
    	     <%
+   	     
+   	     
+   	    if(minlat > placeList.get(i).getLatitude()) minlat = placeList.get(i).getLatitude();
+   	  if(minlong > placeList.get(i).getLongitude()) minlong = placeList.get(i).getLongitude();
+   	if(maxlat < placeList.get(i).getLatitude()) maxlat = placeList.get(i).getLatitude();
+    if(maxlong < placeList.get(i).getLongitude()) maxlong = placeList.get(i).getLongitude();
+   	  latitudeSum += placeList.get(i).getLatitude();
+   	  longitudeSum += placeList.get(i).getLongitude();
    	    if(i != placeList.size()-1){
    	 	%>
    	    <div style="text-align: center; width: 200px; height: 70px;">
@@ -231,9 +245,21 @@ header
    	    }
    	
 
-    }
+    }double averageLatitude = latitudeSum  / placeList.size();
+    double averageLongitude =longitudeSum  / placeList.size();
+    
 %>
 
+<script>
+function moveMap(minlat, minlong, maxlat, maxlong) {
+	
+	var middle = new naver.maps.LatLngBounds(
+            new naver.maps.LatLng(minlat, minlong),
+            new naver.maps.LatLng(maxlat, maxlong));
+    map.panToBounds(middle);
+}
+
+</script>
    	      
    	     
    	         <li><input id="slider-button" type="button" class="create-course" value="작성된 리뷰보기" ></li>
@@ -407,9 +433,10 @@ function init(){
     
     var polylinePath = new Array();
     
-    
+
     <c:forEach var="direction" items="${DirectionList}">
     polylinePath.push(new naver.maps.LatLng( ${direction.latitude}, ${direction.longitude}));
+   
     </c:forEach>
  //   console.log(polylinePath);
     
@@ -429,7 +456,15 @@ function init(){
          });
       
          
-        
+         var averageLatitude = <%= averageLatitude %>;
+      // 이제 average 변수를 원하는 곳에 사용할 수 있습니다.
+      var averageLongitude = <%= averageLongitude %>;
+      var maxlat= <%= maxlat %>;
+      var minlat= <%= minlat %>;
+      var maxlong= <%= maxlong %>;
+      var minlong= <%= minlong %>;
+      console.log(minlat, minlong);
+      moveMap(minlat, minlong, maxlat, maxlong);      
          
     
  
@@ -484,18 +519,7 @@ function selectMapList() {
 
 
 // 지도를 이동하게 해주는 함수
-function moveMap(len, lat) {
-	var mapOptions = {
-		    center: new naver.maps.LatLng(len, lat),
-		    zoom: 15,
-		    mapTypeControl: true
-		};
-    var map = new naver.maps.Map('map', mapOptions);
-    var marker = new naver.maps.Marker({
-        position: new naver.maps.LatLng(len, lat),
-        map: map
-    });
-}
+
 function calculateDistance(lat1, lon1, lat2, lon2) {
 	  const earthRadius = 6371; // 지구 반지름 (단위: km)
 

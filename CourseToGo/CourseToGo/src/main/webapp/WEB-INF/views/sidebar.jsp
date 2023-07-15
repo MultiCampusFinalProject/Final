@@ -13,7 +13,7 @@
 		    <ul>
 		    	<!-- 전체적인 링크 수정해야함(onclick) -->
 		    	<li><input type="button" class="home" value="홈" onclick="location.href='/home'"></li>
-		    	<li><input type="button" class="course" value="코스" onclick="location.href='/courseList'"></li>
+		    	<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'"></li>
 		    	<c:if test="${empty sessionScope.user.userId}">
 		    		<li><input type="button" class="create-course" value="코스 제작" onclick="showAlertAndRedirect()"></li>
 		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>

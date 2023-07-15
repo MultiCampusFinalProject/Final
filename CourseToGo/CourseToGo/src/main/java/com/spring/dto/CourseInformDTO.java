@@ -13,23 +13,27 @@ import lombok.ToString;
 @ToString
 public class CourseInformDTO {
     private int courseId;
-    private int userId;
+    private String userNickName;
     private String courseName;
     private double courseAvgScore;
     private int courseNumber;
     private	String courseList;
     private	String courseIdList;
     private String courseContent;
+    private String areaNameList;
+    private String categoryNameList;
     @Builder
-    public CourseInformDTO(int courseId, int userId, String courseName, double courseAvgScore, int courseNumber,String courseIdList,String courseList,String courseContent) {
+    public CourseInformDTO(int courseId, String userNickName, String courseName, double courseAvgScore, int courseNumber,String courseIdList,String courseList,String courseContent,String areaNameList, String categoryNameList) {
         this.courseId = courseId;
-        this.userId = userId;
+        this.userNickName = userNickName;
         this.courseName = courseName;
         this.courseAvgScore = courseAvgScore;
         this.courseNumber = courseNumber;
         this.courseIdList = courseIdList;
         this.courseList = courseList;
         this.courseContent = courseContent;
+        this.areaNameList = areaNameList;
+        this.categoryNameList = categoryNameList;
     }
     
 }
