@@ -3,6 +3,11 @@ package com.spring.controller;
 
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +18,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CourseReview;
+import com.spring.dto.CtgUserDTO;
+import com.spring.dto.PlaceDTO;
 import com.spring.dto.PlaceReview;
 import com.spring.service.CourseReviewService;
+import com.spring.service.CourseService;
 import com.spring.service.PlaceReviewService;
+import com.spring.service.PlaceService;
 
 @Controller
 public class ReviewController {
@@ -29,117 +40,150 @@ public class ReviewController {
 	@Autowired
 	private PlaceReviewService placereviewservice;
 	
-	@RequestMapping(value = "/review", method = RequestMethod.GET)
+	@Autowired
+	private PlaceService placeService;
+	
+	@Autowired
+	private CourseService courseService;
+	
+	@RequestMapping(value = "/setReview", method = RequestMethod.GET)
 	public String insertCourseReviewForm(@RequestParam(value = "placeId1", required = false) String placeId1, 
 			                        	 @RequestParam(value = "placeId2", required = false) String placeId2, 
 										 @RequestParam(value = "placeId3", required = false) String placeId3, 
 										 @RequestParam(value = "placeId4", required = false) String placeId4, 
 										 @RequestParam(value = "placeId5", required = false) String placeId5,
-										 @RequestParam(value= "courseId") String courseId) {
+										 @RequestParam(value= "courseId") String courseId,
+										 HttpSession session, Model model) {
 		
-		Integer[] placeIdList = new Integer[5]; //[0,0,0,0,0]
-
-		if(!placeId1.equals("")&&!placeId1.equals("undefined"))placeIdList[0] = Integer.parseInt(placeId1);
-   	    if(!placeId2.equals("")&&!placeId2.equals("undefined"))placeIdList[1] = Integer.parseInt(placeId2);
-   	    if(!placeId3.equals("")&&!placeId3.equals("undefined"))placeIdList[2] = Integer.parseInt(placeId3);
-   	    if(!placeId4.equals("")&&!placeId4.equals("undefined"))placeIdList[3] = Integer.parseInt(placeId4);
-   	    if(!placeId5.equals("")&&!placeId5.equals("undefined"))placeIdList[4] = Integer.parseInt(placeId5);
+		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");		
+		Integer[] placeIds = new Integer[5];
+		CourseInformDTO courseInform = null;
 		
-//   	    if(placeIdList[3] == 0) {
-//   	    	//place가 3개
-//   	    }
-//   	    else if (placeIdList[4] == 0) {
-//   	    	// place가 4개
-//   	    }
-//   	    
+	    try {
+	        placeIds[0] = placeId1 != null && !placeId1.isEmpty() ? Integer.parseInt(placeId1) : null;
+	        placeIds[1] = placeId2 != null && !placeId2.isEmpty() ? Integer.parseInt(placeId2) : null;
+	        placeIds[2] = placeId3 != null && !placeId3.isEmpty() ? Integer.parseInt(placeId3) : null;
+	        placeIds[3] = placeId4 != null && !placeId4.isEmpty() ? Integer.parseInt(placeId4) : null;
+	        placeIds[4] = placeId5 != null && !placeId5.isEmpty() ? Integer.parseInt(placeId5) : null;
+	    } catch (NumberFormatException e) {
+	        e.printStackTrace();
+	    }
+	    
+   	    List<PlaceDTO> placeList = new ArrayList<PlaceDTO>();
    	    
+		for (Integer placeId : placeIds) {
+		    if (placeId != null) {
+		        try {
+					placeList.add(placeService.getPlaceByPlaceId(placeId));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+		    }
+		}
 		
-		return "review";
+
+		
+		try {
+			courseInform = courseService.getCourseInformByCourseId(Integer.parseInt(courseId));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("courseId", courseId);
+		model.addAttribute("placeList", placeList); // placeId, placeName만 사용
+		model.addAttribute("user", user);
+		model.addAttribute("courseInform", courseInform);
+		
+		return "setReview";
 	}
 	
 	
+	private String[] filterNullValues(String... models) {
+	    List<String> filteredValues = new ArrayList<>();
+	    for (String value : models) {
+	        if (value != null && !value.isEmpty()) {
+	            filteredValues.add(value);
+	        }
+	    }
+	    return filteredValues.toArray(new String[filteredValues.size()]);
+	}
+	
 	/* 코스리뷰 작성 이랑 장소 리뷰 별점 표기  */ // http://localhost:8090/review 
 	@RequestMapping(value = "/review", method= RequestMethod.POST)
-	public String insertCouseReview(@ModelAttribute CourseReview coursereview,
-			                        @RequestParam(value="score" , required=false) int star,
-			                        @RequestParam(value= "courseId", required=false) String courseId,
-			                        @RequestParam(value="userId" , required=false) int userId,
-			                        @RequestParam(value="score1" , required=false) String placeScore1,
-			                        @RequestParam(value="score2" , required=false) String placeScore2,
-			                        @RequestParam(value="score3" , required=false) String placeScore3,
-			                        @RequestParam(value="score4" , required=false) String placeScore4,
-			                        @RequestParam(value="score5" , required=false) String placeScore5,
-			                        @RequestParam(value = "placeId1", required = false) String placeId1, 
-									@RequestParam(value = "placeId2", required = false) String placeId2, 
-									@RequestParam(value = "placeId3", required = false) String placeId3, 
-									@RequestParam(value = "placeId4", required = false) String placeId4, 
-									@RequestParam(value = "placeId5", required = false) String placeId5
-			                        ) throws Exception { 
-		
-		System.out.println(star);
+	public String insertCouseReview(@ModelAttribute CourseReview courseReview,
+									@ModelAttribute("placeScore1") String placeScore1,
+									@ModelAttribute("placeScore2") String placeScore2,
+									@ModelAttribute("placeScore3") String placeScore3,
+									@ModelAttribute("placeScore4") String placeScore4,
+									@ModelAttribute("placeScore5") String placeScore5,
+									@ModelAttribute("place1") String placeId1,
+									@ModelAttribute("place2") String placeId2,
+									@ModelAttribute("place3") String placeId3,
+									@ModelAttribute("place4") String placeId4,
+									@ModelAttribute("place5") String placeId5,
+									HttpSession session) { 
 
-		coursereview.setCourseScore(star);
-		System.out.println(coursereview);
+		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");		
 		
-		Integer[] placeScoreList = new Integer[5];
+		String[] placeScores = filterNullValues(placeScore1, placeScore2, placeScore3, placeScore4, placeScore5);
+		String[] placeIds = filterNullValues(placeId1, placeId2, placeId3, placeId4, placeId5);
 		
-		if(!placeScore1.equals("")&&!placeScore1.equals("undefined"))placeScoreList[0] = Integer.parseInt(placeScore1);
-   	    if(!placeScore2.equals("")&&!placeScore2.equals("undefined"))placeScoreList[1] = Integer.parseInt(placeScore2);
-   	    if(!placeScore3.equals("")&&!placeScore3.equals("undefined"))placeScoreList[2] = Integer.parseInt(placeScore3);
-   	    if(!placeScore4.equals("")&&!placeScore4.equals("undefined"))placeScoreList[3] = Integer.parseInt(placeScore4);
-   	    if(!placeScore5.equals("")&&!placeScore5.equals("undefined"))placeScoreList[4] = Integer.parseInt(placeScore5);
-   	    
-		Integer[] placeIdList = new Integer[5]; 
+		 for (int i = 0; i < placeScores.length; i++) {
+			 System.out.println(placeScores[i]);
+		 }		
+		 for (int i = 0; i < placeIds.length; i++) {
+			 System.out.println(placeIds[i]);
+		 }		
+		int placeCount = 0;
+		String query = "";
 		
-		if(!placeId1.equals("")&&!placeId1.equals("undefined"))placeIdList[0] = Integer.parseInt(placeId1);
-   	    if(!placeId2.equals("")&&!placeId2.equals("undefined"))placeIdList[1] = Integer.parseInt(placeId2);
-   	    if(!placeId3.equals("")&&!placeId3.equals("undefined"))placeIdList[2] = Integer.parseInt(placeId3);
-   	    if(!placeId4.equals("")&&!placeId4.equals("undefined"))placeIdList[3] = Integer.parseInt(placeId4);
-   	    if(!placeId5.equals("")&&!placeId5.equals("undefined"))placeIdList[4] = Integer.parseInt(placeId5);
+		// placeScore, placeId가 비어있지 않을 시 placeReview insert 실행
+				for (int i = 0; i < placeIds.length; i++) {
+					if (placeScores[i] != null && placeIds[i] != null) {
+						PlaceReview newPlaceReview = new PlaceReview(user.getUserId(), Integer.parseInt(placeIds[i]), Integer.parseInt(placeScores[i]));
+						boolean result = false;
+						
+							try {
+								result = placereviewservice.insertPlaceReview(newPlaceReview);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							if(result) {
+								System.out.println("place" + i + "리뷰 결과 : " + result);			
+								placeCount++;
+							}
 		
-   	    
-   	    System.out.println("placeIdList[4]: " + placeIdList[4]);
-   	    
-		PlaceReview pr1 = new PlaceReview();
-	    pr1.setPlaceScore(placeScoreList[0]);
-	    pr1.setPlaceId(placeIdList[0]);
-	    pr1.setUserId(userId);
-
+					}
+				}
+				// CourseReview insert 실행
+				
+				boolean result = false;
+				
+				try {
+					result = coursereviewservice.insertCourseReview(courseReview);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				if(result) {
+					System.out.println("course 리뷰 결과 : " + result);						
+				}
+				    
+		        query += ("courseId="+ String.valueOf(courseReview.getCourseId())+"&");
+		        
+		        for(int i= 0; i< placeCount; i++) {
+		        	query+="placeId"+(i+1) + "="+placeIds[i];
+		            	if (i!= placeCount-1) {
+		            		query+="&";
+		            	}
+		            	else{
+		            	}
+		        }		
+		        System.out.println(query);
+			
+		System.out.println(courseReview);
 		
-		
-		PlaceReview pr2 = new PlaceReview();
-	    pr2.setPlaceScore(placeScoreList[1]);
-	    pr2.setPlaceId(placeIdList[1]);
-	    pr2.setUserId(userId);
-
-		
-		PlaceReview pr3 = new PlaceReview();
-        pr3.setPlaceScore(placeScoreList[2]);
-        pr3.setPlaceId(placeIdList[2]);
-        pr3.setUserId(userId);
-
-		
-		PlaceReview pr4 = new PlaceReview();
-        pr4.setPlaceScore(placeScoreList[3]);
-        pr4.setPlaceId(placeIdList[3]);
-        pr4.setUserId(userId);
-
-		
-		PlaceReview pr5 = new PlaceReview();
-        pr5.setPlaceScore(placeScoreList[4]);
-        pr5.setPlaceId(placeIdList[4]);
-        pr5.setUserId(userId);
-
-		
-		coursereviewservice.insertCourseReview(coursereview);
-		
-		placereviewservice.insertPlaceReview(pr1);
-		placereviewservice.insertPlaceReview(pr2);
-		placereviewservice.insertPlaceReview(pr3);
-		placereviewservice.insertPlaceReview(pr4);
-		placereviewservice.insertPlaceReview(pr5);
-		
-		return "review";
+		return "redirect:/courseList/Map?" + query;
 		
 	}
 

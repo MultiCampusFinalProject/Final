@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Course To Go / Course List</title>
 	<style>
 	    table {
 			width: 80%;
@@ -44,7 +44,7 @@
 				    	 					background-color:white;
 				    	 					border-radius: 5px;
 			       	 					    border: 1px solid #EAE8E8;
-			       	 					    padding: 5px">
+			       	 					    padding: 5px;">
 			       	 					    
 						    	 	<c:forEach items="${requestScope.courseMakerUserNameList}" var="userName" varStatus="userSt">
 					    	 			<c:if test="${courseSt.index eq userSt.index}">

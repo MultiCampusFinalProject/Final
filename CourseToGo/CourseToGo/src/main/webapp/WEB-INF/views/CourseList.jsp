@@ -282,7 +282,7 @@ font-weight: bold;
       	<span>제작자: <%= userNickname  %></span>
        <%for (String area : areaSet) {%>
       <span>
-       <%= area %> </span><%} 
+      #<%= area %> </span><%} 
       %>
       
       
