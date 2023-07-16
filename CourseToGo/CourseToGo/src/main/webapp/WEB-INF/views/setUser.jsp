@@ -16,12 +16,22 @@
 		<div class="myPageInform">
 			<table>
 				<tr>
-					<td style="width: 400px;">
+					<td style="width: 500px;">
 						<div align="center" class="left-column" width="500px">
-							<h1>프로필</h1>
-							<img src="https://github.com/S2ll/S2ll/blob/main/userProfile1.png?raw=true" alt="profileImage" width="80" height="80" >
-							<p><h3>${sessionScope.newUser.userName}</h3></p>
-							<p><h4 style="color: grey;">${sessionScope.newUser.userEmail}</h4></p><br>
+									<div style="width:250px;
+												height: 350px;
+										 		border-radius:20px;
+										   		background-color:#ebebeb;
+										   		padding-top: 10px;
+										   		padding-bottom: 10px;
+								   		    	box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3);">
+									   	
+									<div style="background-color:white;
+												width: 250px;"><h1>프로필</h1></div>
+								<img src="https://github.com/S2ll/S2ll/blob/main/userProfile1.png?raw=true" alt="profileImage" width="80" height="80" >
+								<p><h3>${sessionScope.newUser.userName}</h3></p>
+								<p><h4 style="color: grey;">${sessionScope.newUser.userEmail}</h4></p><br>
+							</div>
 						</div>
 					</td>
 					<td>
