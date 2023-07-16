@@ -64,10 +64,10 @@ document.getElementById("area").innerHTML = areaName;
       <input type="hidden" id="placeId3" name="placeId3" value=>
       <input type="hidden" id="placeId4" name="placeId4" value=>
       <input type="hidden" id="placeId5" name="placeId5" value=>
-      <input id="courseName" type="text" name="courseName" value="myCourse">
+      <input class="name" id="courseName" type="text" name="courseName" value="myCourse">
       <input id="courseNumber" type="hidden" name="courseNumber">
       <textarea id="courseContent" class="text" name="courseContent" required>코스에 대한 설명을 작성해주세요.</textarea>
-      <button type="submit">전송</button>
+      <button class = "submit" type="submit">전송</button>
     </form>
   </div> 
 </div>
@@ -165,7 +165,7 @@ document.getElementById("area").innerHTML = areaName;
 	    <ul style="display: flex; flex-direction: column; align-items: center;">
 	      <% for (PlaceDTO place : places) { %>
 	        <div style="display: flex; justify-content: center; align-items: center; width: 200px; height: 60px;" class="well well-sm">
-	          <div onclick="placeClicked('<%= place.getPlaceId()%>',' <%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>');">
+	          <div onclick="placeClicked('<%= place.getPlaceId()%>',' <%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>', );">
 	            <li><%= place.getPlaceName() %></li>
 	          </div>
 	        </div>
@@ -178,195 +178,245 @@ document.getElementById("area").innerHTML = areaName;
 	<div class="markerInputs" onclick="deleteMarker(event)">
 	  <ul id="markerInputs" class="horizontal-list"></ul>
 	</div>
-
+	<div id="markerList" type="hidden"></div>
+	
    	<div class="displayMap">
     <div id="map" class="map">
  
 
-    
-    <script type="text/javascript">
-	    map = new naver.maps.Map('map', {
-		    center: new naver.maps.LatLng(37.5714, 126.9768),
-		    zoom: 10
-		});
-        var map = new naver.maps.Map("map", {});
-        var markerList = [];
-        var MAX_MARKER_COUNT = 5; // 최대 마커 개수
-        var selectedMarker = null; // 선택된 마커
-        var myList = [];
-		var placeName=[];
-        if (myList === null) {
-        } else if (myList.length >= MAX_MARKER_COUNT) {
-            myList = myList.slice(0, MAX_MARKER_COUNT);
-        }
-       
-        // 기존에 생성된 마커들을 지도에 표시합니다.
-        for (var i = 0; i < myList.length; i++) {
-            var lat = myList[i][0];
-            var lng = myList[i][1];
+<script>
+  map = new naver.maps.Map('map', {
+    center: new naver.maps.LatLng(37.5714, 126.9768),
+    zoom: 10
+  });
 
-            var marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(lat, lng),
-                map: map,
-                draggable: false
-            });
-            var markerOptions = {
-            	    icon: {
-            	        url: '/marker.png',
-            	        size: new naver.maps.Size(50, 52),
-            	        origin: new naver.maps.Point(0, 0),
-            	        anchor: new naver.maps.Point(25, 26)
-            	    }
-           };
+  var MAX_MARKER_COUNT = 5; // 최대 마커 개수
+  var selectedMarker = null; // 선택된 마커
+  var markerList = [];
+  var myList = [];
+  var placeName = [];
+  var placeId = [];
 
-        var marker = new naver.maps.Marker(markerOptions);
-            markerList.push(marker);
-            updateMarkerInputs();
-            addMarkerEventListeners(marker);
-        }
-        
-        function updateMarkerInputs() {
-            var markerInputs = '';
-            for (var i = 0; i < placeName.length; i++) {
-                var name = placeName[i];
-                markerInputs += '<li>' + (i + 1) + ' ' + name + '</li>';
-            }
-            document.getElementById('markerInputs').innerHTML = markerInputs;
-        }
+  if (myList === null) {
+  } else if (myList.length >= MAX_MARKER_COUNT) {
+    myList = myList.slice(0, MAX_MARKER_COUNT);
+  }
 
-        function addMarkerEventListeners(marker) {
-        	  naver.maps.Event.addListener(marker, 'click', function() {
-        	    if (selectedMarker !== marker) {
-        	      if (selectedMarker) {
-        	        selectedMarker.setIcon('/marker.png');
-        	      }
-        	      selectedMarker = marker;
-        	      selectedMarker.setIcon('/marker.png');
-        	    } else {
-        	      var index = markerList.indexOf(marker);
-        	      if (index !== -1) {
-        	        marker.setMap(null);
-        	        markerList.splice(index, 1);
-        	        placeName.splice(index, 1);
-        	        placeId.splice(index, 1);
-        	        myList.splice(index, 1);
-        	        selectedMarker = null;
-        	        updateMarkerInputs();
-        	        console.log("Marker removed");
-        	        console.log("markerList:", markerList);
-        	        console.log("placeName:", placeName);
-        	        console.log("placeId:", placeId);
-        	        console.log("myList:", myList);
-        	      }
-        	    }
-        	  });
+  for (var i = 0; i < myList.length; i++) {
+    var lat = myList[i][0];
+    var lng = myList[i][1];
+    var name = myList[i][2];
 
-        	  naver.maps.Event.addListener(marker, 'dragend', function() {
-        	    updateMarkerInputs();
-        	  });
-        	}
-        
-        
-        function deleteMarker(event) {
-        	  var clickedIndex = Array.from(event.target.parentNode.children).indexOf(event.target);
-        	  if (clickedIndex !== -1) {
-        	    var markerToRemove = markerList[clickedIndex];
-        	    if (markerToRemove) {
-        	      markerToRemove.setMap(null);
-        	      markerList.splice(clickedIndex, 1);
-        	      placeName.splice(clickedIndex, 1);
-        	      placeId.splice(clickedIndex, 1);
-        	      myList.splice(clickedIndex, 1);
-        	      updateMarkerInputs();
-        	      console.log("Marker removed");
-        	      console.log("markerList:", markerList);
-        	      console.log("placeName:", placeName);
-        	      console.log("placeId:", placeId);
-        	      console.log("myList:", myList);
-        	    }
-        	}
-        }
-		
-        var placeId = [];
-        
-        function placeClicked(id ,lat, lng, name) {
-            if (myList === null) {
-                myList = [];
-            } else if (myList.length >= MAX_MARKER_COUNT) {
-            	console.log(myList);
-                return; // 마커 개수가 제한에 도달한 경우 마커 생성하지 않음
-            }
-            for(var i = 0 ; i < myList.length; i++){ // 마커가 이미 찍힌지 비교
-            	if(name ==placeName[i]){
-            		return;	
-            	}
-            }
-           	
-          
-            
-            var newPlace = [name, lat, lng];
-            placeName.push(name);
-            myList.push(newPlace);
-       	 <%
-         String contextPath = request.getContextPath();
-         String imagePath = contextPath + "/images/marker.png";
-      	%>
-            var marker = new naver.maps.Marker({
-                position: new naver.maps.LatLng(lat, lng),
-                map: map,
-                icon: {
-                    content: [
-                                '<div class="cs_mapbridge">',
-                                    '<div class="map_group _map_group crs">',
-                                        '<div class="map_marker _marker num1 num1_big"> ',
-                                            '<span class="ico _icon"></span>',
-                                            '<span class="shd"></span>',
-                                        '</div>',
-                                    '</div>',
-                                '</div>'
-                            ].join(''),
-                    size: new naver.maps.Size(38, 58),
-                    anchor: new naver.maps.Point(19, 58),
-                },
-                draggable: false
-                
-            });
-            
-            console.log(marker);
-            
-            var contentString = '<div style="max-width: 200px;">' +
-            name +
-            '</div>';
-            var infoWindow = new naver.maps.InfoWindow({
-                content: contentString, // 말풍선에 표시할 내용
-                position: marker.getPosition() // 말풍선을 표시할 위치는 마커의 위치로 설정
-            	
-            });
-            marker.index = markerList.length;
-            markerList.push(marker);
-            updateMarkerInputs();
-            addMarkerEventListeners(marker);
-			
-            placeId.push(id); // 검색결과 클릭시 마커를 찍으면서 placeId값을 배열에 저장.
-            // 첫 번째 마커로 지도를 이동합니다. -x
-          	console.log(placeId); 
-            map.setCenter(marker.getPosition());
-            var contentString = name;
-            infoWindow.setContent(contentString);
-            infoWindow.open(map, marker);
+    var marker = new naver.maps.Marker({
+      position: new naver.maps.LatLng(lat, lng),
+      map: map,
+      draggable: false,
+      name: name,
+      id: i.toString()
+    });
 
-            naver.maps.Event.addListener(marker, 'click', function() {
-                if (infoWindow.getMap()) {
-                    infoWindow.close();
-                }else{	
-            		infoWindow.open(map, marker);
-                }
-            });
+    markerList.push(marker);
+
+    addMarkerEventListeners(marker);
+  }
+
+  function updateMarkers() {
+    updateMarkerInputs();
+    updateMarkerList();
+  }
+
+  function updateMarkerInputs() {
+    var markerInputs = '';
+    for (var i = 0; i < placeName.length; i++) {
+      var name = placeName[i];
+      markerInputs += '<li>' + (i + 1) + ' ' + name + '</li>';
+    }
+    document.getElementById('markerInputs').innerHTML = markerInputs;
+  }
+
+  function updateMarkerList() {
+    var markerListHTML = '';
+    for (var i = 0; i < markerList.length; i++) {
+      var marker = markerList[i];
+      var markerName = placeName[i];
+      if (markerName) {
+        markerListHTML += '<li>' + (i + 1) + ' ' + markerName + '</li>';
+      }
+    }
+    document.getElementById('markerList').innerHTML = markerListHTML;
+  }
+
+  function addMarkerEventListeners(marker) {
+    naver.maps.Event.addListener(marker, 'click', function () {
+      if (selectedMarker !== marker) {
+        if (selectedMarker) {
+          var selectedMarkerName = placeName[selectedMarker.index];
+          var selectedMarkerHTML = [
+            '<div class="cs_mapbridge">',
+            '  <div class="map_group _map_group crs">',
+            '    <div class="map_marker _marker num1 num1_big">',
+            '      <span class="ico _icon">' + selectedMarkerName + '</span>',
+            '      <span class="shd"></span>',
+            '    </div>',
+            '  </div>',
+            '</div>'
+          ].join('');
+          selectedMarker.setIcon({
+            content: selectedMarkerHTML,
+            size: new naver.maps.Size(38, 58),
+            anchor: new naver.maps.Point(19, 58)
+          });
         }
 
+        selectedMarker = marker;
+        var name = placeName[selectedMarker.index];
+        var markerHTML = [
+          '<div class="cs_mapbridge">',
+          '  <div class="map_group _map_group crs">',
+          '    <div class="map_marker _marker num1 num1_big">',
+          '      <span class="ico _icon">' + name + '</span>',
+          '      <span class="shd"></span>',
+          '    </div>',
+          '  </div>',
+          '</div>'
+        ].join('');
 
+        selectedMarker.setIcon({
+          content: markerHTML,
+          size: new naver.maps.Size(38, 58),
+          anchor: new naver.maps.Point(19, 58)
+        });
+      } else {
+        var index = markerList.indexOf(marker);
+        if (index !== -1) {
+          marker.setMap(null);
+          markerList.splice(index, 1);
+          placeName.splice(index, 1);
+          placeId.splice(index, 1);
+          myList.splice(index, 1);
+          selectedMarker = null;
+          updateMarkers();
+          updateMarkerOrder();
+          console.log("Marker removed");
+          console.log("markerList:", markerList);
+          console.log("placeName:", placeName);
+          console.log("placeId:", placeId);
+          console.log("myList:", myList);
+        }
+      }
+    });
 
-    </script>
+    naver.maps.Event.addListener(marker, 'dragend', function () {
+      updateMarkerInputs();
+    });
+  }
+
+  function deleteMarker(event) {
+    var clickedIndex = Array.from(event.target.parentNode.children).indexOf(event.target);
+    if (clickedIndex !== -1) {
+      var markerToRemove = markerList[clickedIndex];
+      if (markerToRemove) {
+        markerToRemove.setMap(null);
+        markerList.splice(clickedIndex, 1);
+        placeName.splice(clickedIndex, 1);
+        placeId.splice(clickedIndex, 1);
+        myList.splice(clickedIndex, 1);
+        updateMarkers();
+        updateMarkerOrder();
+        console.log("Marker removed");
+        console.log("markerList:", markerList);
+        console.log("placeName:", placeName);
+        console.log("placeId:", placeId);
+        console.log("myList:", myList);
+      }
+    }
+  }
+
+  function placeClicked(id, lat, lng, name, marker) {
+    if (myList === null) {
+      myList = [];
+    } else if (myList.length >= MAX_MARKER_COUNT) {
+      console.log(myList);
+      return; // 마커 개수가 제한에 도달한 경우 마커 생성하지 않음
+    }
+
+    for (var i = 0; i < myList.length; i++) {
+      // 마커가 이미 찍힌지 비교
+      if (name === placeName[i]) {
+        return;
+      }
+    }
+
+    console.log(myList);
+    var newPlace = [name, lat, lng];
+    placeName.push(name);
+    myList.push(newPlace);
+
+    var markerHTML = [
+      '<div class="cs_mapbridge">',
+      '  <div class="map_group _map_group crs">',
+      '    <div class="map_marker _marker num1 num1_big">',
+      '      <span class="ico _icon">' + getCircleNumber(placeName.indexOf(name)) + name + '</span>',
+      '      <span class="shd"></span>',
+      '    </div>',
+      '  </div>',
+      '</div>'
+    ].join('');
+
+    function getCircleNumber(index) {
+      var baseCharCode = 9312; // '①'의 유니코드 값
+      return String.fromCharCode(baseCharCode + index);
+    }
+
+    var marker = new naver.maps.Marker({
+      position: new naver.maps.LatLng(lat, lng),
+      map: map,
+      icon: {
+        content: markerHTML,
+        size: new naver.maps.Size(38, 58),
+        anchor: new naver.maps.Point(19, 58),
+      },
+      draggable: false,
+    });
+
+    marker.index = markerList.length;
+    markerList.push(marker);
+    updateMarkers();
+    updateMarkerOrder();
+    addMarkerEventListeners(marker);
+
+    placeId.push(id);
+    map.setCenter(marker.getPosition());
+  }
+
+  function updateMarkerOrder() {
+    var baseCharCode = 9312; // '①'의 유니코드 값
+    for (var i = 0; i < markerList.length; i++) {
+      var marker = markerList[i];
+      if (marker) {
+        var markerName = placeName[i];
+        var circleNumber = String.fromCharCode(baseCharCode + i);
+        var markerHTML = [
+          '<div class="cs_mapbridge">',
+          '  <div class="map_group _map_group crs">',
+          '    <div class="map_marker _marker num1 num1_big">',
+          '      <span class="ico _icon">' + circleNumber + markerName + '</span>',
+          '      <span class="shd"></span>',
+          '    </div>',
+          '  </div>',
+          '</div>'
+        ].join('');
+        marker.setIcon({
+          content: markerHTML,
+          size: new naver.maps.Size(38, 58),
+          anchor: new naver.maps.Point(19, 58)
+        });
+      }
+    }
+  }
+
+  updateMarkers();
+</script>
 
 	</div>   
 </div>
