@@ -180,43 +180,67 @@
   
 .cs_mapbridge {
   position: relative;
-  width: 40px;
-  height: 60px;
+  display: inline-block;
 }
 
 .map_group {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 30px;
+  height: 30px;
+}
+
+._map_group.crs {
+  background: #00cae9;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
 }
 
 .map_marker {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 60px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+._marker.num1.num1_big {
+  width: 30px;
+  height: 30px;
 }
 
 ._icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
-  background-color: #ff0000;
+  display: block;
+  width: 14px;
+  height: 14px;
+  margin: 8px;
+  background: #e6e6e6;
   border-radius: 50%;
 }
 
 .shd {
+  display: block;
+  width: 14px;
+  height: 14px;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 28px;
-  height: 28px;
-  background-color: #000000;
-  opacity: 0.2;
+  top: 0;
+  left: 0;
   border-radius: 50%;
+  box-shadow: 0 0 1px 2px #00cae9;
+  opacity: 0;
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
+  animation-delay: 1.1s;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2, 1.2);
+    opacity: 0;
+  }
 }
