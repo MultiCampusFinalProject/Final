@@ -79,14 +79,18 @@
 					    	 			</c:if>
 					    	 		</c:forEach>
 									
-									<div style="margin-bottom:5px;">
+									<div style="margin-bottom:5px;
+												background-color: #fafafa;
+												border-radius: 5px;
+												padding:5px;
+				       	 					    padding-left: 20px;">
 										<c:forEach items="${requestScope.courseInformDTOList}" var="courseInformDTO" varStatus= "courseInformSt">
 											<c:if test="${courseReviewSt.index eq courseInformSt.index}">
 												<b>${courseInformDTO.userNickName}</b> 님의 <a href="/courseList/Map?${query}"><b>${courseInformDTO.courseName}</b></a> 코스에 남긴 리뷰입니다. <b style="color: #B6B7B7;">${courseReview.reviewDate}</b>
-												<div class="stars" style = "text-align: center;" data-score="${courseReview.courseScore}"></div>
 											</c:if>
 										</c:forEach>
-									</div>	
+									</div>
+									<div class="stars" style = "text-align: center; margin-bottom:5px;" data-score="${courseReview.courseScore}"></div>
 									<div style = "background-color: #DDEBF0;
 												  padding:10px;
 												  border-radius: 5px;

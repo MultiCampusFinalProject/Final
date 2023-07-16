@@ -41,28 +41,41 @@
 		    	 	<c:forEach items="${requestScope.courseInformList}" var="courseInformDTO" varStatus="courseSt">
 	
 				    	 		<div style="margin: 5px;
-				    	 					background-color:white;
+				    	 					background-color: #DDEBF0;
 				    	 					border-radius: 5px;
-			       	 					    border: 1px solid #EAE8E8;
-			       	 					    padding: 5px;">
-			       	 					    
-						    	 	<c:forEach items="${requestScope.courseMakerUserNameList}" var="userName" varStatus="userSt">
-					    	 			<c:if test="${courseSt.index eq userSt.index}">
-					    	 				<b>${userName} </b>님의
-					    	 			</c:if>
-					    	 		</c:forEach>
-					    	 		
-					    	 		<c:forEach items="${requestScope.courseDetailPageList}" var="coursePage" varStatus="pageSt">
-					    	 			<c:if test="${courseSt.index eq pageSt.index}">
-					    	 				<c:set var="query" value="${coursePage}" scope="request" />
-					    	 			</c:if>
-					    	 		</c:forEach>
-					    	 		
-				    	 			<a href="/courseList/Map?${query}" style="color: blue;"><b>${courseInformDTO.courseName} </b></a> Course: ${courseInformDTO.courseContent} <br>
-				    	 			
-					                <div class="inline-items">
+			       	 					    border: 1px solid #BDD9E3;
+			       	 					    padding: 10px;">
+			       	 				<div style="margin-bottom:5px;
+												background-color: #fafafa;
+												border-radius: 5px;
+												padding:5px;
+				       	 					    padding-left: 20px;">	    
+							    	 	<c:forEach items="${requestScope.courseMakerUserNameList}" var="userName" varStatus="userSt">
+						    	 			<c:if test="${courseSt.index eq userSt.index}">
+						    	 				<b>${userName} </b>님의
+						    	 			</c:if>
+						    	 		</c:forEach>
+						    	 		
+						    	 		<c:forEach items="${requestScope.courseDetailPageList}" var="coursePage" varStatus="pageSt">
+						    	 			<c:if test="${courseSt.index eq pageSt.index}">
+						    	 				<c:set var="query" value="${coursePage}" scope="request" />
+						    	 			</c:if>
+						    	 		</c:forEach>
+						    	 		
+					    	 			<a href="/courseList/Map?${query}" style="background-color: white;
+					    	 													  color:#595959;"><b>${courseInformDTO.courseName} </b></a> Course: <b style="color: #797979">${courseInformDTO.courseContent}</b> <br>
+									</div>				    	 			
+					                <div class="inline-items" style = "border-radius:5px;
+					                								   background-color: ;
+					                								   margin-top: 5px;
+					                								   display:flex;
+					                								   align-items: center;
+					                								   justify-content: center;">
 					                    <c:forEach items="${fn:split(courseInformDTO.courseList, ',')}" var="place">
-					                        <div class="item">${place}</div>
+					                        <div class="item" style = "padding:5px;
+					                        						   background-color: #71B6D0;
+					                        						   border-radius:5px;
+					                        						   color: white;"><b>${place}</b></div>
 					                    </c:forEach>
 					                </div>
 					                
