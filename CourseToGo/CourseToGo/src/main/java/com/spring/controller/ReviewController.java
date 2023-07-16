@@ -80,9 +80,7 @@ public class ReviewController {
 				}
 		    }
 		}
-		
 
-		
 		try {
 			courseInform = courseService.getCourseInformByCourseId(Integer.parseInt(courseId));
 		} catch (Exception e) {
@@ -128,12 +126,12 @@ public class ReviewController {
 		String[] placeScores = filterNullValues(placeScore1, placeScore2, placeScore3, placeScore4, placeScore5);
 		String[] placeIds = filterNullValues(placeId1, placeId2, placeId3, placeId4, placeId5);
 		
-		 for (int i = 0; i < placeScores.length; i++) {
-			 System.out.println(placeScores[i]);
-		 }		
-		 for (int i = 0; i < placeIds.length; i++) {
-			 System.out.println(placeIds[i]);
-		 }		
+//		 for (int i = 0; i < placeScores.length; i++) {
+//			 System.out.println(placeScores[i]);
+//		 }		
+//		 for (int i = 0; i < placeIds.length; i++) {
+//			 System.out.println(placeIds[i]);
+//		 }		
 		int placeCount = 0;
 		String query = "";
 		
@@ -149,7 +147,7 @@ public class ReviewController {
 								e.printStackTrace();
 							}
 							if(result) {
-								System.out.println("place" + i + "리뷰 결과 : " + result);			
+//								System.out.println("place" + i + "리뷰 결과 : " + result);			
 								placeCount++;
 							}
 		
@@ -166,7 +164,7 @@ public class ReviewController {
 				}
 				
 				if(result) {
-					System.out.println("course 리뷰 결과 : " + result);						
+//					System.out.println("course 리뷰 결과 : " + result);						
 				}
 				    
 		        query += ("courseId="+ String.valueOf(courseReview.getCourseId())+"&");
@@ -179,9 +177,7 @@ public class ReviewController {
 		            	else{
 		            	}
 		        }		
-		        System.out.println(query);
 			
-		System.out.println(courseReview);
 		
 		return "redirect:/courseList/Map?" + query;
 		

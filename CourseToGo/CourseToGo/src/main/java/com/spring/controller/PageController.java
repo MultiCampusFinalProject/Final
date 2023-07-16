@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.spring.dto.CourseDTO;
 import com.spring.dto.CourseInformDTO;
+import com.spring.dto.CourseReview;
 import com.spring.dto.CtgUserDTO;
 import com.spring.dto.UserBookmarkCourseDTO;
+import com.spring.service.CourseReviewService;
 import com.spring.service.CourseService;
+import com.spring.service.PlaceReviewService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,6 +47,12 @@ public class PageController {
 	
 	@Autowired
 	private BookmarkController bookmarkController;
+	
+	@Autowired
+	private CourseReviewService courseReviewService;
+	
+	@Autowired
+	private PlaceReviewService placeReviewService;
 	
 	@Value("${naver.api.login.client.id}")
 	private String clientId;	
@@ -227,7 +237,8 @@ public class PageController {
 		
 		return "userContents";
 	}
-
+	
+	// 나의 북마크
 	@GetMapping(value = "/userBookmarkList")
 	public String getUserBookmarkListPage(HttpSession session,
 										  Model model) {
@@ -285,7 +296,7 @@ public class PageController {
 		return "userCourseList";
 	}
 	
-	
+	// 나의 코스	
 	@GetMapping(value = "/userCourse")
 	public String getUserCourseListPage(HttpSession session, Model model) {
 		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
@@ -332,8 +343,60 @@ public class PageController {
 		return "userCourseList";
 	}
 	
-	
-	
+	// 나의 리뷰
+	@GetMapping(value = "userReview")
+	public String getUserReviewPage(HttpSession session, Model model) {
+		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+		List<CourseReview> courseReviewList = new ArrayList<CourseReview>();
+		List<CourseInformDTO> courseInformDTOList = new ArrayList<CourseInformDTO>();
+		List<String> courseDetailPageList = new ArrayList<String>();
+		
+		try {
+			courseReviewList = courseReviewService.getCourseReviewByUserId(user.getUserId());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+
+		
+		for(CourseReview review : courseReviewList) {
+			CourseInformDTO courseInform = null;
+			
+			try {
+				courseInform = courseService.getCourseInformByCourseId(review.getCourseId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			courseInformDTOList.add(courseInform);
+		}
+		
+		for (CourseInformDTO course : courseInformDTOList) {
+        	int courseId = course.getCourseId();
+            String courseIdList = course.getCourseIdList();
+            String[] placeIds = courseIdList.split(",");
+            String query = "";
+            int courseNumber = course.getCourseNumber();
+         
+            query += ("courseId="+ String.valueOf(courseId)+"&");
+            
+            for(int i= 0; i< courseNumber; i++) {
+            	query+="placeId"+(i+1) + "="+placeIds[i];
+	            	if (i!= courseNumber-1) {
+	            		query+="&";
+	            	}
+	            	else{
+	            	}
+            }
+            courseDetailPageList.add(query);    
+	}		
+		
+		
+		model.addAttribute("courseReviewList", courseReviewList);
+		model.addAttribute("courseInformDTOList", courseInformDTOList);
+		model.addAttribute("courseDetailPageList", courseDetailPageList);	
+		
+		return "userReviewList";
+	}
 	
 	
 	
