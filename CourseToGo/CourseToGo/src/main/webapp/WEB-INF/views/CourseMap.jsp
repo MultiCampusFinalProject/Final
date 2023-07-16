@@ -268,7 +268,7 @@ function moveMap(minlat, minlong, maxlat, maxlong) {
    	 
    	  
    	  	   <div style="" class="">
-   	     <form id="review" action="/review" method="GET" accept-charset="UTF-8">
+   	     <form id="review" action="/setReview" method="GET" accept-charset="UTF-8">
    	     
    	      <li><input id="slider-button" type="button" class="create-course" value="리뷰 작성 버튼" ></li>
       <input type="hidden" id="placeId1" name="placeId1" value=>
