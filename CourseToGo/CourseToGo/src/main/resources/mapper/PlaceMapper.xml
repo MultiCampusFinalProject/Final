@@ -40,13 +40,13 @@
 		ORDER BY p.place_id ASC
  	</select>
  
-	<select id="searchPlacesByAreaOrCategory" parameterType="String" resultType="com.spring.dto.PlaceDTO">
+	<select id="searchPlacesByAreaOrCategory" parameterType="java.util.Map" resultType="com.spring.dto.PlaceDTO">
 		SELECT p.place_id AS placeId, p.place_name AS placeName, p.latitude, p.longitude, p.address, p.place_avg_score AS placeAvgScore
 		FROM place p
-		LEFT JOIN area_place ap ON p.place_id = ap.place_id
-		LEFT JOIN area a ON (a.area_name = #{areaName} OR #{areaName} IS NULL) AND ap.area_id = a.area_id
-		LEFT JOIN category_place cp ON p.place_id = cp.place_id
-		LEFT JOIN category c ON (c.category_name = #{categoryName} OR #{categoryName} IS NULL) AND cp.category_id = c.category_id
+		INNER JOIN area_place ap ON p.place_id = ap.place_id
+		INNER JOIN area a ON (a.area_name = #{areaName} OR #{areaName} IS NULL) AND ap.area_id = a.area_id
+		INNER JOIN category_place cp ON p.place_id = cp.place_id
+		INNER JOIN category c ON (c.category_name = #{categoryName} OR #{categoryName} IS NULL) AND cp.category_id = c.category_id
 		WHERE (a.area_name = #{areaName} OR (#{areaName} IS NULL OR #{areaName} = '')) OR (c.category_name = #{categoryName} OR (#{categoryName} IS NULL OR #{categoryName} = ''))
 		ORDER BY p.place_avg_score DESC
 	</select>

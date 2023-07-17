@@ -1,6 +1,8 @@
 package com.spring.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -81,9 +83,11 @@ public class PlaceService {
 	}
 
 
-	public List<PlaceDTO> searchPlacesByAreaOrCategory(String categoryName, String areaName) {
-		
-		return mapper.searchPlacesByAreaOrCategory(categoryName, areaName);
+	public List<PlaceDTO> searchPlacesByAreaOrCategory(String areaName, String categoryName) {
+		Map<String, String> params = new HashMap<>();
+		params.put("categoryName", categoryName);
+		params.put("areaName", areaName);
+		return mapper.searchPlacesByAreaOrCategory(params);
 	}
 
 

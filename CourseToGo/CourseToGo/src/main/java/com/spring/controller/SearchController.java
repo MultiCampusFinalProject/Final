@@ -71,7 +71,7 @@ public class SearchController {
             sb.append("Average Score: ").append(place.getPlaceAvgScore()).append("<br>");
             sb.append("<br>");
         }
-                
+        System.out.println("jSearchA");
         if (searchResults2.isEmpty()) {
             System.out.println("검색결과 없음.");
         }
@@ -83,7 +83,7 @@ public class SearchController {
     
     @GetMapping("/jSearchAC")
     public String searchPlacesByAreaOrCategory(@RequestParam("areaName") String areaName, @RequestParam("categoryName") String categoryName, Model model3) {
-    	
+    	System.out.println("jSearchAC");
 
     	System.out.println(areaName);
     	System.out.println(categoryName);
