@@ -12,7 +12,7 @@
  		INSERT INTO course (COURSE_ID, USER_ID, COURSE_NAME, COURSE_AVG_SCORE, COURSE_NUMBER,COURSE_CONTENT)
  		VALUES (course_seq.nextval, #{userId}, #{courseName}, 0, #{courseNumber}, #{courseContent})
  	</insert>
- <select id="getAllCourses" resultType="com.spring.dto.CourseInformDTO">
+<select id="getAllCourses" resultType="com.spring.dto.CourseInformDTO">
   SELECT
     c.course_id AS courseId,
     u.user_nickname AS userNickName,
@@ -23,7 +23,11 @@
     LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
     LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
     LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
-    LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList
+    LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList,
+    CASE
+      WHEN user_bookmark_course.BOOKMARK_ID IS NULL THEN 0
+      ELSE 1
+    END AS isBookmarked
   FROM
     Course c
     JOIN Course_place ON c.course_id = Course_place.course_id
@@ -33,91 +37,91 @@
     JOIN area ON area_place.area_id = area.area_id
     JOIN category ON category_place.category_id = category.category_id
     JOIN ctg_user u ON c.user_id = u.user_id
+    LEFT JOIN user_bookmark_course ON c.course_id = user_bookmark_course.COURSE_ID
   GROUP BY
     c.course_id,
     u.user_nickname,
     c.course_name,
     c.course_content,
     c.course_avg_score,
-    c.course_number
+    c.course_number,
+    user_bookmark_course.BOOKMARK_ID
 </select>
 
- 		<select id="getCourseInformByCourseId" parameterType="_int"  resultType="com.spring.dto.CourseInformDTO">
-SELECT
-   c.course_id as  courseId,
-       u.user_nickname AS userNickName,
-        c.course_name  AS courseName,
-        c.course_avg_score  AS courseAvgScore,
-        c.course_number AS courseNumber,
-        c.course_content AS courseContent,
-        LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
-        LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
-      	LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
-        LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList
-FROM
-  Course c
-     JOIN
-        Course_place ON c.course_id = Course_place.course_id
-      JOIN
-        place ON Course_place.place_id = place.place_id
-   JOIN
-        area_place ON place.place_id = area_place.place_id
-    JOIN
-        category_place ON place.place_id = category_place.place_id
-      JOIN
-        area ON area_place.area_id = area.area_id
-         JOIN
-        category ON category_place.category_id = category.category_id
-         JOIN ctg_user u ON c.user_id = u.user_id
-WHERE
-	c.course_id = #{courseId}
-GROUP BY
-  c.course_id,
-  u.user_nickname,
-  c.course_name,
-  c.course_content,
-  c.course_avg_score,
-  c.course_number
- 	</select>
- 		<select id="getCourseInformByUserId" parameterType="_int"  resultType="com.spring.dto.CourseInformDTO">
-SELECT
-  c.course_id as  courseId,
-        u.user_nickname AS userNickName,
-        c.course_name  AS courseName,
-        c.course_avg_score  AS courseAvgScore,
-        c.course_number AS courseNumber,
-        c.course_content AS courseContent,
-        LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
-        LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
-      	LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
-        LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList
-FROM
-  Course c
-
-  
-       JOIN
-        Course_place ON c.course_id = Course_place.course_id
-      JOIN
-        place ON Course_place.place_id = place.place_id
-   JOIN
-        area_place ON place.place_id = area_place.place_id
-    JOIN
-        category_place ON place.place_id = category_place.place_id
-      JOIN
-        area ON area_place.area_id = area.area_id
-         JOIN
-        category ON category_place.category_id = category.category_id
-         JOIN ctg_user u ON c.user_id = u.user_id
-WHERE
-	c.user_id = #{userId}
-GROUP BY
-  c.course_id,
-   u.user_nickname,
-  c.course_name,
-  c.course_content,
-  c.course_avg_score,
-  c.course_number
- 	</select>
+ 		<select id="getCourseInformByCourseId" parameterType="_int" resultType="com.spring.dto.CourseInformDTO">
+  SELECT
+    c.course_id AS courseId,
+    u.user_nickname AS userNickName,
+    c.course_name AS courseName,
+    c.course_avg_score AS courseAvgScore,
+    c.course_number AS courseNumber,
+    c.course_content AS courseContent,
+    LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
+    LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
+    LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
+    LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList,
+    CASE
+      WHEN user_bookmark_course.BOOKMARK_ID IS NULL THEN 0
+      ELSE 1
+    END AS isBookMarked
+  FROM
+    Course c
+    JOIN Course_place ON c.course_id = Course_place.course_id
+    JOIN place ON Course_place.place_id = place.place_id
+    JOIN area_place ON place.place_id = area_place.place_id
+    JOIN category_place ON place.place_id = category_place.place_id
+    JOIN area ON area_place.area_id = area.area_id
+    JOIN category ON category_place.category_id = category.category_id
+    JOIN ctg_user u ON c.user_id = u.user_id
+    LEFT JOIN user_bookmark_course ON c.course_id = user_bookmark_course.COURSE_ID
+  WHERE
+    c.course_id = #{courseId}
+  GROUP BY
+    c.course_id,
+    u.user_nickname,
+    c.course_name,
+    c.course_content,
+    c.course_avg_score,
+    c.course_number,
+    user_bookmark_course.BOOKMARK_ID
+</select>
+ 		<select id="getCourseInformByUserId" parameterType="_int" resultType="com.spring.dto.CourseInformDTO">
+  SELECT
+    c.course_id AS courseId,
+    u.user_nickname AS userNickName,
+    c.course_name AS courseName,
+    c.course_avg_score AS courseAvgScore,
+    c.course_number AS courseNumber,
+    c.course_content AS courseContent,
+    LISTAGG(Course_place.place_id, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseIdList,
+    LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
+    LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
+    LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList,
+    CASE
+      WHEN user_bookmark_course.BOOKMARK_ID IS NULL THEN 0
+      ELSE 1
+    END AS isBookMarked
+  FROM
+    Course c
+    JOIN Course_place ON c.course_id = Course_place.course_id
+    JOIN place ON Course_place.place_id = place.place_id
+    JOIN area_place ON place.place_id = area_place.place_id
+    JOIN category_place ON place.place_id = category_place.place_id
+    JOIN area ON area_place.area_id = area.area_id
+    JOIN category ON category_place.category_id = category.category_id
+    JOIN ctg_user u ON c.user_id = u.user_id
+    LEFT JOIN user_bookmark_course ON c.course_id = user_bookmark_course.COURSE_ID AND user_bookmark_course.USER_ID = #{userId}
+  WHERE
+    c.user_id = #{userId}
+  GROUP BY
+    c.course_id,
+    u.user_nickname,
+    c.course_name,
+    c.course_content,
+    c.course_avg_score,
+    c.course_number,
+    user_bookmark_course.BOOKMARK_ID
+</select>
  	<select id="getCourseById" parameterType="_int" resultType="com.spring.dto.CourseDTO">
  	
  	SELECT
@@ -135,35 +139,7 @@ course_id = #{courseId}
  	
  	</select>
 
- 	 	<select id="getCourseBySearchKeyword" parameterType="com.spring.dto.SearchKeyword" resultType="com.spring.dto.CourseInformDTO">
-SELECT
-  c.course_id AS courseId,
-  c.user_id AS userId,
-  c.course_name AS courseName,
-  c.course_avg_score AS courseAvgScore,
-  c.course_number AS courseNumber,
-  c.course_content AS courseContent,
-  LISTAGG(cp.place_id, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseIdList,
-  LISTAGG(pl.place_name, ',') WITHIN GROUP (ORDER BY cp.place_id) AS courseList
-FROM
-  Course c
-JOIN
-  Course_place cp ON c.course_id = cp.course_id
-JOIN
-  place pl ON cp.place_id = pl.place_id
-GROUP BY
-  c.course_id,
-  c.user_id,
-  c.course_name,
-  c.course_content,
-  c.course_avg_score,
-  c.course_number
-  <trim prefix="WHERE" prefixOverrides="AND |OR">
-							<if test="keyword != null and keyword !=''">
-								 	AND content LIKE '%'||#{keyword}||'%'
-								</if>
-							</trim>
- 	</select>
+ 
  	<!-- pagination 이 적용된 쿼리문 -->
 <select id="getCourseWithPageRequest" parameterType="com.spring.dto.PageRequestDTO" resultType="com.spring.dto.CourseInformDTO">
   SELECT
@@ -176,7 +152,11 @@ GROUP BY
     Course.courseIdList AS courseIdList,
     Course.courseList AS courseList,
     Course.areaNameList AS areaNameList,
-    Course.categoryNameList AS categoryNameList
+    Course.categoryNameList AS categoryNameList,
+    CASE
+      WHEN user_bookmark_course.BOOKMARK_ID IS NULL THEN 0
+      ELSE 1
+    END AS isBookMarked
   FROM (
     SELECT
       c.course_id,
@@ -198,7 +178,7 @@ GROUP BY
       JOIN category_place ON place.place_id = category_place.place_id
       JOIN area ON area_place.area_id = area.area_id
       JOIN category ON category_place.category_id = category.category_id
-         JOIN ctg_user u ON c.user_id = u.user_id
+      JOIN ctg_user u ON c.user_id = u.user_id
     <trim prefix="WHERE" prefixOverrides="AND |OR">
       <if test="keyword != null and keyword !=''">
         AND (c.course_content LIKE '%'||#{keyword}||'%'
@@ -215,6 +195,7 @@ GROUP BY
     c.course_avg_score,
     c.course_number
   ) Course
+  LEFT JOIN user_bookmark_course ON Course.course_id = user_bookmark_course.COURSE_ID
   WHERE
     <![CDATA[   rn <= #{pageNum} * #{amount} AND rn > (#{pageNum} - 1) *  #{amount} 	]]>
 </select>
