@@ -86,6 +86,7 @@ ul li {
     color: #808080;
     margin-bottom: 10px;
     text-align: center;
+    font-weight: lighter;
 }
 
 .logout-btn, .edit-profile-btn {

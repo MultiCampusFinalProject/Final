@@ -7,9 +7,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.dto.CtgUserDTO;
 import com.spring.dto.UserBookmarkCourseDTO;
@@ -22,22 +25,45 @@ public class BookmarkController {
 	private BookmarkService bkService;
 	
 	// 코스 리스트에서 찜하기 기능----------------------------------------------------
-	@RequestMapping(value = "/courseBookmark", method = RequestMethod.POST)
-	public String insertUserBookmark(@ModelAttribute("courseId") String courseId, 
-									   HttpSession session) {
-		
-		CtgUserDTO user =  (CtgUserDTO) session.getAttribute("user");
-		int intCourseId = Integer.parseInt(courseId);
-		
-		System.out.println(user);
-		System.out.println(intCourseId);
-		
-		try {
-			bkService.insertUserBookmark(user.getUserId(), intCourseId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return "redirect:/courseList";
+	@RequestMapping(value = "/courseListWithPagination", method = RequestMethod.POST)
+	@ResponseBody
+	public int insertCourseBookmark(@RequestParam("courseId") int courseId,
+	                                   HttpSession session,
+	                                   Model model) throws Exception {
+	    CtgUserDTO user =  (CtgUserDTO) session.getAttribute("user");
+	    int userId = user.getUserId();
+        boolean res= false;
+	    try {
+	    	res = bkService.insertCourseBookmark(userId, courseId);
+	    	if(res == true) {
+	    		return 1;
+	    	}
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return 0;
+	}
+	
+	// 찜 해제(db에서 삭제) 기능-------------------------------------------------------
+	@RequestMapping(value = "/courseListWithPagination", method = RequestMethod.DELETE)
+	@ResponseBody
+	public int deleteCourseBookmarkById(@RequestParam("courseId") int courseId,
+	                                       HttpSession session,
+	                                       Model model) {
+	    CtgUserDTO user =  (CtgUserDTO) session.getAttribute("user");
+	    int userId = user.getUserId();
+	    boolean res = false;
+
+	    try {
+	        res = bkService.deleteCourseBookmarkById(userId, courseId);
+
+	        if(res) {
+	            return 0;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return 1;
 	}
 	
 	// 유저 아이디를 통해 유저가 북마크한 코스 객체 리스트 반환 ----------------------------------
@@ -53,32 +79,5 @@ public class BookmarkController {
 		
 		return bookmarkList;
 	}
-	
-	// 유저 아이디를 통해 유저가 북마크한 리스트 삭제
-	public int deleteUserBookmarkListByUserId(int userId) {
-		int result = 0;
-		
-		try {
-			result = bkService.deleteUserBookmarkListByUserId(userId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
-	// 유저 아이디와 코스 아이디를 통해 유저의 북마크 삭제 
-	public boolean deleteUserBookmarkByUserIdAndCourseId(int userId, int courseId) {
-		boolean result = false;
-		
-		try {
-			result = bkService.deleteUserBookmarkByUserIdAndCourseId(userId, courseId);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-
 	
 }

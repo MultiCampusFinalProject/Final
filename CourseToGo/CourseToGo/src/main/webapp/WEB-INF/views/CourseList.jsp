@@ -148,35 +148,36 @@ font-weight: bold;
 		</div>
 		<br>
 	   <!--추천 코스 리스트 -->	
-		    	<%
-    List<CourseInformDTO> recommandedCourseInformList = (List<CourseInformDTO>) request.getAttribute("recommandedCourseInformList");
-    if (recommandedCourseInformList != null) {
-        for (CourseInformDTO course : recommandedCourseInformList) {
-        	int courseId = course.getCourseId();
-        
-            String courseName = course.getCourseName();
-            String userNickName = course.getUserNickName();
-          	double AvgScore = course.getCourseAvgScore();
-            String courseList = course.getCourseList();
-            String courseIdList = course.getCourseIdList();
-            String courseContent = course.getCourseContent();
-            String areaString = course.getAreaNameList();
-            String categoryString = course.getCategoryNameList();
-            Set<String> areaSet =  new HashSet<>(Arrays.asList(areaString.split(",")));
-            Set<String> categorySet =  new HashSet<>(Arrays.asList(categoryString.split(",")));
-            String[] placeNames = courseList.split(",");
-            String[] placeIds = courseIdList.split(",");
-            String query="";
-            int courseNumber = course.getCourseNumber();
-         
-            query+=("courseId="+ String.valueOf(courseId)+"&");
-            for(int i= 0; i< courseNumber; i++){
-            	query+="placeId"+(i+1) + "="+placeIds[i];
-            	if(i!= courseNumber-1)query+="&";
-            	else{
-            	
-            	}
-            }
+<%
+	 List<CourseInformDTO> recommandedCourseInformList = (List<CourseInformDTO>) request.getAttribute("recommandedCourseInformList");
+	 if (recommandedCourseInformList != null) {
+	     for (CourseInformDTO course : recommandedCourseInformList) {
+	     	int courseId = course.getCourseId();
+	     
+	         String courseName = course.getCourseName();
+	         String userNickName = course.getUserNickName();
+	       	double AvgScore = course.getCourseAvgScore();
+	         String courseList = course.getCourseList();
+	         String courseIdList = course.getCourseIdList();
+	         String courseContent = course.getCourseContent();
+	         String areaString = course.getAreaNameList();
+	         String categoryString = course.getCategoryNameList();
+	         Set<String> areaSet =  new HashSet<>(Arrays.asList(areaString.split(",")));
+	         Set<String> categorySet =  new HashSet<>(Arrays.asList(categoryString.split(",")));
+	         String[] placeNames = courseList.split(",");
+	         String[] placeIds = courseIdList.split(",");
+	         String query="";
+	         int courseNumber = course.getCourseNumber();
+	         int isBookMarked = course.getIsBookMarked();
+	      
+	         query+=("courseId="+ String.valueOf(courseId)+"&");
+	         for(int i= 0; i< courseNumber; i++){
+	         	query+="placeId"+(i+1) + "="+placeIds[i];
+	         	if(i!= courseNumber-1)query+="&";
+	         	else{
+	         	
+	         	}
+	         }
          
 %>
 
@@ -233,9 +234,22 @@ font-weight: bold;
       
     <h3>소개글: <%= courseContent %></h3>
   </div> 
-	<form action="/courseBookmark" method="POST">
+	<form action="/courseListWithPagination" method="POST">
 		<div style="float:right;">
-			<button type="submit" class="add-button">찜하기</button>
+		<%
+		    if (isBookMarked != 1) {
+		%>
+		    <button type="submit" class="favorite">찜하기</button>
+    	<%
+		    }
+		%>
+		<%
+		    if (isBookMarked == 1) {
+		%>
+		    <button type="submit" class="cancel">찜해제</button>
+    	<%
+		    }
+		%>
 		</div>
 		<br>
 		<input type="hidden" name="courseId" id="courseIdInput" value="<%= courseId %>" >
@@ -279,6 +293,7 @@ font-weight: bold;
             String[] placeIds = courseIdList.split(",");
             String query="";
             int courseNumber = course.getCourseNumber();
+            int isBookMarked = course.getIsBookMarked();
          
             query+=("courseId="+ String.valueOf(courseId)+"&");
             for(int i= 0; i< courseNumber; i++){
@@ -346,9 +361,22 @@ font-weight: bold;
       
     <h3>소개글: <%= courseContent %></h3>
   </div> 
-	<form action="/courseBookmark" method="POST">
+	<form action="/courseListWithPagination" method="POST">
 		<div style="float:right;">
-			<button type="submit" class="add-button">찜하기</button>
+		<%
+		    if (isBookMarked != 1) {
+		%>
+		    <button type="submit" class="favorite">찜하기</button>
+    	<%
+		    }
+		%>
+		<%
+		    if (isBookMarked == 1) {
+		%>
+		    <button type="submit" class="cancel">찜해제</button>
+    	<%
+		    }
+		%>
 		</div>
 		<br>
 		<input type="hidden" name="courseId" id="courseIdInput" value="<%= courseId %>" >
@@ -429,15 +457,64 @@ font-weight: bold;
 	
 
 	// bookmark 관련 코드=======================================================
-	 $(document).ready(function() {
-	  $('.add-button').on('click', function() {
-	    var courseId = $('#courseIdInput').val(); // courseId 값을 가져옴
-	    $('#courseForm').submit(); // 폼 제출
+	$(document).ready(function() {
+	  $(document).on('click', '.favorite', function(e) {
+	    var button = $(this);
+	    var courseId = button.closest('.list-group-item').find('.course-id').text();
+	    
+	    insertBookmark(courseId, function(response) {
+	    	if(response == 1) {
+	    		button.removeClass('favorite').addClass('cancel').text('찜해제');
+	    	}
+	    });
+	    
+	    e.preventDefault();
 	  });
-	});
-</script>
-
- 
 	
+	  $(document).on('click', '.cancel', function(e) {
+	    var button = $(this);
+	    var courseId = button.closest('.list-group-item').find('.course-id').text();
+	    
+	    deleteBookmark(courseId, function(response) {
+	    	if(response == 0) {
+	    		button.removeClass('cancel').addClass('favorite').text('찜하기');
+	    	}
+	    });
+	    
+	    e.preventDefault();
+	  });
+	
+	  function insertBookmark(courseId, callback) {
+	    $.ajax({
+	      url: '/courseListWithPagination',
+	      method: 'POST',
+	      data: {
+	        courseId: courseId
+	      },
+	      success: function(response) {
+	        callback(response);
+	      }
+	    });
+	  }
+	
+	  function deleteBookmark(courseId, callback) {
+	    $.ajax({
+	      url: '/courseListWithPagination',
+	      method: 'POST',
+	      data: {
+	        _method: 'DELETE',
+	        courseId: courseId
+	      },
+	      success: function(response) {
+	        callback(response);
+	      }
+	    });
+	  }
+	});
+	
+	function notLogin() {
+		  alert("로그인을 해주세요.");
+		}
+</script>
 </body>
 </html>
