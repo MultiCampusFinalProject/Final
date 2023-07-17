@@ -265,8 +265,14 @@ public class PageController {
 		}
 		
 		for(CourseInformDTO courseInformDTO : courseInformList) {
-			String userNickname = courseInformDTO.getUserNickName();
-			courseMakerUserNameList.add(userNickname);
+			String userNickname ="";
+			userNickname = courseInformDTO.getUserNickName();
+			
+			if(userNickname == null) {
+				courseMakerUserNameList.add("---");
+			} else {
+				courseMakerUserNameList.add(userNickname);
+			}
 		}
 
 		for (CourseInformDTO course : courseInformList) {
@@ -312,8 +318,14 @@ public class PageController {
 		}
 		
 		for(CourseInformDTO courseInformDTO : courseInformList) {
-			String userNickname = courseInformDTO.getUserNickName();
-			courseMakerUserNameList.add(userNickname);
+			String userNickname ="";
+			userNickname = courseInformDTO.getUserNickName();
+			
+			if(userNickname == null) {
+				courseMakerUserNameList.add("---");
+			} else {
+				courseMakerUserNameList.add(userNickname);
+			}
 		}
 		
 		for (CourseInformDTO course : courseInformList) {
@@ -356,14 +368,15 @@ public class PageController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 
-		
 		for(CourseReview review : courseReviewList) {
 			CourseInformDTO courseInform = null;
 			
 			try {
 				courseInform = courseService.getCourseInformByCourseId(review.getCourseId());
+				if(courseInform.getUserNickName() == null) {
+					courseInform.setUserNickName("---");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
