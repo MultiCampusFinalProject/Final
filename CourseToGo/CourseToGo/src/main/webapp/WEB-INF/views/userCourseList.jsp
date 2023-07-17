@@ -75,7 +75,8 @@
 					                        <div class="item" style = "padding:5px;
 					                        						   background-color: #71B6D0;
 					                        						   border-radius:5px;
-					                        						   color: white;"><b>${place}</b></div>
+					                        						   color: white;
+					                        						   margin-right:15px;"><b>${place}</b></div>
 					                    </c:forEach>
 					                </div>
 					                
