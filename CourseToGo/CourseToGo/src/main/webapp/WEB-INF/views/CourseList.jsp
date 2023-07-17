@@ -13,6 +13,8 @@
 
 </head>
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@300;700&family=Sunflower:wght@300&family=VT323&display=swap');
 #mainForm
 {   
   display: flex;
@@ -144,6 +146,7 @@ font-weight: bold;
 			</div>
 		</form>
 		</div>
+		<br>
 	   <!--추천 코스 리스트 -->	
 		    	<%
     List<CourseInformDTO> recommandedCourseInformList = (List<CourseInformDTO>) request.getAttribute("recommandedCourseInformList");
@@ -178,9 +181,9 @@ font-weight: bold;
 %>
 
     <div class="recommendedSearchList">
-<li class="list-group-item" style="width:100%;animation: spin 2s linear infinite; background-color: #6fadcf;	border-radius: 20px 20px 20px 20px;">
+<li class="list-group-item" style=" width:1400px;animation: spin 2s linear infinite; background-color: #87CEEB;	border-radius: 20px 20px 20px 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
   <div class=" " >
-    <a href="/courseList/Map?<%= query %>">
+    <a  style="color: navy; font-family: 'Sunflower', sans-serif;" href="/courseList/Map?<%= query %>">
       <h1>No. <span class="course-id"><%= courseId %></span> &nbsp <span> 
       <%= courseName %></span>&nbsp	
       <span>제작자: <%= userNickName %></span>
@@ -200,13 +203,27 @@ font-weight: bold;
 		<br>
       
       <%-- placeIds 배열을 활용하여 필요한 작업 수행 --%>
-
-      <% for (String placeName : placeNames) { %>
-     &nbsp &nbsp &nbsp &nbsp &nbsp
-      <span class="well" stle="padding:20px"><%= placeName %>   </span>
-      &nbsp &nbsp &nbsp &nbsp &nbsp
-
-      <% }      %>
+<% for (int i = 0; i < placeNames.length; i++) { %>
+  <% if (i > 0) { %>
+    &nbsp;
+    <img src="/images/dot2.png" alt="이미지_설명" width="50" height="auto" style="transform: rotate(90deg);">
+    &nbsp;
+ 
+  <% } %>
+  
+  <% if (i == 0) { %>
+   <img src="/images/go1.png" alt="이미지_설명">
+    &nbsp;
+  <% } %>
+  
+  <span style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" padding: 20px; class="well" style="padding: 20px;"><img src="/images/point.png" alt="이미지_설명" width="30" height="auto"><%= placeNames[i] %></span>
+  
+  <% if (i == placeNames.length - 1) { %>
+    &nbsp;
+  <img src="/images/end2.png" alt="이미지_설명" width="50" height="auto">
+  <% } %>
+  
+<% } %>
 
 
     </a>
@@ -226,6 +243,7 @@ font-weight: bold;
   </div>
 
 </li>
+<br>
 <%
     }
   }
@@ -274,9 +292,9 @@ font-weight: bold;
 %>
 
     <div class="searchList">
-<li class="list-group-item" style="width:100%;border-radius: 20px 20px 20px 20px;">
+<li class="list-group-item"  style=" width:1400px;animation: spin 2s linear infinite; background-color: #6495ed;	border-radius: 20px 20px 20px 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
   <div class=" ">
-    <a href="/courseList/Map?<%= query %>">
+    <a style="color: navy; font-family: 'Sunflower', sans-serif;" href="/courseList/Map?<%= query %>">
       <h1>No. <span class="course-id"><%= courseId %></span> &nbsp 
       <span> <%= courseName %></span>&nbsp
       	<span>제작자: <%= userNickname  %></span>
@@ -297,13 +315,28 @@ font-weight: bold;
 		<br>
       
       <%-- placeIds 배열을 활용하여 필요한 작업 수행 --%>
+<% for (int i = 0; i < placeNames.length; i++) { %>
+  <% if (i > 0) { %>
+    &nbsp;
+    <img src="/images/dot2.png" alt="이미지_설명" width="50" height="auto" style="transform: rotate(90deg);">
+    &nbsp;
+ 
+  <% } %>
+  
+  <% if (i == 0) { %>
+   <img src="/images/go1.png" alt="이미지_설명">
+    &nbsp;
+  <% } %>
+  
+  <span style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" padding: 20px; class="well" style="padding: 20px;"><img src="/images/point.png" alt="이미지_설명" width="30" height="auto"><%= placeNames[i] %></span>
+  
+  <% if (i == placeNames.length - 1) { %>
+    &nbsp;
+  <img src="/images/end2.png" alt="이미지_설명" width="50" height="auto">
+  <% } %>
+  
+<% } %>
 
-      <% for (String placeName : placeNames) { %>
-     &nbsp &nbsp &nbsp &nbsp &nbsp
-      <span class="well" stle="padding:20px"><%= placeName %>   </span>
-      &nbsp &nbsp &nbsp &nbsp &nbsp
-
-      <% }      %>
 
 
     </a>
@@ -321,14 +354,15 @@ font-weight: bold;
 		<input type="hidden" name="courseId" id="courseIdInput" value="<%= courseId %>" >
 	</form>
   </div>
-
+	<br>
 </li>
 <%
     }
   }
 %>
+
 </div>
-    	
+    
     
       <div class="searchList">
     <div class="row justify-content-center" >
