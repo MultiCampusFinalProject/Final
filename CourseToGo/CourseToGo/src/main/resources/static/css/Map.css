@@ -65,25 +65,35 @@
 	z-index: 2;
 	}
 	
+	.markerList {
+	  display: none;
+	}
+	
 	.searchResults {
 	position: absolute;
 	z-index: 5;
-	text-align: left;
+	text-align: center;
 	margin-left: 250px;
 	margin-top: 50px;
 	font-weight: bold;
 	max-height: 400px;
 	width: 250px;
 	overflow-y: auto;
+	
 	background-color: #ffffff;
+	background-color: rgba( 255, 255, 255, 0.5 );
 	border-radius: 10px;
 	border-color: #000000;
 	  
 	}
 	
+	.searchResults::-webkit-scrollbar {
+	width: 0;
+	display: none;
+	}
+	
 	.searchResults.noResults::-webkit-scrollbar {
 	width: 10px;
-	 
 	}
 	
 	.searchResults::-webkit-scrollbar-thumb {

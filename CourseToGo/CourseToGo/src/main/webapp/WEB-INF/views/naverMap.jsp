@@ -178,7 +178,12 @@ document.getElementById("area").innerHTML = areaName;
 	<div class="markerInputs" onclick="deleteMarker(event)">
 	  <ul id="markerInputs" class="horizontal-list"></ul>
 	</div>
-	<div id="markerList" type="hidden"></div>
+	
+	<div class="markerList" id="markerList" type="hidden">
+	<ul type="hidden"></ul>
+	</div>
+	
+	
 	
    	<div class="displayMap">
     <div id="map" class="map">
