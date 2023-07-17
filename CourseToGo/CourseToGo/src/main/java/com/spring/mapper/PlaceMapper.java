@@ -3,6 +3,7 @@ package com.spring.mapper;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -30,6 +31,8 @@ public interface PlaceMapper {
 	public List<PlaceDTO> searchPlacesByCategory(String categoryName);
 
 	public List<PlaceDTO> searchPlacesByAreaOrCategory(String categoryName, String areaName);
+
+	public List<PlaceDTO> searchPlacesByAreaOrCategory(Map<String, String> params);
 
 	
 
