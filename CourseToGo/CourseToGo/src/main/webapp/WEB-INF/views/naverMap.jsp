@@ -51,26 +51,53 @@ document.getElementById("area").innerHTML = areaName;
 <div class="middle">
   <div class="left">
     <form id="searchForm" method="get" action="/jSearchAC" accept-charset="utf-8">
-      <input type="text" id="areaName" name="areaName" placeholder="검색어를 입력하세요">
-      <input type="text" id="categoryName" name="categoryName" placeholder="검색어를 입력하세요">
-      <button type="submit">검색</button>
+      <input class="left input" type="text" id="areaName" name="areaName" placeholder="지역명 ex)홍대">
+      <input class="left input" type="text" id="categoryName" name="categoryName" placeholder="업종명 ex)음식점">
+      <button class="left button" type="submit">검색</button>
     </form>
   </div>
   
    <div class="sidebar2" >
     <form id="saveMark" action="/saveMarker" method="POST" accept-charset="UTF-8">
-      <input type="hidden" id="placeId1" name="placeId1" value=>
-      <input type="hidden" id="placeId2" name="placeId2" value=>
-      <input type="hidden" id="placeId3" name="placeId3" value=>
-      <input type="hidden" id="placeId4" name="placeId4" value=>
-      <input type="hidden" id="placeId5" name="placeId5" value=>
-      <input class="name" id="courseName" type="text" name="courseName" value="myCourse">
-      <input id="courseNumber" type="hidden" name="courseNumber">
-      <textarea id="courseContent" class="text" name="courseContent" required>코스에 대한 설명을 작성해주세요.</textarea>
-      <button class = "submit" type="submit">전송</button>
+     <input type="hidden" id="placeId1" name="placeId1" value=>
+     <input type="hidden" id="placeId2" name="placeId2" value=>
+     <input type="hidden" id="placeId3" name="placeId3" value=>
+     <input type="hidden" id="placeId4" name="placeId4" value=>
+     <input type="hidden" id="placeId5" name="placeId5" value=>
+     <textarea class="userGuide">
+      &#8595;코스제작 가이드 &#8595;
+      
+&#10112;좌측 상단 검색창을 통해 검색을 해주세요.
+예시 : 지역명 홍대 
+	    업종명 음식점
+	    
+&#10113;나온 검색결과를 클릭해서 지도에 마커를 추가해서 장소를 확인하세요.(최대 5개)
+
+&#10114;선택한 장소를 확인 후 우측 사이드바에서 코스이름 코스에 대한 설명을 작성해주세요.
+
+&#10115;작성이 끝나면 코스만들기를 눌러서 자신만의 코스를 만들어주세요.
+    </textarea>
+    <input class="Coursename" id="courseName" type="text" name="courseName" value="Course Name" onfocus="clearInputValue(this)">
+	<input id="courseNumber" type="hidden" name="courseNumber">
+	<textarea id="courseContent" class="courseContent" name="courseContent" required onfocus="clearTextareaValue(this)">코스에 대한 설명을 작성해주세요.</textarea>
+    <button class = "submit" type="submit">전송</button>
     </form>
   </div> 
 </div>
+
+<script>
+	function clearInputValue(input) {
+	  if (input.value === input.defaultValue) {
+	    input.value = '';
+	  }
+	}
+	
+	function clearTextareaValue(textarea) {
+	  if (textarea.value === textarea.defaultValue) {
+	    textarea.value = '';
+	  }
+	}
+</script>
 
 <!--  전송 버튼에 대한 스크립트 -->
 	<script>
@@ -158,13 +185,11 @@ document.getElementById("area").innerHTML = areaName;
 	  if (places != null && !places.isEmpty()) { 
 	%>
 	<div class="searchResults">
-	  <h2 id="area"></h2>
-	  <hr style="border-width:1px 0 0 0; border-color:#000;">
-	  <hr style="border-width:1px 0 0 0; border-color:#000;">
+	  <h2 class= "resultsarea" id="area"></h2>
 	  <div>
 	    <ul style="display: flex; flex-direction: column; align-items: center;">
 	      <% for (PlaceDTO place : places) { %>
-	        <div style="display: flex; justify-content: center; align-items: center; width: 200px; height: 60px;" class="well well-sm">
+	        <div style="display: flex; justify-content: center; align-items: center; width: 200px; height: 60px;" class="box in">
 	          <div onclick="placeClicked('<%= place.getPlaceId()%>',' <%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>', );">
 	            <li><%= place.getPlaceName() %></li>
 	          </div>
@@ -191,8 +216,10 @@ document.getElementById("area").innerHTML = areaName;
 
 <script>
   map = new naver.maps.Map('map', {
-    center: new naver.maps.LatLng(37.5714, 126.9768),
-    zoom: 10
+	  center: new naver.maps.LatLng(37.5714, 126.9768),
+	  zoom: 16,
+	  minZoom: 12,
+	  maxZoom: 16
   });
 
   var MAX_MARKER_COUNT = 5; // 최대 마커 개수
