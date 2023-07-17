@@ -13,15 +13,55 @@
 
 </head>
 <style>
+ .modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 
-@import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@300;700&family=Sunflower:wght@300&family=VT323&display=swap');
+  .modal-content {
+    background-color: #fff;
+    margin: 20% auto;
+    padding: 20px;
+    width: 60%;
+    max-width: 600px;
+    border-radius: 8px;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+@import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@300;700&family=Grandiflora+One&family=Sunflower:wght@300&family=VT323&display=swap');
+html{
+
+}
+#suggections{
+font-size:40px;
+}
 #mainForm
 {   
   display: flex;
- 
+
 }
 body{
-
+ 
  overflow: auto;
 }
   .searchList{
@@ -31,7 +71,7 @@ body{
 font-weight: bold;
 
    top: 0;
-    left: 250px;
+    left: 400px;
     right: 600px;
     bottom: 0;
   }
@@ -47,7 +87,7 @@ font-weight: bold;
 
 
    top: 0;
-    left: 250px;
+    left: 400px;
     right: 600px;
     bottom: 0;
 
@@ -70,7 +110,7 @@ font-weight: bold;
     }
   
 </style>
-<body>
+<body ">
 
     <div class="sidebar" >
             <%@ include file="sidebar.jsp" %>
@@ -90,7 +130,9 @@ font-weight: bold;
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-   <div class="searchList"> <h1 >"어디"로 갈지 모르시겠나요? 다른 이들과 저희의 추천을 받아보세요.</h1></div>
+   <div class="searchList"> <h1 style=" width:1450px;color: navy;font-size: 48px; font-weight: 900 ;font-family: 'Grandiflora One', serif;">"어디"로 갈지 모르시겠나요? 다른 이들과 저희의 추천을 받아보세요.</h1></div>
+   <br>
+   <br>
     <!-- 검색 엔진 -->
     <script>
     $(document).ready(function() {
@@ -138,13 +180,51 @@ font-weight: bold;
     	}
 </script>
     <!-- 검색 창 -->
+   <script>
+  function openModal(placeId) {
+    document.getElementById("myModal").style.display = "block";
+    console.log(placeId);
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          // 서버에서 받아온 데이터를 모달 창에 표시
+          populateModal(response);
+          // 모달 창 열기
+          document.getElementById("myModal").style.display = "block";
+        } else {
+          console.error("AJAX request failed");
+        }
+      }
+    };
+
+    // AJAX 요청 전송
+    xhr.open("GET", "/modalInform?placeId=" + placeId, true);
+    xhr.send();
+  }
+  function populateModal(data) {
+	  // 모달 창 내부 요소에 데이터를 채워넣는 로직을 구현
+	  var modalContent = document.getElementById("placeContent");
+	  modalContent.innerHTML = "<h2>" + data.placeName + "</h2><p>" + data.주소 + "</p><p>"+data.score+ "</p>";
+	}
+  function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+  }
+</script>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="placeContent">팝업 제목</h2>
    
+  </div>
+</div>
     <div  class="searchList">
     
 
     	<form id="mainForm" class="row justify-content-center g-3" action="/courseListWithPagination" method="GET">
 			<div class="col-auto" style="display: flex; ">
-					<input  type="submit" class="btn btn-primary mb-3 " style="margin-left: 100px; value="검색" />
+					<input  type="submit" class="btn btn-primary  " style="margin-left: 500px;background-color: navy;" value="검색" />
 					<input	 style="width: 400px; height: 40px;"
 					
 						type="text" 
@@ -214,11 +294,13 @@ font-weight: bold;
       <span>
       #<%= category %> </span><%} 
       %>
-      </h1>
+      </h1>  </a>
 
       
 		<br>
-      
+  
+
+
       <%-- placeIds 배열을 활용하여 필요한 작업 수행 --%>
 <% for (int i = 0; i < placeNames.length; i++) { %>
   <% if (i > 0) { %>
@@ -233,7 +315,7 @@ font-weight: bold;
     &nbsp;
   <% } %>
   
-  <span style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" padding: 20px; class="well" style="padding: 20px;"><img src="/images/point.png" alt="이미지_설명" width="30" height="auto"><%= placeNames[i] %></span>
+  <span style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" padding: 20px; class="well" style="padding: 20px;"><img src="/images/point.png" alt="이미지_설명" width="30" height="auto" onclick="openModal(<%=placeIds[i] %>)"><%= placeNames[i] %></span>
   
   <% if (i == placeNames.length - 1) { %>
     &nbsp;
@@ -243,7 +325,7 @@ font-weight: bold;
 <% } %>
 
 
-    </a>
+  
     <br>
     
        <br>
@@ -334,7 +416,7 @@ font-weight: bold;
       #<%= category %> </span><%} 
       %>
       
-      </h1>
+      </h1>    </a>
 
       
 		<br>
@@ -364,7 +446,7 @@ font-weight: bold;
 
 
 
-    </a>
+
     <br>
     
        <br>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
@@ -110,7 +111,28 @@ public class CourseController {
 		
 		return "CourseList";
 	}
-	
+	@RequestMapping( value = "/modalInform")
+	@ResponseBody
+	public String showModal(Model model, @RequestParam int placeId) {
+		 // 모달에 표시할 데이터 조회 및 가공
+	   PlaceDTO data = null;
+	try {
+		data = placeService.getPlaceByPlaceId(placeId);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	    
+	    // JSON 데이터 생성
+	String jsonData = "{"
+		    + "\"placeName\": \"" + data.getPlaceName() + "\","
+		    + "\"주소\": \"" + data.getAddress() + "\","
+		    + "\"score\": \"" + data.getPlaceAvgScore() + "\""
+		    + "}";
+	    
+	    return jsonData;
+		
+	}
 	@RequestMapping(value = "/courseList/Map", method = RequestMethod.GET)
 	public String showMapPage(Model model,
 	         @RequestParam(value = "courseId", required = false) String courseId,
