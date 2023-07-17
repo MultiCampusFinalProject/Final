@@ -8,16 +8,16 @@
 <body>
 	<div class="banner">
 		<div class="imgcontanier">
-			<img class="slideImg" src="example/slide01.jpg">
+			<img class="slideImg" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/836352eb-85d1-41f1-8e81-027690cca410">
 		</div>
 		<div class="imgcontanier">
-			<img class="slideImg" src="example/slide02.jpg">
+			<img class="slideImg" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/38d1f492-fb74-4592-bff5-f04a92ab1395">
 		</div>
 		<div class="imgcontanier">
-			<img class="slideImg" src="example/slide03.jpg">
+			<img class="slideImg" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/836352eb-85d1-41f1-8e81-027690cca410">
 		</div>
 		<div class="imgcontanier">
-			<img class="slideImg" src="example/slide04.jpg">
+			<img class="slideImg" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/38d1f492-fb74-4592-bff5-f04a92ab1395">
 		</div>
 		<a class="prev" onclick="plusSlides(-1)">❮</a>
 		<a class="next"onclick="plusSlides(1)">❯</a>

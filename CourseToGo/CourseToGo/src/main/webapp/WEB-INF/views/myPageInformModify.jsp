@@ -18,14 +18,25 @@
 		<div class="myPageInform">
 			<table>
 				<tr>
-					<td style="width: 400px;">
+					<td style="width: 500px;">
 						<div align="center" class="left-column" width="500px">
-							<h1>프로필</h1>
-							<img id="profileImage" src="${sessionScope.user.userPhoto}" alt="profileImage" width="80" height="80">
-							<p><h3>${sessionScope.userName}</h3></p>
-							<p><h4 style="color: grey;">${sessionScope.user.userEmail}</h4></p><br>
-							<button class="button" id="fix" onclick="showSampleImages()">프로필 사진 수정하기</button>
-							<button class="button" id="delete" onclick="deleteProfileImage()">프로필 사진 삭제하기</button>
+							<div style="width:250px;
+							 		border-radius:20px;
+							   		background-color:#ebebeb;
+							   		padding-top: 10px;
+							   		padding-bottom: 10px;
+					   		    	box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3);">
+							   	
+								<div style="background-color:white;
+											width: 250px;"><h1>프로필</h1></div>
+								<img id="profileImage" src="${sessionScope.user.userPhoto}" alt="profileImage" width="80" height="80">
+								<p><h3>${sessionScope.userName}</h3></p>
+								<p><h4 style="color: grey;">${sessionScope.user.userEmail}</h4></p><br>
+								<button class="button" id="fix" onclick="showSampleImages()">프로필 사진 수정하기</button>
+								<br>
+								<button class="button" id="delete" onclick="deleteProfileImage()">프로필 사진 삭제하기</button>
+								<br><br>
+							</div>
 						</div>
 					</td>
 					<td>
@@ -41,6 +52,7 @@
 							<br/>
 							<div>
 								<input class="button" type="submit" value="프로필 수정 완료" onclick="updateProfile()">
+								<br>
 								<input class="button" type="button" value="회원 탈퇴" onclick="unsignConfirm()">
 							</div>
 						</div>

@@ -26,5 +26,10 @@ public interface CourseReviewMapper {
 	
 	public List<CourseReview> getCourseReviewByCourseId (int courseId);
 	
+	// userId로 CourseReview 객체 리스트 반환	
+	public List<CourseReview> getCourseReviewByUserId(int userId);
+
+
+	
 
 }

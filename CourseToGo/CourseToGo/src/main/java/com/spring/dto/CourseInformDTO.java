@@ -22,8 +22,9 @@ public class CourseInformDTO {
     private String courseContent;
     private String areaNameList;
     private String categoryNameList;
+    private int isBookMarked;
     @Builder
-    public CourseInformDTO(int courseId, String userNickName, String courseName, double courseAvgScore, int courseNumber,String courseIdList,String courseList,String courseContent,String areaNameList, String categoryNameList) {
+    public CourseInformDTO(int courseId, String userNickName, String courseName, double courseAvgScore, int courseNumber,String courseIdList,String courseList,String courseContent,String areaNameList, String categoryNameList,int isBookedMarked) {
         this.courseId = courseId;
         this.userNickName = userNickName;
         this.courseName = courseName;
@@ -34,6 +35,7 @@ public class CourseInformDTO {
         this.courseContent = courseContent;
         this.areaNameList = areaNameList;
         this.categoryNameList = categoryNameList;
+        this.isBookMarked = isBookMarked;
     }
     
 }

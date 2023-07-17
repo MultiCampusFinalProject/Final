@@ -35,12 +35,22 @@
  	</delete>
  	
  	
- 	<select id="getCourseReviewByCourseId" parameterType="int" resultType="com.spring.dto.CourseReview">
+ 	<select id="getCourseReviewByCourseId" parameterType="_int" resultType="com.spring.dto.CourseReview">
  		SELECT course_score as courseScore, content, course_review_id as courseReviewId
  		FROM course_review
  		WHERE course_id = #{courseId}
  	</select>
  	
- 	
+	<!-- userId로 CourseReview 객체 리스트 반환 -->
+ 	<select id="getCourseReviewByUserId" parameterType="_int" resultType="CourseReview">
+ 		SELECT course_review_id AS courseReviewId,
+ 			   user_id AS userId,
+ 			   course_id AS courseId,
+ 			   course_score AS courseScore,
+ 			   content AS content,
+ 			   review_date AS reviewDate
+ 		FROM course_review
+ 		WHERE user_id = #{userId}
+ 	</select>		 	
  	
  </mapper>

@@ -9,7 +9,7 @@
 </head>
 <body>
 	<%@ include file="sidebar.jsp" %>
-	<div class="signupDone">
+	<div class="signupDone" style="margin-left: 100px;">
 		<br><br><br><br><br><br><br><br><br>
 		<img src="https://cdn-icons-png.flaticon.com/512/4550/4550058.png" height = "80px">
 		<h3>${sessionScope.user.userName} 님의 가입이 완료되었습니다.</h3>
