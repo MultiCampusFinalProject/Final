@@ -134,6 +134,7 @@
   course_content AS courseContent,
   course_avg_score AS courseAvgScore,
   course_number AS courseNumber
+  
 FROM
   COURSE 
 WHERE
@@ -157,12 +158,12 @@ course_id = #{courseId}
     Course.areaNameList AS areaNameList,
     Course.categoryNameList AS categoryNameList,
     CASE
-      WHEN user_bookmark_course.BOOKMARK_ID IS NULL THEN 0
+      WHEN user_bookmark_course.COURSE_ID IS NULL THEN 0
       ELSE 1
     END AS isBookMarked
   FROM (
     SELECT
-      c.course_id,
+      c.course_id as course_id,
       u.user_nickname AS user_nickname,
       c.user_id as user_id,
       c.course_name,
@@ -191,17 +192,17 @@ course_id = #{courseId}
         OR category.category_name LIKE '%'||#{keyword}||'%')
       </if>
     </trim>
-      GROUP BY
-    c.course_id,
+    GROUP BY
+      c.course_id,
       u.user_nickname,
       c.user_id,
-    c.course_name,
-    c.course_content,
-    c.course_avg_score,
-    c.course_number
+      c.course_name,
+      c.course_content,
+      c.course_avg_score,
+      c.course_number
   ) Course
-   LEFT JOIN user_bookmark_course ON Course.course_id = user_bookmark_course.COURSE_ID
-    AND Course.user_id = user_bookmark_course.user_id
+LEFT JOIN user_bookmark_course ON Course.course_id = user_bookmark_course.COURSE_ID and  user_bookmark_course.user_id = #{userId}
+  
   WHERE
     <![CDATA[   rn <= #{pageNum} * #{amount} AND rn > (#{pageNum} - 1) *  #{amount} 	]]>
 </select>

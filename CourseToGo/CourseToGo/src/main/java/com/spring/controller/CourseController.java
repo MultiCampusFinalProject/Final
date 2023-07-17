@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -20,6 +22,7 @@ import org.springframework.ui.Model;
 import com.spring.dto.CourseDTO;
 import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CourseReview;
+import com.spring.dto.CtgUserDTO;
 import com.spring.dto.DirectionDTO;
 import com.spring.dto.DirectionPoint;
 import com.spring.dto.PlaceDTO;
@@ -66,11 +69,13 @@ public class CourseController {
 
 //	@RequestMapping( value = "/courseList/keyword")
 	@RequestMapping( value = "/courseListWithPagination")
-	public String naverMap(PageRequestDTO pageRequest ,Model model) {
+	public String naverMap(PageRequestDTO pageRequest ,Model model,HttpSession session) {
 		List<CourseInformDTO> courseInformList=new ArrayList<>();
 		System.out.println(pageRequest);
-
-		
+		CtgUserDTO user =  (CtgUserDTO) session.getAttribute("user");
+	    int userId = user.getUserId();	
+		pageRequest.setUserId(userId);
+	    
 		int total = 0;
 		try {
 			courseInformList = courseService.getCourseWithPageRequest(pageRequest);

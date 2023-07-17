@@ -15,41 +15,33 @@ public class BookmarkService {
 	@Autowired
 	private BookmarkMapper bkMapper;
 	
-	// 코스 리스트에서 찜하기 기능----------------------------------------------------
-	public boolean insertUserBookmark(int userId, int courseId) throws SQLException{
-		int result = bkMapper.insertUserBookmark(userId, courseId);
+	// 유저 아이디를 통해 유저가 북마크한 코스 객체 리스트 반환 ----------------------------------
+	public List<UserBookmarkCourseDTO> getUserBookmarkListByUserId(int userId) throws SQLException {
+		return bkMapper.getUserBookmarkListByUserId(userId);
+	}	
+	
+	// userId와 courseId를 받아와 db에 저장---------------------------------------------------------------
+	public boolean insertCourseBookmark(int userId, int courseId) throws SQLException{
+		int result = bkMapper.insertCourseBookmark(userId, courseId);
 		
 		if(result != 0) {
 			return true;
 		}
 		return false;
 	}
-
-	// 유저 아이디를 통해 유저가 북마크한 코스 객체 리스트 반환 ----------------------------------
-	public List<UserBookmarkCourseDTO> getUserBookmarkListByUserId(int userId) throws SQLException {
-		return bkMapper.getUserBookmarkListByUserId(userId);
+	
+	// userId와 courseId를 통해 db 값 삭제----------------------------------------------------------------
+	public boolean deleteCourseBookmarkById(int userId, int courseId) throws Exception{
+		boolean result = false;
+		
+		int res = bkMapper.deleteCourseBookmarkById(userId, courseId);
+		
+		if(res != 0) {
+			result = true;
+		} else {
+			throw new Exception("찜 해제 실패");
+		}
+		
+		return result;
 	}
-
-	// 유저 아이디를 통해 유저가 북마크한 리스트 삭제 ----------------------------------
-	public int deleteUserBookmarkListByUserId(int userId) throws SQLException {
-		return bkMapper.deleteUserBookmarkListByUserId(userId);
-	}
-
-	// 유저 아이디와 코스 아이디를 통해 유저의 북마크 삭제 --------------------------------	
-	public boolean deleteUserBookmarkByUserIdAndCourseId(int userId, int courseId) throws SQLException {
-		return bkMapper.deleteUserBookmarkByUserIdAndCourseId(userId, courseId);
-	}
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
