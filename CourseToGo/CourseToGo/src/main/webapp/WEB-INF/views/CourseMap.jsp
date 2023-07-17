@@ -8,6 +8,9 @@
 <!DOCTYPE html>
 <html>
 <link rel="stylesheet" href="http://localhost:8090/css/sidebar2.css">
+<link rel="stylesheet" href="http://localhost:8090/css/infowindow.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
  <style>
 #map{
 right:200px;
@@ -17,19 +20,19 @@ width:100%;}
  .header{
  height:50px;}
 footer{
-	height: 10rem; /* footer 높이 */
-	  text-align: center;
-	  margin: 2em auto;
+   height: 10rem; /* footer 높이 */
+     text-align: center;
+     margin: 2em auto;
 padding:2em;
 background-color:#E5F2F1;
 }
 body {
 
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	
-	
+   height: 100%;
+   margin: 0;
+   padding: 0;
+   
+   
 
 }
     .search{
@@ -40,23 +43,23 @@ body {
       border: 1px solid black;
     }
     .test {
-	
-	padding: 5px;
-	width: 80%;
-	height: 800px;
-	background-color: #fa8;
-	border: 1px solid #000;
+   
+   padding: 5px;
+   width: 80%;
+   height: 800px;
+   background-color: #fa8;
+   border: 1px solid #000;
 
 background-clip: content-box;
 
 }
  .middle{
- 	
+    
  }
 .contain{
  width: 100px;
  
-	
+   
 }
 }
   </style>
@@ -64,8 +67,8 @@ background-clip: content-box;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=eeovn23rmv&submodules=geocoder&callback=init"></script>
-	<!-- <script  src="http://code.jquery.com/jquery-latest.min.js"></script> -->
-	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+   <!-- <script  src="http://code.jquery.com/jquery-latest.min.js"></script> -->
+   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
  <div class="sidebar">
             <%@ include file="sidebar.jsp" %>
         </div>
@@ -103,46 +106,14 @@ header
    <title>슬라이드 메뉴</title>
     <style>
         /* 슬라이드 메뉴 스타일 */
-        .slider-menu {
-        	position: fixed;
-    top: 0;
-   
-    height: 100%;
-    background-color: #87ceeb;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-  
-    box-sizing: border-box;
-    position: fixed;
-    flex-direction: column;
-    align-items: center;
-    box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3); /* 우측에 그림자 효과 추가 */
-    z-index: 1;
-            position: fixed;
-          background-color: #ccc;
-            right: 200px; /* 초기에는 왼쪽에 숨겨진 상태 */
-            width: 200px;
-           
-           
-            transition: right 0.3s ease;
-        }
+       
         
         /* 슬라이드 메뉴 버튼 스타일 */
-        .slider-button {
-            position: fixed;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            width: 200px;
-            height: 30px;
-     
-            cursor: pointer;
-            z-index: 9999;
-        }
+       
     </style>
     <script>
     var submitButtonClicked = false;
-	
+   
     function submitForm() {
         if (submitButtonClicked) {
             return false; // 이미 중복 클릭된 경우 중단
@@ -177,42 +148,40 @@ header
         
     
     </script>
-    <div id="slider-menu" class="slider-menu">
-        <!-- 슬라이드 메뉴 내용 -->
-        <div style="text-align: center; width: 200px; height: 80px;margin : 0"" class="well well-sm">
-        <h3>REVIEW</h3>
-          </div>
-       <%
-    List<CourseReview> reviewList = (List<CourseReview>)request.getAttribute("CourseReview");
-   	for(int i = 0 ; i < reviewList.size(); i++){
-   		%>
-   	    <div style="text-align: center; width: 200px; height: 80px;margin : 0"" class="well well-sm">
-   	       <%= reviewList.get(i).getContent() %>
-   	       <%= reviewList.get(i).getCourseScore() %>
-   	       <%= reviewList.get(i).getUserId() %>
-   	    </div>
-   	 
-   	
-   	      <%
-   	   
-   	
-
-    }
-%>
-        
-    </div>
+		<div id="slider-menu" class="slider-menu">
+		  <!-- 슬라이드 메뉴 내용 -->
+		  <div class="slidetitle">
+		    <h3>작성된 리뷰</h3>
+		  </div>
+		  <%
+		  List<CourseReview> reviewList = (List<CourseReview>) request.getAttribute("CourseReview");
+		  for (int i = 0; i < reviewList.size(); i++) {
+		    %>
+		    <div class="slidecontents">
+		      <div>
+		        <%= reviewList.get(i).getContent() %>
+		        <div class="starsscore">
+		          <% int courseScore = reviewList.get(i).getCourseScore();
+		          for (int j = 5; j >= 1; j--) { %>
+		            <i class="fas fa-star <%= j <= courseScore ? "active" : "" %>"></i>
+		          <% } %>
+		        </div>
+		      </div>
+		    </div>
+		  <% } %>
+		</div>
     
 
   <span class="contain">
  <div class="sidebar2">
-		    <div class="logo">Track</div>
-		    <ul>
-		    	<!-- 전체적인 링크 수정해야함(onclick) -->
-		    	<li></li>
-		    	<li><input type="button" class="course" value=${Course.courseName} ></li>
-		    
-		    		<li><input type="button" class="create-course" value="CourseId : ${Course.courseId}"></li>
-		    		<li><input type="button" class="create-course" value="score :${Course.courseAvgScore}" ></li>
+          <div class="logo">Track</div>
+          <ul>
+             <!-- 전체적인 링크 수정해야함(onclick) -->
+             <li></li>
+             <li><input type="button" class="course" value=${Course.courseName} ></li>
+          
+                <li><input type="button" class="create-course" value="CourseId : ${Course.courseId}"></li>
+                <li><input type="button" class="create-course" value="score :${Course.courseAvgScore}" ></li>
 
     <%
     List<PlaceDTO> placeList = (List<PlaceDTO>) request.getAttribute("PlaceList");
@@ -222,28 +191,28 @@ header
     double minlong = 999;
     double maxlat =0;
     double maxlong = 0;
-   	for(int i = 0 ; i < placeList.size(); i++){
-   		%>
+      for(int i = 0 ; i < placeList.size(); i++){
+         %>
 
-   	      <li><input type="button" class="course" value="<%= placeList.get(i).getPlaceName() %>"></li>
-   	  
-   	     <%
-   	     
-   	     
-   	    if(minlat > placeList.get(i).getLatitude()) minlat = placeList.get(i).getLatitude();
-   	  if(minlong > placeList.get(i).getLongitude()) minlong = placeList.get(i).getLongitude();
-   	if(maxlat < placeList.get(i).getLatitude()) maxlat = placeList.get(i).getLatitude();
+            <li><input type="button" class="course" value="<%= placeList.get(i).getPlaceName() %>"></li>
+        
+           <%
+           
+           
+          if(minlat > placeList.get(i).getLatitude()) minlat = placeList.get(i).getLatitude();
+        if(minlong > placeList.get(i).getLongitude()) minlong = placeList.get(i).getLongitude();
+      if(maxlat < placeList.get(i).getLatitude()) maxlat = placeList.get(i).getLatitude();
     if(maxlong < placeList.get(i).getLongitude()) maxlong = placeList.get(i).getLongitude();
-   	  latitudeSum += placeList.get(i).getLatitude();
-   	  longitudeSum += placeList.get(i).getLongitude();
-   	    if(i != placeList.size()-1){
-   	 	%>
-   	    <div style="text-align: center; width: 200px; height: 70px;">
-   	        <img style="width: 50px; height: 50px;" src="<%= request.getContextPath() %>/images/arrow.png" alt="화살표">
-   	    </div>
-   	      <%
-   	    }
-   	
+        latitudeSum += placeList.get(i).getLatitude();
+        longitudeSum += placeList.get(i).getLongitude();
+          if(i != placeList.size()-1){
+          %>
+          <div style="text-align: center; width: 200px; height: 70px;">
+              <img style="width: 50px; height: 50px;" src="<%= request.getContextPath() %>/images/arrow.png" alt="화살표">
+          </div>
+            <%
+          }
+      
 
     }double averageLatitude = latitudeSum  / placeList.size();
     double averageLongitude =longitudeSum  / placeList.size();
@@ -252,25 +221,25 @@ header
 
 <script>
 function moveMap(minlat, minlong, maxlat, maxlong) {
-	
-	var middle = new naver.maps.LatLngBounds(
+   
+   var middle = new naver.maps.LatLngBounds(
             new naver.maps.LatLng(minlat, minlong),
             new naver.maps.LatLng(maxlat, maxlong));
     map.panToBounds(middle);
 }
 
 </script>
-   	      
-   	     
-   	         <li><input id="slider-button" type="button" class="create-course" value="작성된 리뷰보기" ></li>
-   	        
-   	        
-   	 
-   	  
-   	  	   <div style="" class="">
-   	     <form id="review" action="/setReview" method="GET" accept-charset="UTF-8">
-   	     
-   	      <li><input id="slider-button" type="button" class="create-course" value="리뷰 작성 버튼" ></li>
+            
+           
+               <li><input id="slider-button" type="button" class="create-course" value="작성된 리뷰보기" ></li>
+              
+              
+       
+        
+              <div style="" class="">
+           <form id="review" action="/setReview" method="GET" accept-charset="UTF-8">
+           
+            <li><input id="slider-button" type="button" class="create-course" value="리뷰 작성 버튼" ></li>
       <input type="hidden" id="placeId1" name="placeId1" value=>
       <input type="hidden" id="placeId2" name="placeId2" value=>
       <input type="hidden" id="placeId3" name="placeId3" value=>
@@ -278,94 +247,94 @@ function moveMap(minlat, minlong, maxlat, maxlong) {
       <input type="hidden" id="placeId5" name="placeId5" value=>
       <input type="hidden" id="courseId" name="courseId" value=>
       <input id="courseNumber" type="hidden" name="courseNumber">
-	
+   
      
     </form>
-   	       </div>
-   	    </ul>
-		</div>
+             </div>
+          </ul>
+      </div>
    
   </span>
      
-   	    
-  	
+          
+     
 
 </div>
 
 </body>
-<footer style="font-weight: bold; right:500px;bottom:0px">
+
+<!-- footer -->
+
+<footer>
 
 <h2 >코스 소개글 : ${Course.courseContent}</h2>
 </footer>
-<!-- footer -->
-
-
              
       
 <script>
 //polyline
 let markers = new Array(); //마커 정보를 담는 배열
-	let infoWindows = new Array(); // 정보창을 담는 배열  
-	var map;
+   let infoWindows = new Array(); // 정보창을 담는 배열  
+   var map;
  var submitButtonClicked = false;
-	
-	    function submitForm() {
-	        if (submitButtonClicked) {
-	            return false; // 이미 중복 클릭된 경우 중단
-	        }
-	        submitButtonClicked = true; // 버튼 클릭 상태로 설정
-	        var form = document.getElementById("review");
-	        
-	        form.submit(); // 폼 제출
-	        
-	    }
+   
+       function submitForm() {
+           if (submitButtonClicked) {
+               return false; // 이미 중복 클릭된 경우 중단
+           }
+           submitButtonClicked = true; // 버튼 클릭 상태로 설정
+           var form = document.getElementById("review");
+           
+           form.submit(); // 폼 제출
+           
+       }
     document.getElementById("review").onclick = function() {
-	        // 추가 동작을 수행합니다. 
-	        event.preventDefault();
-	        var urlParams = new URLSearchParams(window.location.search);
+           // 추가 동작을 수행합니다. 
+           event.preventDefault();
+           var urlParams = new URLSearchParams(window.location.search);
 
-	        document.getElementById("courseId").value = urlParams.get('courseId');
-			 document.getElementById("courseNumber").value = urlParams.get('courseNumber');
-	        // placeId에 저장된 값을 input 박스안에 각각 집어넣어졌는지 확인.
-	   
-			  document.getElementById("placeId1").value = urlParams.get('placeId1');
-			  document.getElementById("placeId2").value  =urlParams.get('placeId2');
-			  document.getElementById("placeId3").value =urlParams.get('placeId3');
-			  document.getElementById("placeId4").value = urlParams.get('placeId4');
-			  document.getElementById("placeId5").value = urlParams.get('placeId5');
-	      
-	        console.log("전송 버튼이 눌렸습니다!");
-	      
-	        
-	     
-	  
-	      
-	
-	 
-	
-	       
-	        
-	        submitForm(); // 폼 제출
-	       
-	    };
+           document.getElementById("courseId").value = urlParams.get('courseId');
+          document.getElementById("courseNumber").value = urlParams.get('courseNumber');
+           // placeId에 저장된 값을 input 박스안에 각각 집어넣어졌는지 확인.
+      
+           document.getElementById("placeId1").value = urlParams.get('placeId1');
+           document.getElementById("placeId2").value  =urlParams.get('placeId2');
+           document.getElementById("placeId3").value =urlParams.get('placeId3');
+           document.getElementById("placeId4").value = urlParams.get('placeId4');
+           document.getElementById("placeId5").value = urlParams.get('placeId5');
+         
+           console.log("전송 버튼이 눌렸습니다!");
+         
+           
+        
+     
+         
+   
+    
+   
+          
+           
+           submitForm(); // 폼 제출
+          
+       };
 init();
 
 //지도를 그려주는 함수 실행
 function init(){
-	
+   
 
-	
-	
-	//검색정보를 테이블로 작성해주고, 지도에 마커를 찍어준다.
-	
-	var polylinePath = new Array();
+   
+   
+   //검색정보를 테이블로 작성해주고, 지도에 마커를 찍어준다.
+   
+   var polylinePath = new Array();
     
-	 
+    
 
-	map = new naver.maps.Map('map', {
-	    center: new naver.maps.LatLng(37.3595704, 127.105399),
-	    zoom: 10
-	});
+   map = new naver.maps.Map('map', {
+       center: new naver.maps.LatLng(37.3595704, 127.105399),
+       zoom: 10
+   });
  
   
     
@@ -379,36 +348,41 @@ function init(){
 
     
  //   polylinePath.push(new naver.maps.LatLng( ${place.latitude}, ${place.longitude}));
-    	
+       
 
     var marker = new naver.maps.Marker({
     
         position: new naver.maps.LatLng(${place.latitude}, ${place.longitude}),
-    	
+       
         map: map
     });
     
     markers.push(marker);
     
-	var contentString = [
-	    '<div class="iw_inner">', '<p>place Name: ${place.placeName}</p>',
-	 ' ${place.address}',
-	    '</div>'
-	].join('');	
+    var contentString = [
+    	  '<div class="naver-infoWindow">',
+    	  '  <div class="naver-infoWindow-content">',
+    	  '    <p>${place.placeName}</p>',
+    	  '    ${place.address}',
+    	  '  </div>',
+    	  '  <div class="naver-infoWindow-anchor"></div>',
+    	  '</div>'
+    	].join('');
     
     var infoWindow = new naver.maps.InfoWindow({
-
         content: contentString,
+        Width: 140,
+        backgroundColor: "rgba( 135, 206, 235)",
+        borderColor: "#c4c4c4",
+        borderWidth: 2,
+        borderRadius: "5px",
+        anchorSize: new naver.maps.Size(30, 30),
+        anchorSkew: true,
+        anchorColor: "rgba( 135, 206, 235)",
+        pixelOffset: new naver.maps.Point(20, -20)
+        
+			
 
-   //     maxWidth: 140,
-     //   backgroundColor: "#eee",
-       // borderColor: "#2db400",
-     //   borderWidth: 5,
-      //  anchorSize: new naver.maps.Size(30, 30),
-       // anchorSkew: true,
-//        anchorColor: "#eee",
-
-  //	      pixelOffset: new naver.maps.Point(20, -20)
     });
 
     infoWindows.push(infoWindow); // 생성한 정보창을 배열에 담는다.
@@ -446,10 +420,10 @@ function init(){
         //     center: new naver.maps.LatLng(37.5112, 127.0981), // 잠실 롯데월드를 중심으로 하는 지도
           //   zoom: 15
         // });
- 		
+       
          var polyline = new naver.maps.Polyline({
              path: polylinePath,      //선 위치 변수배열
-             strokeColor: '#FF0000', //선 색 빨강 #빨강,초록,파랑
+             strokeColor: 'rgba( 135, 206, 235)', //선 색 빨강 #빨강,초록,파랑
              strokeOpacity: 0.8, //선 투명도 0 ~ 1
              strokeWeight: 6,   //선 두께
              map: map           //오버레이할 지도
@@ -475,14 +449,14 @@ function init(){
 
 
 function ClickMap(i) {
-	  return function () {
-	    var infoWindow = infoWindows[i];
-	    infoWindow.close()
-	  }
-	}
+     return function () {
+       var infoWindow = infoWindows[i];
+       infoWindow.close()
+     }
+   }
 
 function getClickHandler(seq) {
-	
+   
     return function(e) {  // 마커를 클릭하는 부분
         var marker = markers[seq]; // 클릭한 마커의 시퀀스로 찾는다.
         var infoWindow = infoWindows[seq]; // 클릭한 마커의 시퀀스로 찾는다
@@ -490,58 +464,58 @@ function getClickHandler(seq) {
         if (infoWindow.getMap()) {
             infoWindow.close();
         } else {
-        	console.log("표시");
-        	
-        	
+           console.log("표시");
+           
+           
             infoWindow.open(map, marker); // 표출
          //   console.log(map, marker,infoWindow);
         }
-	}
+   }
 }
 
-	
-	
-	
-	
-	
-	
-	
-	
+   
+   
+   
+   
+   
+   
+   
+   
 
 //지도를 그려주는 함수
 function selectMapList() {
-	
-	var map = new naver.maps.Map('map', {
-	    center: new naver.maps.LatLng(37.3595704, 127.105399),
-	    zoom: 10
-	});
+   
+   var map = new naver.maps.Map('map', {
+       center: new naver.maps.LatLng(37.3595704, 127.105399),
+       zoom: 10
+   });
 }
 
 
 // 지도를 이동하게 해주는 함수
 
 function calculateDistance(lat1, lon1, lat2, lon2) {
-	  const earthRadius = 6371; // 지구 반지름 (단위: km)
+     const earthRadius = 6371; // 지구 반지름 (단위: km)
 
-	  // 각도를 라디안으로 변환
-	  const lat1Rad = (lat1 * Math.PI) / 180;
-	  const lon1Rad = (lon1 * Math.PI) / 180;
-	  const lat2Rad = (lat2 * Math.PI) / 180;
-	  const lon2Rad = (lon2 * Math.PI) / 180;
+     // 각도를 라디안으로 변환
+     const lat1Rad = (lat1 * Math.PI) / 180;
+     const lon1Rad = (lon1 * Math.PI) / 180;
+     const lat2Rad = (lat2 * Math.PI) / 180;
+     const lon2Rad = (lon2 * Math.PI) / 180;
 
-	  // 위도와 경도의 차이 계산
-	  const latDiff = lat2Rad - lat1Rad;
-	  const lonDiff = lon2Rad - lon1Rad;
+     // 위도와 경도의 차이 계산
+     const latDiff = lat2Rad - lat1Rad;
+     const lonDiff = lon2Rad - lon1Rad;
 
-	  // Haversine 공식 적용
-	  const a =
-	    Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
-	    Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
-	  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-	  const distance = earthRadius * c;
+     // Haversine 공식 적용
+     const a =
+       Math.sin(latDiff / 2) * Math.sin(latDiff / 2) +
+       Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(lonDiff / 2) * Math.sin(lonDiff / 2);
+     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+     const distance = earthRadius * c;
 
-	  return distance;
-	}
+     return distance;
+   }
 
 </script>
 

@@ -32,7 +32,6 @@ button {
 
 
 
-
 /* 로고 스타일 */
 .logo {
     font-size: 40px;
@@ -66,3 +65,106 @@ margin-left: 220px;
 
 }
 
+.slidetitle{
+	text-align: center;
+	color: #00008b;
+	font-weight: bolder !important;	
+	margin-top: 5px;
+}
+.slidecontents {
+  color: #00008b;
+  font-weight: bolder;
+  text-align: center;
+  width: 200px;
+  height: 80px;
+  background-color: #ffffff;
+  border: 2px solid #c4c4c4;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 5px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.slidecontents::-webkit-scrollbar {
+	width: 0;
+	display: none;
+	}
+	
+	.slidecontents::-webkit-scrollbar {
+	width: 10px;
+	}
+	
+	.slidecontents::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	}
+	
+	.slidecontents::-webkit-scrollbar-track {
+	background-color: grey;
+	}
+
+ .slider-menu {
+    position: fixed;
+    top: 0;
+    height: 100%;
+    background-color: rgba( 135, 206, 235, 0.7);
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 5px 0px 10px rgba(0.3, 0, 0, 0); /* 우측에 그림자 효과 추가 */
+    z-index: 1;
+    position: fixed;
+    right: 200px; /* 초기에는 왼쪽에 숨겨진 상태 */
+    width: 250px;
+    transition: right 0.3s ease;
+    height: 100%;
+    overflow:hidden;
+}
+        
+        
+ .slider-button {
+position: fixed;
+top: 50%;
+right: 0;
+transform: translateY(-50%);
+width: 200px;
+height: 30px;
+     
+cursor: pointer;
+z-index: 9999;
+        }
+        
+        
+.footer{
+	
+position: fixed;
+bottom: 0;
+width: 100%;
+background-color: #f0f0f0;
+padding: 20px;
+text-align: center;
+	
+}
+
+div.starsscore {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  font-size: 14px;
+  padding: 0 .2em;
+}
+
+div.starsscore .fas.fa-star {
+  color: #ccc;
+}
+
+div.starsscore .fas.fa-star.active {
+  color: #ffd400;
+}
