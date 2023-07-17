@@ -26,10 +26,13 @@ import com.spring.dto.CourseDTO;
 import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CourseReview;
 import com.spring.dto.CtgUserDTO;
+import com.spring.dto.PlaceDTO;
 import com.spring.dto.UserBookmarkCourseDTO;
 import com.spring.service.CourseReviewService;
 import com.spring.service.CourseService;
 import com.spring.service.PlaceReviewService;
+import com.spring.service.PlaceService;
+import com.spring.service.RankingService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -46,6 +49,9 @@ public class PageController {
 	private CourseService courseService;
 	
 	@Autowired
+	private PlaceService placeService;
+	
+	@Autowired
 	private BookmarkController bookmarkController;
 	
 	@Autowired
@@ -53,6 +59,9 @@ public class PageController {
 	
 	@Autowired
 	private PlaceReviewService placeReviewService;
+	
+	@Autowired
+	private RankingService rankingService;
 	
 	@Value("${naver.api.login.client.id}")
 	private String clientId;	
@@ -66,7 +75,7 @@ public class PageController {
 	// /home으로 접속시 네이버 로그인 화면으로 이동하는  "apiURL"주소를 세션에 저장하여 home.jsp로 이동.
 	// "접근 토큰 요청" 메서드
 	@GetMapping(value = "/home")			
-	public String login(HttpSession session) {			
+	public String login(HttpSession session, Model model) {			
 		log.info("home 화면 출력");	
 			
 		String redirectURI="";			
@@ -85,7 +94,46 @@ public class PageController {
 		apiURL += "&state=" + state;			
 					
 		session.setAttribute("apiURL", apiURL);			
-					
+		
+		// 코스 추천	
+		List<String> courseIdList = rankingService.sortCourseIdByCount();
+		List<String> placeIdList = rankingService.sortPlaceIdByCount();
+		
+		List<CourseInformDTO> courseInformDTOList = new ArrayList<CourseInformDTO>();
+		List<PlaceDTO> placeDTOList = new ArrayList<PlaceDTO>();
+		
+		for(String courseId : courseIdList) {
+			CourseInformDTO courseInform = null;
+			
+			try {
+				courseInform = courseService.getCourseInformByCourseId(Integer.parseInt(courseId));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}			
+			courseInform.setCourseAvgScore(5.0);
+			courseInformDTOList.add(courseInform);
+		}
+
+		for(String placeId : placeIdList) {
+			PlaceDTO place = null;
+			
+			try {
+				place = placeService.getPlaceByPlaceId(Integer.parseInt(placeId));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			placeDTOList.add(place);
+		}
+		
+		//임시방편
+		List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
+		List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
+		
+		model.addAttribute("courseInformDTOList", courseInformDTOSubList);
+		model.addAttribute("placeDTOList", placeDTOSubList);
+		
+		
 		return "home";		
 	}
 	
