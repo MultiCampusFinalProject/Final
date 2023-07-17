@@ -86,7 +86,37 @@
 				       	 					    padding-left: 20px;">
 										<c:forEach items="${requestScope.courseInformDTOList}" var="courseInformDTO" varStatus= "courseInformSt">
 											<c:if test="${courseReviewSt.index eq courseInformSt.index}">
-												<b>${courseInformDTO.userNickName}</b> 님의 <a href="/courseList/Map?${query}"><b>${courseInformDTO.courseName}</b></a> 코스에 남긴 리뷰입니다. <b style="color: #B6B7B7;">${courseReview.reviewDate}</b>
+												<b>${courseInformDTO.userNickName}</b> 님의 <a href="/courseList/Map?${query}"><b>${courseInformDTO.courseName}</b></a> 코스에 남긴 리뷰입니다.
+												<b style="color: #B6B7B7;">${courseReview.reviewDate}</b>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<form style = "display: inline-block;
+															   white-space: nowrap;">
+													<input type = "hidden" name = "courseReviewId" id = "courseReviewId" value = "${courseReview.courseReviewId}">
+													<button type = "submit" value = "리뷰 수정" class = "reviewButton" style= "color:grey;
+																															background-color: #cccccc;
+																															padding-top: 2px;
+																															padding-bottom: 2px;
+																															border-radius: 5px;
+																															text-align: center;
+																															width: 50px;
+																															border: 0px;"><b>수정</b></button>
+													
+												</form>
+												&nbsp;&nbsp;&nbsp;&nbsp;
+												<form style = "display: inline-block;
+															   white-space: nowrap;">
+													<input type = "hidden" name = "courseReviewId" id = "courseReviewId" value = "${courseReview.courseReviewId}">
+													<button type = "submit" value = "리뷰 수정" class = "reviewButton" style= "color:grey;
+																															background-color: #cccccc;
+																															padding-top: 2px;
+																															padding-bottom: 2px;
+																															border-radius: 5px;
+																															text-align: center;
+																															width: 50px;
+																															border: 0px;"><b>삭제</b></button>
+													
+												</form>
+												
 											</c:if>
 										</c:forEach>
 									</div>
