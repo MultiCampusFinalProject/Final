@@ -10,44 +10,11 @@
 <html>
 <head>
     <title class="searchList" >Searching Courses</title>
-
+ <link rel="stylesheet" type="text/css" href="http://localhost:8090/css/modal.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 <style>
- .modal {
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
 
-  .modal-content {
-    background-color: #fff;
-    margin: 20% auto;
-    padding: 20px;
-    width: 60%;
-    max-width: 600px;
-    border-radius: 8px;
-  }
-
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
 @import url('https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@300;700&family=Grandiflora+One&family=Sunflower:wght@300&family=VT323&display=swap');
 html{
 
@@ -204,21 +171,46 @@ font-weight: bold;
     xhr.send();
   }
   function populateModal(data) {
-	  // 모달 창 내부 요소에 데이터를 채워넣는 로직을 구현
-	  var modalContent = document.getElementById("placeContent");
-	  modalContent.innerHTML = "<h2>" + data.placeName + "</h2><p>" + data.주소 + "</p><p>"+data.score+ "</p>";
+	  var modalTitle = document.getElementById("placeTitle");
+	  var modalAddress = document.getElementById("placeAddress");
+	  var modalScore = document.getElementById("placeScore");
+
+	  modalTitle.textContent = data.placeName;
+	  modalAddress.textContent = data.주소;
+
+	  var score = data.score; // 소수점 값
+
+	  // 별 아이콘 생성 로직
+	  var starHTML = "";
+	  var totalStars = 5; // 총 별 개수
+	  var fullStars = Math.floor(score); // 소수점 아래 버림
+
+	  // 전체 별 생성
+	  for (var i = 0; i < totalStars; i++) {
+	    if (i < fullStars) {
+	      starHTML += "<i class='fas fa-star filled'></i>";
+	    } else {
+	      starHTML += "<i class='fas fa-star empty'></i>";
+	    }
+	  }
+
+	  modalScore.innerHTML = starHTML;
 	}
+
   function closeModal() {
     document.getElementById("myModal").style.display = "none";
   }
+  
 </script>
 <div id="myModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
-    <h2 id="placeContent">팝업 제목</h2>
-   
+    <h2 id="placeTitle"></h2>
+    <p id="placeAddress"></p>
+    <span id="placeScore" class="star-icons"></span>
   </div>
 </div>
+
     <div  class="searchList">
     
 
