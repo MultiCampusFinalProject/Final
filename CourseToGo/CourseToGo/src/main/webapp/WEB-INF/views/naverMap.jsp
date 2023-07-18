@@ -64,7 +64,7 @@ document.getElementById("area").innerHTML = areaName;
      <input type="hidden" id="placeId3" name="placeId3" value=>
      <input type="hidden" id="placeId4" name="placeId4" value=>
      <input type="hidden" id="placeId5" name="placeId5" value=>
-     <textarea class="userGuide">
+     <textarea class="userGuide" readonly>
       &#8595;코스제작 가이드 &#8595;
       
 &#10112;좌측 상단 검색창을 통해 검색을 해주세요.
@@ -77,10 +77,10 @@ document.getElementById("area").innerHTML = areaName;
 
 &#10115;작성이 끝나면 코스만들기를 눌러서 자신만의 코스를 만들어주세요.
     </textarea>
-    <input class="Coursename" id="courseName" type="text" name="courseName" value="Course Name" onfocus="clearInputValue(this)">
+    <input class="Coursename" id="courseName" type="text" name="courseName" value="코스 이름을 입력해주세요." onfocus="clearInputValue(this)">
 	<input id="courseNumber" type="hidden" name="courseNumber">
 	<textarea id="courseContent" class="courseContent" name="courseContent" required onfocus="clearTextareaValue(this)">코스에 대한 설명을 작성해주세요.</textarea>
-    <button class = "submit" type="submit">전송</button>
+    <button class = "submit" type="submit">코스 제작하기!</button>
     </form>
   </div> 
 </div>
@@ -89,7 +89,8 @@ document.getElementById("area").innerHTML = areaName;
 	function clearInputValue(input) {
 	  if (input.value === input.defaultValue) {
 	    input.value = '';
-	  }
+	  } 
+	  
 	}
 	
 	function clearTextareaValue(textarea) {
@@ -278,65 +279,28 @@ document.getElementById("area").innerHTML = areaName;
     document.getElementById('markerList').innerHTML = markerListHTML;
   }
 
+  var selectedMarker = null;
+
   function addMarkerEventListeners(marker) {
     naver.maps.Event.addListener(marker, 'click', function () {
-      if (selectedMarker !== marker) {
-        if (selectedMarker) {
-          var selectedMarkerName = placeName[selectedMarker.index];
-          var selectedMarkerHTML = [
-            '<div class="cs_mapbridge">',
-            '  <div class="map_group _map_group crs">',
-            '    <div class="map_marker _marker num1 num1_big">',
-            '      <span class="ico _icon">' + selectedMarkerName + '</span>',
-            '      <span class="shd"></span>',
-            '    </div>',
-            '  </div>',
-            '</div>'
-          ].join('');
-          selectedMarker.setIcon({
-            content: selectedMarkerHTML,
-            size: new naver.maps.Size(38, 58),
-            anchor: new naver.maps.Point(19, 58)
-          });
-        }
-
-        selectedMarker = marker;
-        var name = placeName[selectedMarker.index];
-        var markerHTML = [
-          '<div class="cs_mapbridge">',
-          '  <div class="map_group _map_group crs">',
-          '    <div class="map_marker _marker num1 num1_big">',
-          '      <span class="ico _icon">' + name + '</span>',
-          '      <span class="shd"></span>',
-          '    </div>',
-          '  </div>',
-          '</div>'
-        ].join('');
-
-        selectedMarker.setIcon({
-          content: markerHTML,
-          size: new naver.maps.Size(38, 58),
-          anchor: new naver.maps.Point(19, 58)
-        });
-      } else {
-        var index = markerList.indexOf(marker);
-        if (index !== -1) {
-          marker.setMap(null);
-          markerList.splice(index, 1);
-          placeName.splice(index, 1);
-          placeId.splice(index, 1);
-          myList.splice(index, 1);
-          selectedMarker = null;
-          updateMarkers();
-          updateMarkerOrder();
-          console.log("Marker removed");
-          console.log("markerList:", markerList);
-          console.log("placeName:", placeName);
-          console.log("placeId:", placeId);
-          console.log("myList:", myList);
-        }
+      var index = markerList.indexOf(marker);
+      if (index !== -1) {
+        marker.setMap(null);
+        markerList.splice(index, 1);
+        placeName.splice(index, 1);
+        placeId.splice(index, 1);
+        myList.splice(index, 1);
+        selectedMarker = null;
+        updateMarkers();
+        updateMarkerOrder();
+        console.log("Marker removed");
+        console.log("markerList:", markerList);
+        console.log("placeName:", placeName);
+        console.log("placeId:", placeId);
+        console.log("myList:", myList);
       }
     });
+  
 
     naver.maps.Event.addListener(marker, 'dragend', function () {
       updateMarkerInputs();

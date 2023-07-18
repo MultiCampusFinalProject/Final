@@ -20,11 +20,11 @@ width:100%;}
  .header{
  height:50px;}
 footer{
-   height: 10rem; /* footer 높이 */
-     text-align: center;
-     margin: 2em auto;
-padding:2em;
-background-color:#E5F2F1;
+ height: 10rem; /* footer 높이 */
+ text-align: center;
+ margin: 2em auto;
+ padding:2em;
+ background-color:#E5F2F1;
 }
 body {
 
@@ -59,8 +59,47 @@ background-clip: content-box;
 .contain{
  width: 100px;
  
+ }
+.courseName{
+  	 display: block;
+    text-decoration: none;
+    color: #1e90ff;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #fff;
+    width: 170px;
+    margin:auto;
+	}
+ 
+.CourseId{
+  	 display: block;
+    text-decoration: none;
+    color: #1e90ff;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #fff;
+    width: 170px;
+    margin:auto;
+	}
+ 
+.score{
+  	  display: block;
+    text-decoration: none;
+    color: #1e90ff;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #fff;
+    width: 170px;
+    margin:auto;
+	}
    
-}
+
 }
   </style>
     <meta charset="UTF-8">
@@ -75,7 +114,7 @@ background-clip: content-box;
 </head>
 
 <header class="header">
-header
+
   <title>List View Example</title>
    
 </header>
@@ -178,10 +217,10 @@ header
           <ul>
              <!-- 전체적인 링크 수정해야함(onclick) -->
              <li></li>
-             <li><input type="button" class="course" value=${Course.courseName} ></li>
+             <li><input type="button" class="courseName" value=${Course.courseName} ></li>
           
-                <li><input type="button" class="create-course" value="CourseId : ${Course.courseId}"></li>
-                <li><input type="button" class="create-course" value="score :${Course.courseAvgScore}" ></li>
+                <li><input type="button" class="CourseId" value="CourseId : ${Course.courseId}"></li>
+                <li><input type="button" class="score" value="score :${Course.courseAvgScore}" ></li>
 <hr style="border: 1px dashed #ffffff"></hr>
     <%
     List<PlaceDTO> placeList = (List<PlaceDTO>) request.getAttribute("PlaceList");
@@ -194,7 +233,12 @@ header
       for(int i = 0 ; i < placeList.size(); i++){
          %>
 
-            <li><input type="button" class="course" style="font-size: 12px; font-weight: 900; background-color: #ffffff; color:#00008b; border: 3px solid #00008b;" value="<%= placeList.get(i).getPlaceName() %>"></li>
+           <li>
+		  	<input type="button" class="course" style="font-size: 12px; font-weight: 900; background-color: #ffffff; color:#00008b; border: 3px solid #00008b;" value="<%= placeList.get(i).getPlaceName() %>"
+		    onclick="window.open('https://search.naver.com/search.naver?query=' + encodeURIComponent('<%= placeList.get(i).getPlaceName() %>'), '_blank')"
+		    onmouseover="this.style.backgroundColor='rgba( 135, 206, 235, 0.7)';"
+		    onmouseout="this.style.backgroundColor='#ffffff';">
+		  </li>
         
            <%
            
@@ -220,6 +264,20 @@ header
 %>
 
 <script>
+
+function openNaverSearch(placeName) {
+	  var encodedPlaceName = encodeURIComponent(placeName);
+	  var searchURL = 'https://search.naver.com/search.naver?query=' + encodedPlaceName;
+	  window.open(searchURL, '_blank');
+	}
+
+	function handleButtonMouseOver(button) {
+	  button.style.backgroundColor = '#ccc';
+	}
+
+	function handleButtonMouseOut(button) {
+	  button.style.backgroundColor = '#ffffff';
+	}
 
 function moveMap(minlat, minlong, maxlat, maxlong) {
    

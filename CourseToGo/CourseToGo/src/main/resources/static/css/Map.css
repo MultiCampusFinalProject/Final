@@ -175,9 +175,26 @@
     align-items: center;
    	box-shadow: -5px 0px 10px rgba(0, 0, 0, 0.3);
     z-index: 1;
+    overflow-f: auto;
 	}
+	
+	.sidebar2::-webkit-scrollbar {
+	width: 0;
+	display: none;
+	}
+	
+
+	
+	.sidebar2::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	}
+	
+	.sidebar2::-webkit-scrollbar-track {
+	background-color: grey;
+	}
+	
     .sidebar2 form {
-  	 margin-top: 20px;
+  	 margin-top: 10px;
      display: flex;
      flex-direction: column;
      height: 100%; /* form 요소의 높이를 설정하여 부모 요소에 맞게 확장될 수 있도록 합니다. */
@@ -190,7 +207,7 @@
      overflow-y: auto;
 	 margin-bottom: 20px;
 	 resize: none;
-	 height: 200px;
+	 height: 450px;
 	 color: #00008b;
 	 background-color: rgba(255, 255, 255, 0.7);
 	 text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -218,18 +235,20 @@
 	 margin-bottom: 20px;
 	 width: 100%;
 	 resize: none;
-	 height: 500px;
+	 height: 350px;
 	 color: #00008b;
 	 font-weight: bolder;
 	}
 	.submit{
 	 color: #00008b;
 	 font-weight: bolder;
-	 background-color: rgba(255, 255, 255, 0.7);
+	 background-color: rgba(255, 255, 255, 1);
 	 border-radius: 5px;
 	 z-index:11;
 	}
-	
+	.submit:hover {
+  	 background-color: rgba( 135, 206, 235, 0.7);
+	}
 	
 	
 	

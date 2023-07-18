@@ -62,6 +62,24 @@ ul li {
     margin:auto;
 }
 
+.home:hover {
+  	 background-color: rgba( 135, 206, 235, 0.7);
+	}
+
+.course:hover {
+  	 background-color: rgba( 135, 206, 235, 0.7);
+	}
+	
+.mypage:hover {
+  	 background-color: rgba( 135, 206, 235, 0.7);
+	}
+
+.create-course:hover {
+  	 background-color: rgba( 135, 206, 235, 0.7);
+	}
+
+
+
 .profile {
     display: flex;
     flex-direction: column;
