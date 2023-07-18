@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,10 +15,16 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CtgUserDTO;
+import com.spring.dto.PlaceDTO;
+import com.spring.service.CourseService;
+import com.spring.service.PlaceService;
+import com.spring.service.RankingService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,12 +51,21 @@ public class NaverAPIController {
 	
 	@Autowired
 	private CtgUserController userController;
+	
+	@Autowired
+	private RankingService rankingService;
+	
+	@Autowired
+	private CourseService courseService;
+	
+	@Autowired
+	private PlaceService placeService;
 
 	// localhost:----/test 로 callback URL을 설정. 출력해줄 jsp는 myPage.jsp입니다
 	@GetMapping(value = "/callback")
 	public String loginPOSTNaver(@RequestParam("code") String code,
 								 @RequestParam("state") String state,
-								 HttpSession session) {	
+								 HttpSession session, Model model) {	
 		log.info("login 시도");
 		String redirectURI = "";
 		
@@ -118,6 +135,49 @@ public class NaverAPIController {
 													   searchUser.getUserPhoto(), searchUser.getUserIntroduce());
 			session.setMaxInactiveInterval(3600);
 			session.setAttribute("user", userForSession);		
+			
+			
+			
+			
+			// 코스 추천	
+			List<String> courseIdList = rankingService.sortCourseIdByCount();
+			List<String> placeIdList = rankingService.sortPlaceIdByCount();
+			
+			List<CourseInformDTO> courseInformDTOList = new ArrayList<CourseInformDTO>();
+			List<PlaceDTO> placeDTOList = new ArrayList<PlaceDTO>();
+			
+			for(String courseId : courseIdList) {
+				CourseInformDTO courseInform = null;
+				
+				try {
+					courseInform = courseService.getCourseInformByCourseId(Integer.parseInt(courseId));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}			
+				courseInform.setCourseAvgScore(5.0);
+				courseInformDTOList.add(courseInform);
+			}
+
+			for(String placeId : placeIdList) {
+				PlaceDTO place = null;
+				
+				try {
+					place = placeService.getPlaceByPlaceId(Integer.parseInt(placeId));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				placeDTOList.add(place);
+			}
+			
+			//임시방편
+			List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
+			List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
+			
+			model.addAttribute("courseInformDTOList", courseInformDTOSubList);
+			model.addAttribute("placeDTOList", placeDTOSubList);
+			
+			
 			return "home";
 		}	
 	}

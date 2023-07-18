@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.spring.dto.CourseDTO;
 import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CourseReview;
 import com.spring.dto.CtgUserDTO;
@@ -30,7 +27,6 @@ import com.spring.dto.PlaceDTO;
 import com.spring.dto.UserBookmarkCourseDTO;
 import com.spring.service.CourseReviewService;
 import com.spring.service.CourseService;
-import com.spring.service.PlaceReviewService;
 import com.spring.service.PlaceService;
 import com.spring.service.RankingService;
 
@@ -57,8 +53,6 @@ public class PageController {
 	@Autowired
 	private CourseReviewService courseReviewService;
 	
-	@Autowired
-	private PlaceReviewService placeReviewService;
 	
 	@Autowired
 	private RankingService rankingService;
