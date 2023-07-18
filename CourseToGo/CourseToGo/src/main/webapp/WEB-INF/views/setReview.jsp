@@ -114,7 +114,7 @@
 	<br>
 	
 	<!-- placeReview + courseReview 박스-->
-	<form action="/review" method="POST" id = "review" >
+	<form action="/setreview" method="POST" id = "review" >
 	<!-- placeReview 박스 -->	
 	    <div class = "placereview" id = "placereview"
 	    	 style = "margin-left: 200px;
@@ -147,15 +147,15 @@
 															             align-items: center;">	
 					
 			      	  	<input type="radio" id="stars${placeSt.index + 1}5" name = "placeScore${placeSt.index + 1}" value="5" />
-  			            <label for ="stars${placeSt.index + 1}5" title = "5" class="half">★</label>
+  			            <label for ="stars${placeSt.index + 1}5" title = "5" >★</label>
 						<input type="radio" id="stars${placeSt.index + 1}4" name = "placeScore${placeSt.index + 1}" value="4" />
-	        		    <label for ="stars${placeSt.index + 1}4" title = "4" class="half">★</label>						
+	        		    <label for ="stars${placeSt.index + 1}4" title = "4" >★</label>						
 						<input type="radio" id="stars${placeSt.index + 1}3" name = "placeScore${placeSt.index + 1}" value="3" />
-	        		    <label for ="stars${placeSt.index + 1}3" title = "3" class="half">★</label>								
+	        		    <label for ="stars${placeSt.index + 1}3" title = "3">★</label>								
 						<input type="radio" id="stars${placeSt.index + 1}2" name = "placeScore${placeSt.index + 1}" value="2" />
-	        		    <label for ="stars${placeSt.index + 1}2" title = "2" class="half">★</label>								
+	        		    <label for ="stars${placeSt.index + 1}2" title = "2" >★</label>								
 						<input type="radio" id="stars${placeSt.index + 1}1" name = "placeScore${placeSt.index + 1}" value="1" />
-	        		    <label for ="stars${placeSt.index + 1}1" title = "1" class="half">★</label>		
+	        		    <label for ="stars${placeSt.index + 1}1" title = "1" >★</label>		
 	        		    						
 						<input type="hidden" name="place${placeSt.index + 1}" id="place${placeSt.index + 1}" value = "${placeDTO.placeId}">
 	      	  		</div>
@@ -177,15 +177,15 @@
 			<!-- CourseReview score -->
     	    <div class="courseStarsscore">
 					<input type="radio" id="courseStars5" name="courseScore" value="5" />
-		            <label for ="courseStars5" title = "5" class="half">★</label>
+		            <label for ="courseStars5" title = "5">★</label>
 		            <input type="radio" id="courseStars4" name="courseScore" value="4"/>
-		            <label for ="courseStars4" title = "4" class="half">★</label>
+		            <label for ="courseStars4" title = "4" >★</label>
 		            <input type="radio" id="courseStars3" name="courseScore" value="3" />
-		            <label for ="courseStars3" title = "3" class="half">★</label>
+		            <label for ="courseStars3" title = "3" >★</label>
 		            <input type="radio" id="courseStars2" name="courseScore" value="2" />
-		            <label for ="courseStars2" title = "2" class="half">★</label>
+		            <label for ="courseStars2" title = "2" >★</label>
 		            <input type="radio" id="courseStars1" name="courseScore" value="1" />
-		            <label for ="courseStars1" title = "1" class="half">★</label>
+		            <label for ="courseStars1" title = "1" >★</label>
            	</div>	
            	<br> 
 			<!-- courseReview 작성 칸 -->		  
