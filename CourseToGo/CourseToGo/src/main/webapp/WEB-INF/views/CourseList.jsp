@@ -88,22 +88,46 @@ font-weight: bold;
   	height: 1300px;
   	overflow: hidden;
   }
-  .ADBanner > img{
-  	width: 250px;
-  	height: 1300px;
-  	transform: translateX(25px);
+  .ADBanner img{
+  	width: 200px;
+  	height: 780px;
+  	transform: translateX(50px);
   }
 
   .page.navigation {
-/*   	transform: translate(620px, -10px);
-	width: 150%;
-	height: 150% */
 	display: flex;
   	justify-content: center;
   	transform: scale(1.5);
   }
+/*   @font-face {
+  	font-family: 'maple';
+  	src: url('/font/Maplestory Light.ttf') format('truetype');
+  } */
+  
+  .recommendCourse{
+  	position:absolute;
+  	top:0; 
+  	right: 20px;
+  	font-weight: 900;
+  	font-size: 40px;
+  	font-family: 'Grandiflora One';
+  	color: navy;
+  }
+  
+
   
 </style>
+<script>
+window.addEventListener('scroll', function() {
+	  var banner = document.querySelector('.ADBanner');
+	  var scrollOffset = window.scrollY;
+
+	  setTimeout(function() {
+	    banner.style.top = (180 + scrollOffset) + 'px';
+	  }, 300);
+	});
+</script>
+
 <body>
 
     <div class="sidebar" >
@@ -351,6 +375,12 @@ font-weight: bold;
       
     <h3>소개글: <%= courseContent %></h3>
   </div> 
+  
+  
+  <div class="recommendCourse">
+  	<h3 style="font-size:30px; font-weight: 900;">Recommend</h3>
+  </div>
+  
   
 <form action="/courseListWithPagination" method="POST">
     <div style="float:right;" class="bookmarkbtn">
