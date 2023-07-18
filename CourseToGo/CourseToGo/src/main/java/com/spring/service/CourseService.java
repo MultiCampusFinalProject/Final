@@ -93,18 +93,8 @@ public class CourseService {
 		
 		return res;
 	}
-	public List<CourseInformDTO> getCourseBySearchKeyword(SearchKeyword searchKeyword) throws Exception {
-		List<CourseInformDTO> res=new ArrayList<>();
-		 res= courseMapper.getCourseBySearchKeyword(searchKeyword);
-		System.out.println(res);
-		if(!res.isEmpty()) {
-			
-		} else {
-			throw new Exception("no data");
-		}
-		
-		return res;
-	}
+
+	
 	public int getTotalCount(PageRequestDTO pageRequest) throws SQLException {
 		// TODO Auto-generated method stub
 		return courseMapper.getTotalCount(pageRequest);
@@ -115,12 +105,7 @@ public class CourseService {
 //		System.out.println("service = " +courseId);
 		 res= courseMapper. getCourseWithPageRequest(pageRequest);
 		System.out.println(res);
-		if(res==null
-				) {
-			
-		} else {
-//			throw new Exception("no data");
-		}
+	
 		
 		return res;
 	}
