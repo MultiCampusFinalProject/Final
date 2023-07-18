@@ -57,6 +57,36 @@
 		  color:#ffd400;
    		  font-size:20px;
 		}
+		
+		.update-button {
+			background-color: #fff;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			border-radius: 5px;
+			text-align: center;
+			width: 50px;
+			border: 2px solid #b3defc;
+		}
+		
+		.update-button:hover {
+         	background-color: #daeefe;
+        }
+		
+		
+		.delete-button {
+			background-color: #fff;
+			padding-top: 2px;
+			padding-bottom: 2px;
+			border-radius: 5px;
+			text-align: center;
+			width: 50px;
+			border: 2px solid #b3defc
+		}
+		
+		.delete-button:hover {
+         	background-color: #daeefe;
+        }
+        
 	</style>
 </head>
 <body>
@@ -92,27 +122,13 @@
 												 <form style = "display: inline-block; white-space: nowrap;">
       												
 													<input type = "hidden" name = "courseReviewId" id = "courseReviewId" value = "${courseReview.courseReviewId}">
-													<button type = "submit" class = "update-button"  style= "color:grey;
-																															background-color: #cccccc;
-																															padding-top: 2px;
-																															padding-bottom: 2px;
-																															border-radius: 5px;
-																															text-align: center;
-																															width: 50px;
-																															border: 0px;"><b>수정</b></button>
+													<button type = "submit" class = "update-button" ><b> 수정 </b></button>
 													
 												</form> 
 												&nbsp;&nbsp;&nbsp;&nbsp;
 												
 												 <form action="/setreview/${courseReview.courseReviewId}/delete" method="POST" style="display: inline-block; white-space: nowrap;">
-													<button type = "submit" class = "delete-button" style= "color:grey;
-																											background-color: #cccccc;
-																											padding-top: 2px;
-																											padding-bottom: 2px;
-																											border-radius: 5px;
-																											text-align: center;
-																											width: 50px;
-																											border: 0px;"><b>삭제</b></button>
+													<button type = "submit" class = "delete-button" ><b> 삭제 </b></button>
 													
 												</form>
 												
