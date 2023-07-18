@@ -28,8 +28,10 @@ font-size:40px;
 
 }
 body{
- 
- overflow: auto;
+ overflow: auto;.
+ overflow-y: scroll;
+ overflow-x: hidden;
+ width: 1350px;
 }
   .searchList{
  position: relative;
@@ -93,7 +95,12 @@ font-weight: bold;
   }
 
   .page.navigation {
-  	transform: translate(20px, -10px);
+/*   	transform: translate(620px, -10px);
+	width: 150%;
+	height: 150% */
+	display: flex;
+  	justify-content: center;
+  	transform: scale(1.5);
   }
   
 </style>
