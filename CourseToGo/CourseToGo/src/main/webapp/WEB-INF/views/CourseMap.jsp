@@ -182,7 +182,7 @@ header
           
                 <li><input type="button" class="create-course" value="CourseId : ${Course.courseId}"></li>
                 <li><input type="button" class="create-course" value="score :${Course.courseAvgScore}" ></li>
-
+<hr style="border: 1px dashed #ffffff"></hr>
     <%
     List<PlaceDTO> placeList = (List<PlaceDTO>) request.getAttribute("PlaceList");
     double latitudeSum = 0.0;
@@ -194,7 +194,7 @@ header
       for(int i = 0 ; i < placeList.size(); i++){
          %>
 
-            <li><input type="button" class="course" value="<%= placeList.get(i).getPlaceName() %>"></li>
+            <li><input type="button" class="course" style="font-size: 12px; font-weight: 900; background-color: #ffffff; color:#00008b; border: 3px solid #00008b;" value="<%= placeList.get(i).getPlaceName() %>"></li>
         
            <%
            
@@ -220,6 +220,7 @@ header
 %>
 
 <script>
+
 function moveMap(minlat, minlong, maxlat, maxlong) {
    
    var middle = new naver.maps.LatLngBounds(
@@ -229,7 +230,7 @@ function moveMap(minlat, minlong, maxlat, maxlong) {
 }
 
 </script>
-            
+            <hr style="border: 1px dashed #ffffff"></hr>
            
                <li><input id="slider-button" type="button" class="create-course" value="작성된 리뷰보기" ></li>
               
@@ -252,6 +253,7 @@ function moveMap(minlat, minlong, maxlat, maxlong) {
     </form>
              </div>
           </ul>
+          
       </div>
    
   </span>
