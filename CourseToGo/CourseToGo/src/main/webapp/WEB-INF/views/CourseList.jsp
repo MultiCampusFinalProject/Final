@@ -315,7 +315,7 @@ font-weight: bold;
     &nbsp;
   <% } %>
   
-  <span style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" padding: 20px; class="well" style="padding: 20px;"><img src="/images/point.png" alt="이미지_설명" width="30" height="auto" onclick="openModal(<%=placeIds[i] %>)"><%= placeNames[i] %></span>
+  <span onclick="openModal(<%=placeIds[i] %>)" style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" padding: 20px; class="well" style="padding: 20px;"><img src="/images/point.png" alt="이미지_설명" width="30" height="auto" ><%= placeNames[i] %></span>
   
   <% if (i == placeNames.length - 1) { %>
     &nbsp;
