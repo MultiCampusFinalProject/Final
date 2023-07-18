@@ -80,43 +80,54 @@
 								  background-color: #f5f5f5;
 								  border-bottom:2px solid #D5D5D5;
 								  border-radius: 10px;
-								  width: 400px;
+								  width: 600px;
 								  padding-left: 30px;">
 						
 							<div style="display: flex;
 										flex-direction: row;
 								        justify-content: left;
 								        align-items: center;
-								        padding-top: 10px;">
+								        margin-top:0px;
+								        margin-bottom:0px;
+										padding-top:0px;
+										padding-bottom:0px;">
 						
-								<img src="/example/letsgo.png" alt= "go!" width= "40px;">&nbsp;&nbsp;
-									<br>
+								<img style="padding-top:0px;
+											padding-bottom:0px;" src="/example/letsgo.png" alt= "go!" width= "40px;">&nbsp;&nbsp;
 										<h4 style="background-color: white;
 												   padding-right: 5px;
 												   border-radius: 5px;
-												   color: #353535;">	     
+												   color: #353535;
+												   padding-top:0px;
+												   padding-bottom:0px;">	     
 											[ ${place.placeName} ]
 										</h4>
-									<c:choose>
-										<c:when test="${place.placeAvgScore == 1.0}">
-											<span style="color:#ffd400;">&nbsp;&nbsp;&nbsp;★</span>
-										</c:when>
-										<c:when test="${place.placeAvgScore == 2.0}">
-											<span style="color:#ffd400;">&nbsp;&nbsp;&nbsp;★★</span>
-										</c:when>
-										<c:when test="${place.placeAvgScore == 3.0}">
-											<span style="color:#ffd400;">&nbsp;&nbsp;&nbsp;★★★</span>
-										</c:when>
-										<c:when test="${place.placeAvgScore == 4.0}">
-											<span style="color:#ffd400;">&nbsp;&nbsp;&nbsp;★★★★</span>
-										</c:when>
-										<c:when test="${place.placeAvgScore == 5.0}">
-											<span style="color:#ffd400;">&nbsp;&nbsp;&nbsp;★★★★★</span>
-										</c:when>
-									</c:choose>		    				 
-							
+										<c:choose>
+											<c:when test="${place.placeAvgScore >= 0.0 && place.placeAvgScore < 1.0}">
+												<span style="color:#ffd400; padding-bottom:0px;">&nbsp;&nbsp;&nbsp;</span>
+											</c:when>
+											<c:when test="${place.placeAvgScore >= 1.0 && place.placeAvgScore < 2.0}">
+												<span style="color:#ffd400; padding-bottom:0px;">&nbsp;&nbsp;&nbsp;★</span>
+											</c:when>
+											<c:when test="${place.placeAvgScore >= 2.0 && place.placeAvgScore < 3.0}">
+												<span style="color:#ffd400; padding-bottom:0px;">&nbsp;&nbsp;&nbsp;★★</span>
+											</c:when>
+											<c:when test="${place.placeAvgScore >= 3.0 && place.placeAvgScore < 4.0}">
+												<span style="color:#ffd400; padding-bottom:0px;">&nbsp;&nbsp;&nbsp;★★★</span>
+											</c:when>
+											<c:when test="${place.placeAvgScore >= 4.0 && place.placeAvgScore < 5.0}">
+												<span style="color:#ffd400; padding-bottom:0px;">&nbsp;&nbsp;&nbsp;★★★★</span>
+											</c:when>
+											<c:when test="${place.placeAvgScore == 5.0}">
+												<span style="color:#ffd400; padding-bottom:0px;">&nbsp;&nbsp;&nbsp;★★★★★</span>
+											</c:when>
+										</c:choose>		    				 
 							</div>	  
-
+						<h4 style="display: inline-block;
+								   margin-top: 0px;
+								   margin-bottom: 10px;
+								   font-weight: normal;
+								   color: black;">${place.address}</h4>
 
 					</div>
 					
