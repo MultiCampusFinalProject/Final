@@ -61,6 +61,21 @@
 		div[class^=courseStarsscore] label:hover ~ label {
 		  color:#ffd700;
 		}
+		
+		.insert-button {
+		 color: black;
+		 font-weight: bold;
+		 padding: 10px;
+		 border-radius: 10px;
+		 text-align: center;
+		 background-color: #fff;
+		 width: 170px;
+		  }
+		 
+		.insert-button:hover {
+         background-color: #daeefe;
+        }
+        
 	</style>
 </head>
 <body>
@@ -205,15 +220,7 @@
 			
 		    <div>
 		    <br>
-		    	<button type = "submit" value ="등록" class = "insert-button"
-		    			style = "color: black;
-								 font-weight: bold;
-								 padding: 10px;
-								 border-radius: 10px;
-								 text-align: center;
-								 background-color: #fff;
-								 width: 170px;">
-				  리뷰 등록 </button>
+		    	<button type = "submit" value ="등록" class = "insert-button"> 리뷰 등록 </button>
 		    </div>
 		</div>
 	<!-- CourseReview 박스 끝-->		
@@ -235,7 +242,7 @@
 		    
 		    form.submit(); // 폼 제출
 		}
-
+		
 	</script>	
   
   

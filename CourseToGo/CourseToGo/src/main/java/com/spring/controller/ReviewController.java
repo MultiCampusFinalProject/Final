@@ -231,19 +231,14 @@ public class ReviewController {
 	
 	/* 코스 리뷰 삭제  */ 
 	@RequestMapping(value = "/setreview/{course_review_id}/delete", method= RequestMethod.POST)
-	public String deleteCourse(@PathVariable ("course_review_id") String courseReviewIdStr,
-			                   @RequestParam("courseId") String courseIdStr,
-			                   HttpSession session) throws Exception { 
+	public String deleteCourse(@PathVariable ("course_review_id") String courseReviewIdStr ) throws Exception { 
 		
-		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");	
 		
-		int userId = user.getUserId(); // 삭제를 요청한 사람의 userid 가져오기
 		Integer courseReviewId = 0;   
-		Integer courseId = 0;   
+		
 		
 		try {
 				courseReviewId = courseReviewIdStr != null && !courseReviewIdStr.isEmpty() ? Integer.parseInt(courseReviewIdStr) : null; 
-				courseId = courseIdStr != null && !courseIdStr.isEmpty() ? Integer.parseInt(courseIdStr) : null;
 		        
 		    } catch (NumberFormatException e) {
 		        e.printStackTrace();

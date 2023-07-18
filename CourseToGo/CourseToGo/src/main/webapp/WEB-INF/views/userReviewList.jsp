@@ -105,7 +105,6 @@
 												&nbsp;&nbsp;&nbsp;&nbsp;
 												
 												 <form action="/setreview/${courseReview.courseReviewId}/delete" method="POST" style="display: inline-block; white-space: nowrap;">
-													<input type = "hidden" name = "courseId" id = "courseId" value = "${courseReview.courseId}">
 													<button type = "submit" class = "delete-button" style= "color:grey;
 																											background-color: #cccccc;
 																											padding-top: 2px;
