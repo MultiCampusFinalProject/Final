@@ -97,7 +97,8 @@
 				                        						   background-color: #91B6D0;
 				                        						   border-radius:5px;
 				                        						   color: #353535;
-				                        						   margin-left: 10px;"><b>${place}</b></div>
+				                        						   margin-left: 10px;
+				                        						   overflow:hidden;"><b>${place}</b></div>
 				                    </c:forEach>
 									<br>
 									<c:choose>
