@@ -15,11 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.dto.CourseInformDTO;
+import com.spring.dto.CoursePlaceDTO;
 import com.spring.dto.CourseReview;
 import com.spring.dto.CtgUserDTO;
 import com.spring.dto.PlaceDTO;
@@ -56,7 +58,7 @@ public class ReviewController {
 										 HttpSession session, Model model) {
 		
 		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");		
-		Integer[] placeIds = new Integer[5];
+		Integer[] placeIds = new Integer[5]; // Integer 클래스의 배열일 placeId를 선언하여 5개의 요소를 저장할수 있는 배열 
 		CourseInformDTO courseInform = null;
 		
 	    try {
@@ -71,6 +73,7 @@ public class ReviewController {
 	    
    	    List<PlaceDTO> placeList = new ArrayList<PlaceDTO>();
    	    
+   	    // placeIds 배열에 저장된 각 placeId에 대해 장소 정보를 가져와서 placeList에 추가 하는 방식 
 		for (Integer placeId : placeIds) {
 		    if (placeId != null) {
 		        try {
@@ -95,7 +98,7 @@ public class ReviewController {
 		return "setReview";
 	}
 	
-	
+	// models 배열에서 null 이거나 빈 문자열인 요소들을 걸러낸 새로운 문자열 배열을 얻을수 있음 
 	private String[] filterNullValues(String... models) {
 	    List<String> filteredValues = new ArrayList<>();
 	    for (String value : models) {
@@ -107,7 +110,7 @@ public class ReviewController {
 	}
 	
 	/* 코스리뷰 작성 이랑 장소 리뷰 별점 표기  */ // http://localhost:8090/review 
-	@RequestMapping(value = "/review", method= RequestMethod.POST)
+	@RequestMapping(value = "/setreview", method= RequestMethod.POST)
 	public String insertCouseReview(@ModelAttribute CourseReview courseReview,
 									@ModelAttribute("placeScore1") String placeScore1,
 									@ModelAttribute("placeScore2") String placeScore2,
@@ -123,6 +126,7 @@ public class ReviewController {
 
 		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");		
 		
+		// filterNullValues는 주어진 문자열 배열에서 null이 아니고 빈 문자열이 아닌 값들만 걸러내는 메서드
 		String[] placeScores = filterNullValues(placeScore1, placeScore2, placeScore3, placeScore4, placeScore5);
 		String[] placeIds = filterNullValues(placeId1, placeId2, placeId3, placeId4, placeId5);
 		
@@ -153,8 +157,8 @@ public class ReviewController {
 		
 					}
 				}
-				// CourseReview insert 실행
 				
+				// CourseReview insert 실행
 				boolean result = false;
 				
 				try {
@@ -166,7 +170,9 @@ public class ReviewController {
 				if(result) {
 //					System.out.println("course 리뷰 결과 : " + result);						
 				}
-				    
+				 
+				// String.valueOf(...)를 사용하여 courseId 값을 문자열로 변환하고, 
+				// 변환된 courseId 값을 "courseId="라는 문자열과 함께 합쳐서 쿼리 파라미터 형태인건가
 		        query += ("courseId="+ String.valueOf(courseReview.getCourseId())+"&");
 		        
 		        for(int i= 0; i< placeCount; i++) {
@@ -183,54 +189,73 @@ public class ReviewController {
 		
 	}
 
-	/* 코스 리뷰 아이디 검색 */ // http://localhost:8090/review/21
-	@RequestMapping(value = "/review/{course_review_id}", method = RequestMethod.GET)
+	/* 코스 리뷰 아이디 검색 */ 
+	@RequestMapping(value = "/setreview/{course_review_id}", method = RequestMethod.GET)
 	public String updateCourseForm(@PathVariable("course_review_id") int courseReviewId,
-								   Model model) throws Exception {
+			                       HttpSession session,
+			                       Model model ) throws Exception {
 		
-		// db값에 설정된 코스 리뷰 아이디를 가져오기
-		CourseReview coursereview = coursereviewservice.getCourseReviewByReviewId(courseReviewId);
-		System.out.println(coursereview);
-		model.addAttribute("coursereview", coursereview);
-	
+		
+		
+//		// db값에 설정된 코스 리뷰 아이디를 가져오기
+//		CourseReview coursereview = coursereviewservice.getCourseReviewByReviewId(courseReviewId);
+////		System.out.println(coursereview);
+
 
 		
 		
-		return "updatereview";
+		return "updateReview";
 	}
 		
-	/* 코스 리뷰 수정 */ // http://localhost:8090/review/{course_review_id}
-	@RequestMapping(value = "/review/{course_review_id}", method= RequestMethod.PUT)
+	/* 코스 리뷰 수정 */ //
+	@RequestMapping(value = "/setreview/{course_review_id}", method= RequestMethod.PUT)
 	public String updateCourseReview(@PathVariable("course_review_id") int courseReviewId,
 			                         @ModelAttribute("content") String content,
-			                         @ModelAttribute("courseScore") int courseScore) throws Exception { 
+			                         @ModelAttribute("courseScore") int courseScore ) throws Exception { 
+		
 		
 		// 코스 리뷰 아이디를 통해서 수정하기 
 		CourseReview coursereview = coursereviewservice.getCourseReviewByReviewId(courseReviewId);
-		System.out.println(coursereview);
+//		System.out.println(coursereview);
+		
 		coursereview.setContent(content);
 		coursereview.setCourseScore(courseScore);
-
+	
 		coursereviewservice.updateCourseReview(coursereview);
 		
 		
-		return "redirect:/review";
+		return "redirect:/userContents";
 		
 	}
 	
+	
 	/* 코스 리뷰 삭제  */ 
-	@RequestMapping(value = "/review/{course_review_id}", method= RequestMethod.DELETE)
-	public String deleteCourse(@PathVariable("course_review_id") int courseReviewId) throws Exception { 
+	@RequestMapping(value = "/setreview/{course_review_id}/delete", method= RequestMethod.POST)
+	public String deleteCourse(@PathVariable ("course_review_id") String courseReviewIdStr,
+			                   @RequestParam("courseId") String courseIdStr,
+			                   HttpSession session) throws Exception { 
+		
+		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");	
+		
+		int userId = user.getUserId(); // 삭제를 요청한 사람의 userid 가져오기
+		Integer courseReviewId = 0;   
+		Integer courseId = 0;   
+		
+		try {
+				courseReviewId = courseReviewIdStr != null && !courseReviewIdStr.isEmpty() ? Integer.parseInt(courseReviewIdStr) : null; 
+				courseId = courseIdStr != null && !courseIdStr.isEmpty() ? Integer.parseInt(courseIdStr) : null;
+		        
+		    } catch (NumberFormatException e) {
+		        e.printStackTrace();
+		    }
         
-		System.out.println(courseReviewId);
-		coursereviewservice.deleteCourseReviewByReviewId(courseReviewId);
+		coursereviewservice.deleteCourseReviewByReviewId(courseReviewId); 
 		
-		
-		return "redirect:/review";
+		return "redirect:/userContents";
 		
 	}
+	
 	
 
 }
-
 

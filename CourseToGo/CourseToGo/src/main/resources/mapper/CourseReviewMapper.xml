@@ -34,7 +34,13 @@
  		WHERE course_review_id = #{courseReviewId}
  	</delete>
  	
- 	
+ 	<!-- courseId로 placeId의  리스트 반환  // course_place 안에 있는 courseid를 통해서  placeid를 가져오게끔 하는 형식 -->
+ 	<select id="getPlaceIdByCourseId" parameterType="_int" resultType="_int">
+ 		SELECT place_id 
+ 		FROM course_place
+ 		WHERE course_id = #{courseId}
+ 	</select>	
+
  	<select id="getCourseReviewByCourseId" parameterType="_int" resultType="com.spring.dto.CourseReview">
  		SELECT course_score as courseScore, content, course_review_id as courseReviewId
  		FROM course_review
@@ -52,5 +58,6 @@
  		FROM course_review
  		WHERE user_id = #{userId}
  	</select>		 	
+
  	
  </mapper>

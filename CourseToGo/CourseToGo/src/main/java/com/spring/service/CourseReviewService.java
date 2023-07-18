@@ -62,6 +62,7 @@ public class CourseReviewService {
 		
 		int res = mapper.deleteCourseReviewByReviewId(courseReviewId);
 		
+		
 		if(res != 0) {
 			result = true;
 		} else {
@@ -70,7 +71,6 @@ public class CourseReviewService {
 		
 		return result;
 	}
-
 	
 	public List<CourseReview> getCourseReviewByCourseId(int courseId) throws Exception { 
 		List<CourseReview> coursereview = mapper.getCourseReviewByCourseId(courseId);
@@ -91,3 +91,4 @@ public class CourseReviewService {
 
 	
 }
+

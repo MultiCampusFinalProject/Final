@@ -89,10 +89,10 @@
 												<b>${courseInformDTO.userNickName}</b> 님의 <a href="/courseList/Map?${query}"><b>${courseInformDTO.courseName}</b></a> 코스에 남긴 리뷰입니다.
 												<b style="color: #B6B7B7;">${courseReview.reviewDate}</b>
 												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												<form style = "display: inline-block;
-															   white-space: nowrap;">
+												 <form style = "display: inline-block; white-space: nowrap;">
+      												
 													<input type = "hidden" name = "courseReviewId" id = "courseReviewId" value = "${courseReview.courseReviewId}">
-													<button type = "submit" value = "리뷰 수정" class = "reviewButton" style= "color:grey;
+													<button type = "submit" class = "update-button"  style= "color:grey;
 																															background-color: #cccccc;
 																															padding-top: 2px;
 																															padding-bottom: 2px;
@@ -101,19 +101,19 @@
 																															width: 50px;
 																															border: 0px;"><b>수정</b></button>
 													
-												</form>
+												</form> 
 												&nbsp;&nbsp;&nbsp;&nbsp;
-												<form style = "display: inline-block;
-															   white-space: nowrap;">
-													<input type = "hidden" name = "courseReviewId" id = "courseReviewId" value = "${courseReview.courseReviewId}">
-													<button type = "submit" value = "리뷰 수정" class = "reviewButton" style= "color:grey;
-																															background-color: #cccccc;
-																															padding-top: 2px;
-																															padding-bottom: 2px;
-																															border-radius: 5px;
-																															text-align: center;
-																															width: 50px;
-																															border: 0px;"><b>삭제</b></button>
+												
+												 <form action="/setreview/${courseReview.courseReviewId}/delete" method="POST" style="display: inline-block; white-space: nowrap;">
+													<input type = "hidden" name = "courseId" id = "courseId" value = "${courseReview.courseId}">
+													<button type = "submit" class = "delete-button" style= "color:grey;
+																											background-color: #cccccc;
+																											padding-top: 2px;
+																											padding-bottom: 2px;
+																											border-radius: 5px;
+																											text-align: center;
+																											width: 50px;
+																											border: 0px;"><b>삭제</b></button>
 													
 												</form>
 												
