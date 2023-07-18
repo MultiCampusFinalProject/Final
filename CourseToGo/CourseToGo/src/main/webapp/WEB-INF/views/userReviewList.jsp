@@ -118,19 +118,21 @@
 											<c:if test="${courseReviewSt.index eq courseInformSt.index}">
 												<b>${courseInformDTO.userNickName}</b> 님의 <a href="/courseList/Map?${query}"><b>${courseInformDTO.courseName}</b></a> 코스에 남긴 리뷰입니다.
 												<b style="color: #B6B7B7;">${courseReview.reviewDate}</b>
-												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												 <form style = "display: inline-block; white-space: nowrap;">
-      												
-													<input type = "hidden" name = "courseReviewId" id = "courseReviewId" value = "${courseReview.courseReviewId}">
+                                                <div style = "display: inline-block;
+                                                              white-space: nowrap;
+                                                              margin-right: 100px;">
+                                                    &nbsp;&nbsp;          
+                                                    <form style = "display: inline-block;
+                                                                   white-space: nowrap;"
+                                                          action = "/review/${courseReview.courseReviewId}" method = "GET">
 													<button type = "submit" class = "update-button" ><b> 수정 </b></button>
-													
-												</form> 
-												&nbsp;&nbsp;&nbsp;&nbsp;
-												
-												 <form action="/setreview/${courseReview.courseReviewId}/delete" method="POST" style="display: inline-block; white-space: nowrap;">
-													<button type = "submit" class = "delete-button" ><b> 삭제 </b></button>
-													
-												</form>
+                                                    </form>
+                                                    &nbsp;&nbsp;
+                                                 	<form action="/setreview/${courseReview.courseReviewId}/delete" method="POST" style="display: inline-block; white-space: nowrap;">
+                                                        <input type = "hidden" name = "courseReviewId" id = "courseReviewId" value = "${courseReview.courseReviewId}">
+														<button type = "submit" class = "delete-button" ><b> 삭제 </b></button>
+                                                    </form>    
+                                    			</div>    	
 												
 											</c:if>
 										</c:forEach>

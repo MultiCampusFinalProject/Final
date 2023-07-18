@@ -15,10 +15,7 @@ public class PlaceReviewService {
 	
 	/* 장소 리뷰 아이디 검색 */ 
 	public PlaceReview getPlaceReviewByReviewId(int placeReviewId) throws Exception { 
-		PlaceReview coursereview = mapper.getPlaceReviewByReviewId(placeReviewId)
-							.orElseThrow(Exception::new);
-		
-		return coursereview; 
+        return mapper.getPlaceReviewByReviewId(placeReviewId);
 	}
 
 	
@@ -69,4 +66,8 @@ public class PlaceReviewService {
 		return result;
 	}
 	
+    // UserId와 PlaceId로 placeReview 검색하기
+    public PlaceReview getPlaceReviewByUserIdAndPlaceId(int userId, int placeId) throws SQLException {
+        return mapper.getPlaceReviewByUserIdAndPlaceId(userId, placeId);
+    }
 }

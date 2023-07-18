@@ -16,7 +16,7 @@
 		    	<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'"></li>
 		    	<c:if test="${empty sessionScope.user.userId}">
 		    		<li><input type="button" class="create-course" value="코스 제작" onclick="showAlertAndRedirect()"></li>
-		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
+                    <li><input type="button" class="mypage" value="마이페이지" onclick="showAlertAndRedirect()"></li>
 		    	</c:if>
 		    	<c:if test="${not empty sessionScope.user.userId}">
 		    		<li><input type="button" class="create-course" value="코스 제작" onclick="location.href='/naverMap'"></li>

@@ -32,4 +32,15 @@ public class CourseReview {
 		this.courseScore = courseScore;
 		this.reviewDate = reviewDate;
 	}
+	
+    @Builder
+    public CourseReview(int courseReviewId, int courseId, int userId, String content, int courseScore) {
+        this.courseReviewId = courseReviewId;
+        this.courseId = courseId;
+        this.userId = userId;
+        this.content = content;
+        this.courseScore = courseScore;
+    }
+    
+
 }

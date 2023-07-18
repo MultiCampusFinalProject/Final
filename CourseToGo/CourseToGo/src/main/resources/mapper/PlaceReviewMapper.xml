@@ -6,12 +6,29 @@
  <mapper namespace="com.spring.mapper.PlaceReviewMapper">
 
  	
- 	<!-- 장소 리뷰 아이디 검색 -->
- 	<select id="getPlaceReviewByReviewId" resultType="com.spring.dto.PlaceReview">
- 		SELECT place_score as placeScore, place_review_id as placeReviewId
+ 	<!-- place_review_id로 장소리뷰 검색 -->
+     <select id="getPlaceReviewByReviewId" resultType="PlaceReview">
+        SELECT place_review_id AS placeReviewId,
+               user_id AS userId,
+               place_id AS placeId,
+               place_score AS placeScore,
+               review_date AS reviewDate
  		FROM place_review
  		WHERE place_review_id = #{placeReviewId}
  	</select>
+ 	
+     <!-- UserId와 PlaceId로 placeReview 검색하기 -->
+     <select id="getPlaceReviewByUserIdAndPlaceId" parameterType="_int" resultType="PlaceReview">
+         SELECT place_review_id AS placeReviewId,
+                user_id AS userId,
+                place_id AS placeId,
+                place_score AS placeScore,
+                review_date AS reviewDate
+         FROM place_review
+         WHERE user_id = #{userId}
+           AND place_id = #{placeId}
+                 
+     </select>
  	
     <!-- 장소 별점 등록 -->
  	<insert id="insertPlaceReview" parameterType="com.spring.dto.PlaceReview">

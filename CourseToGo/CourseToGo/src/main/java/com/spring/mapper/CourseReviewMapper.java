@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 import com.spring.dto.CourseReview;
 
 
@@ -23,11 +25,13 @@ public interface CourseReviewMapper {
 	public int deleteCourseReviewByReviewId(int courseReviewId)throws SQLException;
 	
     /* 코스 아이디 검색 */
-	public List<CourseReview> getCourseReviewByCourseId (int courseId);
+    public List<CourseReview> getCourseReviewByCourseId (int courseId) throws SQLException;
 	
 	// userId로 CourseReview 객체 리스트 반환	
-	public List<CourseReview> getCourseReviewByUserId(int userId);
-	
+    public List<CourseReview> getCourseReviewByUserId(int userId) throws SQLException;
+
+    // userId와 courseId로 CourseReview 객체 리스트 반환
+    public CourseReview getCourseReviewByUserIdAndCourseId(@Param("userId") int userId, @Param("courseId") int courseId) throws SQLException;
 
 	
 

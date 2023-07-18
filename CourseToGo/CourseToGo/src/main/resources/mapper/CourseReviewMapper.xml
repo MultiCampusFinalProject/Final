@@ -6,12 +6,30 @@
  <mapper namespace="com.spring.mapper.CourseReviewMapper">
 
  	
- 	<!-- 코스 리뷰 아이디 검색 -->
- 	<select id="getCourseReviewByReviewId" parameterType="int" resultType="com.spring.dto.CourseReview">
- 		SELECT course_score as courseScore, content, course_review_id as courseReviewId
- 		FROM course_review
+ 	<!-- 코스리뷰 아이디로 코스리뷰 검색 -->
+ 	<select id="getCourseReviewByReviewId" parameterType="_int" resultType="CourseReview">
+         SELECT course_review_id AS courseReviewId,
+                user_id AS userId,
+                course_id AS courseId,
+                course_score AS courseScore,
+                content AS content,
+                review_date AS reviewDate
+		FROM course_review
  		WHERE course_review_id = #{courseReviewId}
  	</select>
+ 	
+ 	<!-- 유저아이디와 코스아이디로 코스리뷰 검색 -->
+    <select id="getCourseReviewByUserIdAndCourseId" parameterType="_int" resultType="CourseReview">
+         SELECT course_review_id AS courseReviewId,
+                user_id AS userId,
+                course_id AS courseId,
+                course_score AS courseScore,
+                content AS content,
+                review_date AS reviewDate
+         FROM course_review
+         WHERE user_id = #{userId}
+           AND course_id = #{courseId}
+     </select>         
  	
     <!-- 코스 리뷰 등록 -->
  	<insert id="insertCourseReview" parameterType="com.spring.dto.CourseReview">

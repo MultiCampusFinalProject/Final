@@ -1,8 +1,6 @@
 package com.spring.controller;
 
-
-
-
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.dto.CourseInformDTO;
-import com.spring.dto.CoursePlaceDTO;
 import com.spring.dto.CourseReview;
 import com.spring.dto.CtgUserDTO;
 import com.spring.dto.PlaceDTO;
@@ -125,110 +123,209 @@ public class ReviewController {
 									HttpSession session) { 
 
 		CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");		
-		
+        int userId = user.getUserId();
+        
 		// filterNullValues는 주어진 문자열 배열에서 null이 아니고 빈 문자열이 아닌 값들만 걸러내는 메서드
 		String[] placeScores = filterNullValues(placeScore1, placeScore2, placeScore3, placeScore4, placeScore5);
 		String[] placeIds = filterNullValues(placeId1, placeId2, placeId3, placeId4, placeId5);
 		
-//		 for (int i = 0; i < placeScores.length; i++) {
-//			 System.out.println(placeScores[i]);
-//		 }		
-//		 for (int i = 0; i < placeIds.length; i++) {
-//			 System.out.println(placeIds[i]);
-//		 }		
 		int placeCount = 0;
 		String query = "";
 		
-		// placeScore, placeId가 비어있지 않을 시 placeReview insert 실행
-				for (int i = 0; i < placeIds.length; i++) {
-					if (placeScores[i] != null && placeIds[i] != null) {
-						PlaceReview newPlaceReview = new PlaceReview(user.getUserId(), Integer.parseInt(placeIds[i]), Integer.parseInt(placeScores[i]));
-						boolean result = false;
-						
-							try {
-								result = placereviewservice.insertPlaceReview(newPlaceReview);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-							if(result) {
-//								System.out.println("place" + i + "리뷰 결과 : " + result);			
-								placeCount++;
-							}
-		
-					}
+//      System.out.println("받아온 코스리뷰 출력 : " + courseReview);
+        
+        // place 리뷰 남기기-------------------------------------------------------------------
+        for (int i = 0; i < placeIds.length; i++) {
+                PlaceReview placereview = null;
+                
+                if (placeScores[i] != null && placeIds[i] != null) {
+                    PlaceReview insertedPlaceReview = new PlaceReview(userId, Integer.parseInt(placeIds[i]), Integer.parseInt(placeScores[i]));
+                    PlaceReview alreadyInsertedPlaceReview = null;
+                    boolean result = false;    
+                            //이미 별점을 매긴 장소인지 확인-----------------------
+                            try {
+                                alreadyInsertedPlaceReview = placereviewservice.getPlaceReviewByUserIdAndPlaceId(insertedPlaceReview.getUserId(), insertedPlaceReview.getPlaceId());
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        
+                            // 매긴 적 없다면---------------------------------
+                            if(alreadyInsertedPlaceReview == null) {
+                                        try {
+                                            result = placereviewservice.insertPlaceReview(insertedPlaceReview);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        
+                            // 매긴 적 있다면---------------------------------    
+                            } else {            
+                                        try {
+                                            result = placereviewservice.updatePlaceReview(insertedPlaceReview);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                            }    
+                    if(result) {
+                        placeCount++;
+                    }
 				}
+        }
 				
-				// CourseReview insert 실행
-				boolean result = false;
+        // course 리뷰 남기기-------------------------------------------------------------------
+        boolean result = false;
+        
+        try {
+            result = coursereviewservice.insertCourseReview(courseReview);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        if(result) {
+                System.out.println("course 리뷰 결과 : " + result);                        
+        }
+            
+        query += ("courseId="+ String.valueOf(courseReview.getCourseId())+"&");
+        
+        for(int i= 0; i< placeCount; i++) {
+            query+="placeId"+(i+1) + "="+placeIds[i];
+                if (i!= placeCount-1) {
+                    query+="&";
+                }
+                else{
+                }
+        }        
 				
-				try {
-					result = coursereviewservice.insertCourseReview(courseReview);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-				if(result) {
-//					System.out.println("course 리뷰 결과 : " + result);						
-				}
-				 
-				// String.valueOf(...)를 사용하여 courseId 값을 문자열로 변환하고, 
-				// 변환된 courseId 값을 "courseId="라는 문자열과 함께 합쳐서 쿼리 파라미터 형태인건가
-		        query += ("courseId="+ String.valueOf(courseReview.getCourseId())+"&");
-		        
-		        for(int i= 0; i< placeCount; i++) {
-		        	query+="placeId"+(i+1) + "="+placeIds[i];
-		            	if (i!= placeCount-1) {
-		            		query+="&";
-		            	}
-		            	else{
-		            	}
-		        }		
-			
-		
 		return "redirect:/courseList/Map?" + query;
 		
 	}
+		
+    // 코스리뷰 수정 페이지로 이동
+    @GetMapping(value = "/review/{courseReviewId}")
+    public String updateCourseReviewForm(@PathVariable("courseReviewId") String courseReviewId, Model model, HttpSession session) {
+    
+        CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+        CourseReview courseReview = null;
+        CourseInformDTO courseInform = null;
+        
+        // 코스 리뷰 아이디를 통해서 수정하기 
+        try {
+            courseReview = coursereviewservice.getCourseReviewByReviewId(Integer.parseInt(courseReviewId));
+            courseInform = courseService.getCourseInformByCourseId(courseReview.getCourseId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        
+        String[] placeIds = courseInform.getCourseIdList().split(",");
+        
+        List<PlaceDTO> placeList = new ArrayList<PlaceDTO>();
+        List<PlaceReview> placeReviewList = new ArrayList<PlaceReview>(); 
+        
 
-	/* 코스 리뷰 아이디 검색 */ 
-	@RequestMapping(value = "/setreview/{course_review_id}", method = RequestMethod.GET)
-	public String updateCourseForm(@PathVariable("course_review_id") int courseReviewId,
-			                       HttpSession session,
-			                       Model model ) throws Exception {
-		
-		
-		
-//		// db값에 설정된 코스 리뷰 아이디를 가져오기
-//		CourseReview coursereview = coursereviewservice.getCourseReviewByReviewId(courseReviewId);
-////		System.out.println(coursereview);
+        for(String placeId : placeIds) {
+            PlaceReview placeReview = null;
+            PlaceDTO place = null;
 
+            
+            try {
+                place = placeService.getPlaceByPlaceId(Integer.parseInt(placeId));
+                placeReview = placereviewservice.getPlaceReviewByUserIdAndPlaceId(user.getUserId(), Integer.parseInt(placeId));
+                System.out.println("플레이스리뷰 출력 : " + placeReview);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("플레이스 아이디 : " + placeId);
+            System.out.println("플레이스  : " + place);
+            placeList.add(place);
+            placeReviewList.add(placeReview);
+        }    
+        
+        model.addAttribute("courseInform", courseInform);
+        model.addAttribute("courseReview", courseReview);
+        model.addAttribute("placeList", placeList);
+        model.addAttribute("placeReviewList", placeReviewList);
+        
+        System.out.println(courseInform);
+        System.out.println(courseReview);
+        System.out.println(placeList);
+        System.out.println(placeReviewList);
+        return "updateReview";
+    }
+	
+    // 코스리뷰 수정
+    @PostMapping(value = "/review/{courseReviewId}")
+    public String updateCourseReview(@PathVariable("courseReviewId") String courseReviewId,
+                                     @ModelAttribute CourseReview courseReview,
+                                     @ModelAttribute("placeScore1") String placeScore1,
+                                     @ModelAttribute("placeScore2") String placeScore2,
+                                     @ModelAttribute("placeScore3") String placeScore3,
+                                     @ModelAttribute("placeScore4") String placeScore4,
+                                     @ModelAttribute("placeScore5") String placeScore5,
+                                     @ModelAttribute("place1") String placeId1,
+                                     @ModelAttribute("place2") String placeId2,
+                                     @ModelAttribute("place3") String placeId3,
+                                     @ModelAttribute("place4") String placeId4,
+                                     @ModelAttribute("place5") String placeId5,
+                                     HttpSession session) {
+        CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
+        int userId = user.getUserId();
+        
+        String[] placeScores = filterNullValues(placeScore1, placeScore2, placeScore3, placeScore4, placeScore5);
+        String[] placeIds = filterNullValues(placeId1, placeId2, placeId3, placeId4, placeId5);
+        
+        int placeCount = 0;
+        String query = "";
+    	
+        // place 리뷰 수정하기-------------------------------------------------------------------
+        for (int i = 0; i < placeIds.length; i++) {
+                PlaceReview placereview = null;
+                
+                if (placeScores[i] != null && placeIds[i] != null) {
+                    PlaceReview insertedPlaceReview = new PlaceReview(userId, Integer.parseInt(placeIds[i]), Integer.parseInt(placeScores[i]));
+                    boolean result = false;    
+                        
+                        try {
+                            result = placereviewservice.updatePlaceReview(insertedPlaceReview);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-		
-		
-		return "updateReview";
-	}
-		
-	/* 코스 리뷰 수정 */ //
-	@RequestMapping(value = "/setreview/{course_review_id}", method= RequestMethod.PUT)
-	public String updateCourseReview(@PathVariable("course_review_id") int courseReviewId,
-			                         @ModelAttribute("content") String content,
-			                         @ModelAttribute("courseScore") int courseScore ) throws Exception { 
-		
-		
-		// 코스 리뷰 아이디를 통해서 수정하기 
-		CourseReview coursereview = coursereviewservice.getCourseReviewByReviewId(courseReviewId);
-//		System.out.println(coursereview);
-		
-		coursereview.setContent(content);
-		coursereview.setCourseScore(courseScore);
-	
-		coursereviewservice.updateCourseReview(coursereview);
-		
-		
-		return "redirect:/userContents";
-		
-	}
-	
-	
+                    if(result) {
+                        placeCount++;
+                    }
+                }
+        }
+
+        // course 리뷰 남기기-------------------------------------------------------------------
+        boolean result = false;
+        
+        try {
+            result = coursereviewservice.updateCourseReview(courseReview);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(result) {
+            query += ("courseId="+ String.valueOf(courseReview.getCourseId())+"&");
+            
+            for(int i= 0; i< placeCount; i++) {
+                query+="placeId"+(i+1) + "="+placeIds[i];
+                    if (i!= placeCount-1) {
+                        query+="&";
+                    }
+                    else{
+                    }
+            }            
+            return "redirect:/courseList/Map?" + query;
+        }
+        
+        return "error";
+    
+
+    }
+
+    
+    
 	/* 코스 리뷰 삭제  */ 
 	@RequestMapping(value = "/setreview/{course_review_id}/delete", method= RequestMethod.POST)
 	public String deleteCourse(@PathVariable ("course_review_id") String courseReviewIdStr ) throws Exception { 

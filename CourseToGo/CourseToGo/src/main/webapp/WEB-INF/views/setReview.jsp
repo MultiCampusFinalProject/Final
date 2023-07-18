@@ -204,7 +204,7 @@
            	</div>	
            	<br> 
 			<!-- courseReview 작성 칸 -->		  
-			<input class = "CourseReviewccccc" type = "text" name= "content"
+			<input class = "CourseReview" type = "text" name= "content"
 				   style = "height: 20vh;
 					 	    width: 500px; 
 				 	 	    border-radius: 10px;
