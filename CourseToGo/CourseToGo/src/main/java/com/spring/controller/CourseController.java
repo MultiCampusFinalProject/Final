@@ -217,11 +217,5 @@ public class CourseController {
 		}
 
 
-    @ExceptionHandler(NullPointerException.class)
-    public ModelAndView handleNullPointerException(NullPointerException ex) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("error");
-        modelAndView.addObject("error", "NullPointerException occurred");
-        return modelAndView;
-    }
+
 }
