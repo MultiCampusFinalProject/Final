@@ -81,7 +81,8 @@
 								  border-bottom:2px solid #D5D5D5;
 								  border-radius: 10px;
 								  width: 600px;
-								  padding-left: 30px;">
+								  padding-left: 30px;
+								  overflow:hidden;">
 						
 							<div style="display: flex;
 										flex-direction: row;

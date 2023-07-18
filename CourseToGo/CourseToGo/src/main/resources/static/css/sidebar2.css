@@ -33,12 +33,13 @@ button {
 
 
 /* 로고 스타일 */
-.logo {
-    font-size: 40px;
+.sidebar2logo {
+	font-size: 40px;
     font-weight: bold;
     color: #00008b;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     text-align: center;
+}
 }
 
 ul {

@@ -174,7 +174,7 @@ header
 
   <span class="contain">
  <div class="sidebar2">
-          <div class="logo">Track</div>
+          <div class="sidebar2logo">Track</div>
           <ul>
              <!-- 전체적인 링크 수정해야함(onclick) -->
              <li></li>
@@ -207,7 +207,7 @@ header
         longitudeSum += placeList.get(i).getLongitude();
           if(i != placeList.size()-1){
           %>
-          <div style="text-align: center; width: 200px; height: 70px;">
+          <div style="text-align: center; width: 200px; height: 50px;">
               <img style="width: 50px; height: 50px;" src="<%= request.getContextPath() %>/images/arrow.png" alt="화살표">
           </div>
             <%
