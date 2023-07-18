@@ -38,7 +38,7 @@ body{
 font-weight: bold;
 
    top: 0;
-    left: 400px;
+    left: 220px;
     right: 600px;
     bottom: 0;
   }
@@ -54,7 +54,7 @@ font-weight: bold;
 
 
    top: 0;
-    left: 400px;
+    left: 220px;
     right: 600px;
     bottom: 0;
 
@@ -75,9 +75,29 @@ font-weight: bold;
     	width: 30px;
     	height: 30px;
     }
+      .well:hover {
+  	cursor: pointer;
+  }
+  .ADBanner {
+    position: absolute;
+  	right: 0;
+  	top: 180px;
+  	width: 300px;
+  	height: 1300px;
+  	overflow: hidden;
+  }
+  .ADBanner > img{
+  	width: 250px;
+  	height: 1300px;
+  	transform: translateX(25px);
+  }
+
+  .page.navigation {
+  	transform: translate(20px, -10px);
+  }
   
 </style>
-<body ">
+<body>
 
     <div class="sidebar" >
             <%@ include file="sidebar.jsp" %>
@@ -327,20 +347,25 @@ font-weight: bold;
   
 <form action="/courseListWithPagination" method="POST">
     <div style="float:right;" class="bookmarkbtn">
-		<%
-		    if (isBookMarked != 1) {
-		%>
-		    <button type="submit" class="favorite"><img src="/example/bookmarked2.png"></button>
-    	<%
-		    }
-		%>
-		<%
-		    if (isBookMarked == 1) {
-		%>
-		    <button type="submit" class="cancel"><img src="/example/unbookmarked2.png"></button>
-    	<%
-		    }
-		%>
+    	<c:choose>
+		   	<c:when test="${not empty sessionScope.user.userId}">
+		   	<%
+			    if (isBookMarked != 1) {
+			%>
+			    <button type="submit" class="favorite"><img src="/example/unbookmarked1.png"></button>
+		   	<%
+			    }
+			%>
+			<%
+			    if (isBookMarked == 1) {
+			%>
+			    <button type="submit" class="cancel"><img src="/example/bookmarked1.png"></button>
+		   	<%
+			    }
+			%>
+		   	</c:when>
+		   	<c:otherwise></c:otherwise>
+    	</c:choose>
     </div>
     <br>
     <input type="hidden" name="courseId" id="courseIdInput" value="<%= courseId %>" >
@@ -448,20 +473,25 @@ font-weight: bold;
   
 <form action="/courseListWithPagination" method="POST">
     <div style="float:right;" class="bookmarkbtn">
-		<%
-		    if (isBookMarked != 1) {
-		%>
-		    <button type="submit" class="favorite"><img src="/example/bookmarked1.png"></button>
-    	<%
-		    }
-		%>
-		<%
-		    if (isBookMarked == 1) {
-		%>
-		    <button type="submit" class="cancel"><img src="/example/unbookmarked1.png"></button>
-    	<%
-		    }
-		%>
+    	<c:choose>
+		   	<c:when test="${not empty sessionScope.user.userId}">
+		   	<%
+			    if (isBookMarked != 1) {
+			%>
+			    <button type="submit" class="favorite"><img src="/example/unbookmarked1.png"></button>
+		   	<%
+			    }
+			%>
+			<%
+			    if (isBookMarked == 1) {
+			%>
+			    <button type="submit" class="cancel"><img src="/example/bookmarked1.png"></button>
+		   	<%
+			    }
+			%>
+		   	</c:when>
+		   	<c:otherwise></c:otherwise>
+    	</c:choose>
     </div>
     <br>
     <input type="hidden" name="courseId" id="courseIdInput" value="<%= courseId %>" >
@@ -509,6 +539,10 @@ font-weight: bold;
 		</div>
 	</div>
     </div>
+    
+    <div class="ADBanner">
+    	<img src="https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/banner1.png?raw=true">
+    </div>
    <script type="text/javascript">
 	//step01 : 페이징 버튼 클릭시 지정 url 요청갈수 있도록 이벤트 등록
 	console.log()
@@ -550,7 +584,7 @@ font-weight: bold;
 	    
 	    insertBookmark(courseId, function(response) {
 	    	if(response == 1) {
-	    		button.removeClass('favorite').addClass('cancel').find('img').attr('src', '/example/unbookmarked2.png');
+	    		button.removeClass('favorite').addClass('cancel').find('img').attr('src', '/example/bookmarked1.png');
 	    	}
 	    });
 	    
@@ -563,7 +597,7 @@ font-weight: bold;
 	    
 	    deleteBookmark(courseId, function(response) {
 	    	if(response == 0) {
-	    		button.removeClass('cancel').addClass('favorite').find('img').attr('src', '/example/bookmarked2.png');
+	    		button.removeClass('cancel').addClass('favorite').find('img').attr('src', '/example/unbookmarked1.png');
 	    	}
 	    });
 	    

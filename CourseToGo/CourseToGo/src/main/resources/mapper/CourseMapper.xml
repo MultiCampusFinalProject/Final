@@ -157,15 +157,12 @@ course_id = #{courseId}
     Course.courseList AS courseList,
     Course.areaNameList AS areaNameList,
     Course.categoryNameList AS categoryNameList,
-    CASE
-      WHEN user_bookmark_course.COURSE_ID IS NULL THEN 0
-      ELSE 1
-    END AS isBookMarked
+    Course.isBookMarked AS isBookMarked
   FROM (
     SELECT
-      c.course_id as course_id,
+      c.course_id AS course_id,
       u.user_nickname AS user_nickname,
-      c.user_id as user_id,
+      c.user_id AS user_id,
       c.course_name,
       c.course_avg_score,
       c.course_number,
@@ -174,6 +171,11 @@ course_id = #{courseId}
       LISTAGG(place.place_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS courseList,
       LISTAGG(area.area_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS areaNameList,
       LISTAGG(category.category_name, ',') WITHIN GROUP (ORDER BY Course_place.place_id) AS categoryNameList,
+      CASE
+        WHEN user_bookmark_course.COURSE_ID IS NULL THEN 0
+        ELSE 1
+      END AS isBookMarked,
+      user_bookmark_course.COURSE_ID AS bookmarkedCourseId,
       ROW_NUMBER() OVER (ORDER BY c.course_id) AS rn
     FROM
       Course c
@@ -184,8 +186,10 @@ course_id = #{courseId}
       JOIN area ON area_place.area_id = area.area_id
       JOIN category ON category_place.category_id = category.category_id
       JOIN ctg_user u ON c.user_id = u.user_id
+      LEFT JOIN user_bookmark_course ON c.course_id = user_bookmark_course.COURSE_ID
+        AND (user_bookmark_course.user_id = #{userId} OR #{userId} IS NULL)
     <trim prefix="WHERE" prefixOverrides="AND |OR">
-      <if test="keyword != null and keyword !=''">
+      <if test="keyword != null and keyword != ''">
         AND (c.course_content LIKE '%'||#{keyword}||'%'
         OR place.place_name LIKE '%'||#{keyword}||'%'
         OR area.area_name LIKE '%'||#{keyword}||'%'
@@ -199,12 +203,11 @@ course_id = #{courseId}
       c.course_name,
       c.course_content,
       c.course_avg_score,
-      c.course_number
+      c.course_number,
+      user_bookmark_course.COURSE_ID
   ) Course
-LEFT JOIN user_bookmark_course ON Course.course_id = user_bookmark_course.COURSE_ID and  user_bookmark_course.user_id = #{userId}
-  
   WHERE
-    <![CDATA[   rn <= #{pageNum} * #{amount} AND rn > (#{pageNum} - 1) *  #{amount} 	]]>
+    <![CDATA[ rn <= #{pageNum} * #{amount} AND rn > (#{pageNum} - 1) * #{amount} ]]>
 </select>
 
 

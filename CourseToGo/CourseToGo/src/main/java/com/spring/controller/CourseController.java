@@ -12,11 +12,13 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
@@ -74,19 +76,24 @@ public class CourseController {
 		List<CourseInformDTO> courseInformList=new ArrayList<>();
 		System.out.println(pageRequest);
 		CtgUserDTO user =  (CtgUserDTO) session.getAttribute("user");
-	    int userId = user.getUserId();	
+		int userId = -1;
+		try{userId = user.getUserId();}
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
+	    System.out.println(userId);
 		pageRequest.setUserId(userId);
 	    
 		int total = 0;
 		try {
 			courseInformList = courseService.getCourseWithPageRequest(pageRequest);
-//		acourseInformList	 =  courseService.getCourseBySearchKeyword(searchKeyword);
-			//collectSearchKeyword - 
+
 			total = courseService.getTotalCount(pageRequest);
-//		s	searchService.saveSearchKeyword(userId, keyword);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		}	
 		PageResponseDTO pageResponse = new PageResponseDTO(total, 10, pageRequest);
 		System.out.println(pageResponse);
@@ -103,7 +110,7 @@ public class CourseController {
 			recommandedCourseInformList.add(recommandedCourseinform);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+//				e.printStackTrace();
 			}
 		}
 		System.out.println(recommandedCourseInformList);
@@ -195,26 +202,26 @@ public class CourseController {
 		}
 		System.out.println(DirectionList);
 		model.addAttribute("DirectionList", DirectionList);
-//		System.out.println(placeList);
+
 		model.addAttribute("PlaceList", placeList);
-//		model.add
+
 
 		model.addAttribute("Course", course);
 		model.addAttribute("CourseReview", courseReview);
-//		List<RankingItem> topRankingItems = rankingService.getTopRankingItems();
-//	    model.addAttribute("topRankingItems", topRankingItems);
-//	    System.out.println(topRankingItems);
+
 	   
 	    
 	    return "CourseMap"; // 뷰 이름 반환 (map.html 또는 map.jsp 등)
 	}
 		return "CourseMap";
 		}
-	   @GetMapping("/topRanking")
-	    public String getTopRanking(Model model) {
-	        
-//	        model.addAttribute("topRankingItems", topRankingItems);
-//	        System.out.println(topRankingItems);
-	        return "test"; // Return the name of your view page
-	    }
+
+
+    @ExceptionHandler(NullPointerException.class)
+    public ModelAndView handleNullPointerException(NullPointerException ex) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("error");
+        modelAndView.addObject("error", "NullPointerException occurred");
+        return modelAndView;
+    }
 }
