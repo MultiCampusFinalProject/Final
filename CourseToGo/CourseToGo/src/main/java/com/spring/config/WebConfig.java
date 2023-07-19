@@ -1,19 +1,13 @@
 package com.spring.config;
 
-
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.spring.interceptor.ChooseInterceptor;
+import com.spring.interceptor.LoginInterceptor;
 import com.spring.interceptor.SearchInterceptor;
-//import com.spring.service.ChooseService;
-import com.spring.service.SearchService;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -22,11 +16,17 @@ public class WebConfig implements WebMvcConfigurer {
 	
 	@Autowired
     private final ChooseInterceptor chooseInterceptor;
+	
+	@Autowired
+	private final LoginInterceptor LoginInterceptor;
 
     @Autowired
-    public WebConfig(SearchInterceptor searchInterceptor,ChooseInterceptor chooseInterceptor) {
+    public WebConfig(SearchInterceptor searchInterceptor,
+    				 ChooseInterceptor chooseInterceptor,
+    				 LoginInterceptor loginInterceptor) {
         this.searchInterceptor = searchInterceptor;
         this.chooseInterceptor = chooseInterceptor;
+        this.LoginInterceptor = loginInterceptor;
     }
 
   
@@ -36,7 +36,14 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(searchInterceptor)
                 .addPathPatterns("/courseList")
                 .addPathPatterns("/courseListWithPagination");
+        
         registry.addInterceptor(chooseInterceptor)
-        .addPathPatterns("/courseList/Map");
+        		.addPathPatterns("/courseList/Map");
+        
+        //로그인 인터셉터 추가
+        registry.addInterceptor(LoginInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/resources/**", "/css/**","/example/**", "/images/**",
+            		  		     	 "/courseList", "/home", "/callback");
     }
 }

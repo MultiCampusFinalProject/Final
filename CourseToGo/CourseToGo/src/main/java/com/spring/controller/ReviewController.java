@@ -181,7 +181,7 @@ public class ReviewController {
         }
         
         if(result) {
-                System.out.println("course 리뷰 결과 : " + result);                        
+//                System.out.println("course 리뷰 결과 : " + result);                        
         }
             
         query += ("courseId="+ String.valueOf(courseReview.getCourseId())+"&");
@@ -230,12 +230,9 @@ public class ReviewController {
             try {
                 place = placeService.getPlaceByPlaceId(Integer.parseInt(placeId));
                 placeReview = placereviewservice.getPlaceReviewByUserIdAndPlaceId(user.getUserId(), Integer.parseInt(placeId));
-                System.out.println("플레이스리뷰 출력 : " + placeReview);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("플레이스 아이디 : " + placeId);
-            System.out.println("플레이스  : " + place);
             placeList.add(place);
             placeReviewList.add(placeReview);
         }    
@@ -245,10 +242,6 @@ public class ReviewController {
         model.addAttribute("placeList", placeList);
         model.addAttribute("placeReviewList", placeReviewList);
         
-        System.out.println(courseInform);
-        System.out.println(courseReview);
-        System.out.println(placeList);
-        System.out.println(placeReviewList);
         return "updateReview";
     }
 	
