@@ -103,7 +103,7 @@
 	<footer>
 	  <div class="inner">
 	  	<div class = "withoutSidebar">
-		    <div class="footer-message">당신의 휴일이 즐거움으로 가득하도록. 즐거운 Course To Go 되세요.</div>
+		    <div class="footer-message">당신의 휴일이 즐거움으로 가득하도록. 즐거운 CourseToGo 되세요.</div>
 		    <div class="footer-contact">📧  p0209y@gmail.com</div>
 		    <div class="footer-copyright">© 2023 6CanDoIt All rights reserved</div>
 		</div>
