@@ -95,14 +95,17 @@
 						
 								<img style="padding-top:0px;
 											padding-bottom:0px;" src="/example/letsgo.png" alt= "go!" width= "40px;">&nbsp;&nbsp;
-										<h4 style="background-color: white;
-												   padding-right: 5px;
-												   border-radius: 5px;
-												   color: #353535;
-												   padding-top:0px;
-												   padding-bottom:0px;">	     
-											[ ${place.placeName} ]
-										</h4>
+									<h4 style="background-color: white;
+									           padding-right: 5px;
+									           border-radius: 5px;
+									           color: #353535;
+									           padding-top: 0px;
+									           padding-bottom: 0px;
+									           cursor: pointer;"
+									   onclick="openNaverSearch('${place.placeName}')"
+									>
+									  [ ${place.placeName} ]
+									</h4>
 										<c:choose>
 											<c:when test="${place.placeAvgScore >= 0.0 && place.placeAvgScore < 1.0}">
 												<span style="color:#ffd400; padding-bottom:0px;">&nbsp;&nbsp;&nbsp;</span>
@@ -137,5 +140,14 @@
    		</div>		
 	
 	</div>
+	
+				<script>
+				function openNaverSearch(placeName) {
+					  var encodedPlaceName = encodeURIComponent(placeName);
+					  var searchURL = 'https://search.naver.com/search.naver?query=' + encodedPlaceName;
+					  window.open(searchURL, '_blank');
+					}
+
+				</script>
 </body>
 </html>

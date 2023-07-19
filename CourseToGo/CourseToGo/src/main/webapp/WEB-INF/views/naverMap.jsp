@@ -79,7 +79,7 @@ document.getElementById("area").innerHTML = areaName;
     </textarea>
     <input class="Coursename" id="courseName" type="text" name="courseName" value="코스 이름을 입력해주세요." onfocus="clearInputValue(this)">
 	<input id="courseNumber" type="hidden" name="courseNumber">
-	<textarea id="courseContent" class="courseContent" name="courseContent" required onfocus="clearTextareaValue(this)">코스에 대한 설명을 작성해주세요.</textarea>
+	<textarea id="courseContent" class="courseContent" name="courseContent" required onfocus="clearTextareaValue(this)" maxlength="400">코스에 대한 설명을 작성해주세요.</textarea>
     <button class = "submit" type="submit">코스 제작하기!</button>
     </form>
   </div> 

@@ -217,7 +217,7 @@ background-clip: content-box;
           <ul>
              <!-- 전체적인 링크 수정해야함(onclick) -->
              <li></li>
-             <li><input type="button" class="courseName" value=${Course.courseName} ></li>
+             <li><input type="button" class="courseName" value="${Course.courseName}"></li>
           
                 <li><input type="button" class="CourseId" value="CourseId : ${Course.courseId}"></li>
                 <li><input type="button" class="score" value="score :${Course.courseAvgScore}" ></li>
@@ -325,9 +325,9 @@ function moveMap(minlat, minlong, maxlat, maxlong) {
 
 <!-- footer -->
 
-<footer>
+<footer style="margin: 10px auto; height: 350px;">
 
-<h2 >코스 소개글 : ${Course.courseContent}</h2>
+<h2 style="margin-left:220px; margin-right:220px;">코스 소개글 : ${Course.courseContent}</h2>
 </footer>
              
       
