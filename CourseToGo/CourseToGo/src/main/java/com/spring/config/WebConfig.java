@@ -41,9 +41,9 @@ public class WebConfig implements WebMvcConfigurer {
         		.addPathPatterns("/courseList/Map");
         
         //로그인 인터셉터 추가
-        registry.addInterceptor(LoginInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/resources/**", "/css/**","/example/**", "/images/**",
-            		  		     	 "/courseList", "/home", "/callback", "/signupDone");
+//        registry.addInterceptor(LoginInterceptor)
+//                .addPathPatterns("/**")
+//                .excludePathPatterns("/resources/**", "/css/**","/example/**", "/images/**",
+//            		  		     	 "/courseList", "/home", "/callback", "/signupDone");
     }
 }

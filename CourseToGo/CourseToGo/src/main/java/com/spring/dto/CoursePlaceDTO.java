@@ -15,7 +15,7 @@ public class CoursePlaceDTO {
     private int placeId;
     private int selectionOrder;
 
-    // »ý¼ºÀÚ
+ 
     @Builder
     public CoursePlaceDTO(int courseId, int placeId, int selectionOrder) {
         this.courseId = courseId;

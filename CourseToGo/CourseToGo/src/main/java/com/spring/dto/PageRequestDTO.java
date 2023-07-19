@@ -11,7 +11,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 @Data
 public class PageRequestDTO{
 	//현재 페이지 번호
