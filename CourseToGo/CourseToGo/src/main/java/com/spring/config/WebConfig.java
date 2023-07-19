@@ -44,6 +44,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(LoginInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/resources/**", "/css/**","/example/**", "/images/**",
-            		  		     	 "/courseList", "/home", "/callback");
+            		  		     	 "/courseList", "/home", "/callback", "/signupDone");
     }
 }
