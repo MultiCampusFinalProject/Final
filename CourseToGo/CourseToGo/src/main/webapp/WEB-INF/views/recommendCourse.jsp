@@ -121,13 +121,19 @@
 							
 							</div>	  
 							<div>
+				    	 		<c:forEach items="${requestScope.courseDetailPageList}" var="coursePage" varStatus="pageSt">
+				    	 			<c:if test="${courseSt.index eq pageSt.index}">
+				    	 				<c:set var="query" value="${coursePage}" scope="request" />
+				    	 			</c:if>
+				    	 		</c:forEach>
+
 								<h4 style="background-color: white;
 										   margin-top: 5px;
 										   padding-right: 5px;
 										   border-radius: 5px;
 										   color: #353535;
 										   display: inline-block;">	     
-									[ ${course.courseName} ]
+									<a href="/courseList/Map?${query}">[ ${course.courseName} ]</a>
 								</h4>
 									<span style="color: black; font-weight: normal;">${course.courseContent}</span>
 							</div>

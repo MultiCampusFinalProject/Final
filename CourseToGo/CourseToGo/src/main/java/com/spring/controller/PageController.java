@@ -94,7 +94,9 @@ public class PageController {
 		List<String> placeIdList = rankingService.sortPlaceIdByCount();
 		
 		List<CourseInformDTO> courseInformDTOList = new ArrayList<CourseInformDTO>();
+		List<String> courseDetailPageList = new ArrayList<String>();
 		List<PlaceDTO> placeDTOList = new ArrayList<PlaceDTO>();
+		
 		
 		for(String courseId : courseIdList) {
 			CourseInformDTO courseInform = null;
@@ -103,11 +105,33 @@ public class PageController {
 				courseInform = courseService.getCourseInformByCourseId(Integer.parseInt(courseId));
 			} catch (Exception e) {
 				e.printStackTrace();
-			}			
+			}	
+			//임시방편. 무조건 5점으로 출력됨. 추후 테이블 수정봐야 함.
 			courseInform.setCourseAvgScore(5.0);
 			courseInformDTOList.add(courseInform);
 		}
+		
+		for (CourseInformDTO course : courseInformDTOList) {
+        	int courseId = course.getCourseId();
+            int courseNumber = course.getCourseNumber();   
+            String thisCoursePlaceIdList = course.getCourseIdList();
+            
+            String[] placeIds = thisCoursePlaceIdList.split(",");
+            String query = "";
 
+            query += ("courseId="+ String.valueOf(courseId)+"&");
+            
+            for(int i= 0; i< courseNumber; i++) {
+            	query+="placeId"+(i+1) + "="+placeIds[i];
+	            	if (i!= courseNumber-1) {
+	            		query+="&";
+	            	}
+	            	else{
+	            	}
+            }
+            courseDetailPageList.add(query);    
+		}	
+		
 		for(String placeId : placeIdList) {
 			PlaceDTO place = null;
 			
@@ -125,6 +149,7 @@ public class PageController {
 		List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
 		
 		model.addAttribute("courseInformDTOList", courseInformDTOSubList);
+		model.addAttribute("courseDetailPageList", courseDetailPageList);
 		model.addAttribute("placeDTOList", placeDTOSubList);
 		
 		
