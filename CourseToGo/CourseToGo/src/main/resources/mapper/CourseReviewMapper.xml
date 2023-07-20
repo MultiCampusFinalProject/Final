@@ -76,6 +76,32 @@
  		FROM course_review
  		WHERE user_id = #{userId}
  	</select>		 	
-
- 	
+	
+	<!-- 코스리뷰왕 -->
+	<select id="getReviewTop3" resultType="java.lang.Integer">
+    <![CDATA[
+	    SELECT countList.user_id
+	    FROM (
+	          SELECT user_id, COUNT(user_id) AS countReview
+	          FROM course_review
+	          GROUP BY user_id
+	          HAVING COUNT(user_id) > 1
+	          ORDER BY COUNT(user_id) DESC
+	    	  ) countList
+	    WHERE ROWNUM <= 3
+	 ]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
  </mapper>

@@ -1,6 +1,8 @@
 package com.spring.service;
 
 import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.spring.dto.PlaceReview;
@@ -70,4 +72,11 @@ public class PlaceReviewService {
     public PlaceReview getPlaceReviewByUserIdAndPlaceId(int userId, int placeId) throws SQLException {
         return mapper.getPlaceReviewByUserIdAndPlaceId(userId, placeId);
     }
+    
+    // 장소리뷰왕   
+	public List<Integer> getReviewTop3() throws SQLException{
+		return mapper.getReviewTop3();
+	}	
+    
+    
 }

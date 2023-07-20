@@ -88,7 +88,13 @@ public class CourseReviewService {
     // userId와 courseId로 CourseReview 객체 리스트 반환
     public CourseReview getCourseReviewByUserIdAndCourseId(int userId, int courseId) throws SQLException {
         return mapper.getCourseReviewByUserIdAndCourseId(userId, courseId);
-    }	
+    }
+
+
+    // 코스리뷰왕
+	public List<Integer> getReviewTop3() throws SQLException{
+		return mapper.getReviewTop3();
+	}	
 	
 	
 

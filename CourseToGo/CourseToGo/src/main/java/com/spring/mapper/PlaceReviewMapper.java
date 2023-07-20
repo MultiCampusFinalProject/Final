@@ -1,6 +1,8 @@
 package com.spring.mapper;
 
 import java.sql.SQLException;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +26,7 @@ public interface PlaceReviewMapper {
 	
     // UserId와 PlaceId로 placeReview 검색하기    
     public PlaceReview getPlaceReviewByUserIdAndPlaceId(@Param("userId") int userId, @Param("placeId") int placeId) throws SQLException;
+
+    // 장소리뷰왕   
+	public List<Integer> getReviewTop3() throws SQLException;
 }

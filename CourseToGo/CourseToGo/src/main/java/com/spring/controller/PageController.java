@@ -26,10 +26,9 @@ import com.spring.dto.CourseReview;
 import com.spring.dto.CtgUserDTO;
 import com.spring.dto.PlaceDTO;
 import com.spring.dto.UserBookmarkCourseDTO;
-import com.spring.mapper.CtgUserMapper;
 import com.spring.service.CourseReviewService;
 import com.spring.service.CourseService;
-import com.spring.service.CtgUserService;
+import com.spring.service.PlaceReviewService;
 import com.spring.service.PlaceService;
 import com.spring.service.RankingService;
 
@@ -48,9 +47,6 @@ public class PageController {
 	private CourseService courseService;
 	
 	@Autowired
-	private CtgUserService userService;
-	
-	@Autowired
 	private PlaceService placeService;
 	
 	@Autowired
@@ -60,8 +56,7 @@ public class PageController {
 	private CourseReviewService courseReviewService;
 	
 	@Autowired
-	private CtgUserMapper ctgUserMapper;
-	
+	private PlaceReviewService placeReviewService;
 	
 	@Autowired
 	private RankingService rankingService;
@@ -106,6 +101,11 @@ public class PageController {
 		List<String> courseDetailPageList = new ArrayList<String>();
 		List<PlaceDTO> placeDTOList = new ArrayList<PlaceDTO>();
 		
+		// 코스왕, 리뷰왕
+		List<Integer> courseReviewKingUserIds = new ArrayList<Integer>();
+		List<Integer> placeReviewKingUserIds = new ArrayList<Integer>();
+		List<String> courseReviewKingUserNicknames = new ArrayList<String>();
+		List<String> placeReviewKingUserNicknames = new ArrayList<String>();
 		
 		for(String courseId : courseIdList) {
 			CourseInformDTO courseInform = null;
@@ -153,6 +153,36 @@ public class PageController {
 			placeDTOList.add(place);
 		}
 		
+		try {
+			courseReviewKingUserIds = courseReviewService.getReviewTop3();
+			placeReviewKingUserIds = placeReviewService.getReviewTop3();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	
+		
+		String userNickname = null;
+		
+		for(int userId : courseReviewKingUserIds) {
+			userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+			if(userNickname == null) {
+				courseReviewKingUserNicknames.add("---");
+			}else {
+				courseReviewKingUserNicknames.add(userNickname);				
+			}
+		}
+		
+		for(int userId : placeReviewKingUserIds) {
+			userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+			if(userNickname == null) {
+				placeReviewKingUserNicknames.add("---");
+			}else {
+				placeReviewKingUserNicknames.add(userNickname);				
+			}
+		}
+		
 		//임시방편
 		if(courseInformDTOList.size() >=3)	{
 			List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
@@ -164,6 +194,11 @@ public class PageController {
 			model.addAttribute("placeDTOList", placeDTOSubList);
 		}
 		
+		model.addAttribute("courseReviewKingUserIds", courseReviewKingUserIds);
+		model.addAttribute("placeReviewKingUserIds", placeReviewKingUserIds);
+		model.addAttribute("courseReviewKingUserNicknames", courseReviewKingUserNicknames);
+		model.addAttribute("placeReviewKingUserNicknames", placeReviewKingUserNicknames);		
+	
 		model.addAttribute("courseDetailPageList", courseDetailPageList);
 		
 		return "home";		
@@ -179,18 +214,14 @@ public class PageController {
 		int myBookmarkCount = 0;
 		int myReviewCount = 0;
 		
-		try {
-			myCourseCount = ctgUserMapper.getMyCourseCount(userId);
-			myBookmarkCount = ctgUserMapper.getMyBookmarkCount(userId);
-			myReviewCount = ctgUserMapper.getMyReviewCount(userId);
-			
-			session.setAttribute("myCourseCount", myCourseCount);
-			session.setAttribute("myBookmarkCount", myBookmarkCount);
-			session.setAttribute("myReviewCount", myReviewCount);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		myCourseCount = userController.getMyCourseCount(userId);
+		myBookmarkCount = userController.getMyBookmarkCount(userId);
+		myReviewCount = userController.getMyReviewCount(userId);
 		
+		session.setAttribute("myCourseCount", myCourseCount);
+		session.setAttribute("myBookmarkCount", myBookmarkCount);
+		session.setAttribute("myReviewCount", myReviewCount);
+	
 		return "myPageInformModify";
 	}
 	
@@ -204,7 +235,7 @@ public class PageController {
 			res = -1;
 			return res;
 		} else {
-			res =  userService.nicknameCheck(userNickname);
+			userController.nicknameCheck(userNickname);
 			return res;
 		}
 	}

@@ -104,4 +104,51 @@ public class CtgUserController {
 		return view;
 	}
 
+	// 닉네임 중복 검증
+	public int nicknameCheck(String userNickname) {
+		int result = 0;
+		
+		try {
+			result = service.nicknameCheck(userNickname);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	// 나의 코스 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyCourseCount(int userId) {
+		int count = 0;
+		
+		try {
+			count = service.getMyCourseCount(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	// 찜한 코스 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyBookmarkCount(int userId) {
+		int count = 0;
+		
+		try {
+			count = service.getMyBookmarkCount(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+	
+	// 나의 리뷰 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyReviewCount(int userId) {
+		int count = 0;
+		
+		try {
+			count = service.getMyReviewCount(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		return count;
+	}
 }

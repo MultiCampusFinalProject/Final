@@ -77,12 +77,23 @@ public class CtgUserService {
 	}
 	
 	// 닉네임 중복 검증
-	public int nicknameCheck(String userNickname) {
-		int result = 0;
-		result = mapper.nicknameCheck(userNickname);
-		
-		return result;
+	public int nicknameCheck(String userNickname) throws SQLException{
+		return mapper.nicknameCheck(userNickname);
 	}
 
+	// 나의 코스 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyCourseCount(int userId) throws SQLException {
+		return mapper.getMyCourseCount(userId);
+	}
+	
+	// 찜한 코스 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyBookmarkCount(int userId) throws SQLException{
+		return mapper.getMyBookmarkCount(userId);
+	}
+	
+	// 나의 리뷰 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyReviewCount(int userId) throws SQLException{
+		return mapper.getMyReviewCount(userId);	
+	}
 
 }

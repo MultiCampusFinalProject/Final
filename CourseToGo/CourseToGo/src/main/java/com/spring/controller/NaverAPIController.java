@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CtgUserDTO;
 import com.spring.dto.PlaceDTO;
+import com.spring.service.CourseReviewService;
 import com.spring.service.CourseService;
+import com.spring.service.PlaceReviewService;
 import com.spring.service.PlaceService;
 import com.spring.service.RankingService;
 
@@ -60,6 +63,12 @@ public class NaverAPIController {
 	
 	@Autowired
 	private PlaceService placeService;
+	
+	@Autowired
+	private CourseReviewService courseReviewService;
+	
+	@Autowired
+	private PlaceReviewService placeReviewService;	
 
 	// localhost:----/test 로 callback URL을 설정. 출력해줄 jsp는 myPage.jsp입니다
 	@GetMapping(value = "/callback")
@@ -144,6 +153,7 @@ public class NaverAPIController {
 			List<String> placeIdList = rankingService.sortPlaceIdByCount();
 			
 			List<CourseInformDTO> courseInformDTOList = new ArrayList<CourseInformDTO>();
+			List<String> courseDetailPageList = new ArrayList<String>();
 			List<PlaceDTO> placeDTOList = new ArrayList<PlaceDTO>();
 			
 			for(String courseId : courseIdList) {
@@ -158,6 +168,27 @@ public class NaverAPIController {
 				courseInformDTOList.add(courseInform);
 			}
 
+			for (CourseInformDTO course : courseInformDTOList) {
+	        	int courseId = course.getCourseId();
+	            int courseNumber = course.getCourseNumber();   
+	            String thisCoursePlaceIdList = course.getCourseIdList();
+	            
+	            String[] placeIds = thisCoursePlaceIdList.split(",");
+	            String query = "";
+
+	            query += ("courseId="+ String.valueOf(courseId)+"&");
+	            
+	            for(int i= 0; i< courseNumber; i++) {
+	            	query+="placeId"+(i+1) + "="+placeIds[i];
+		            	if (i!= courseNumber-1) {
+		            		query+="&";
+		            	}
+		            	else{
+		            	}
+	            }
+	            courseDetailPageList.add(query);    
+			}	
+			
 			for(String placeId : placeIdList) {
 				PlaceDTO place = null;
 				
@@ -169,14 +200,56 @@ public class NaverAPIController {
 				
 				placeDTOList.add(place);
 			}
+
+			List<Integer> courseReviewKingUserIds = new ArrayList<Integer>();
+			List<Integer> placeReviewKingUserIds = new ArrayList<Integer>();
+			List<String> courseReviewKingUserNicknames = new ArrayList<String>();
+			List<String> placeReviewKingUserNicknames = new ArrayList<String>();
+			
+			
+			try {
+				courseReviewKingUserIds = courseReviewService.getReviewTop3();
+				placeReviewKingUserIds = placeReviewService.getReviewTop3();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			String userNickname = null;
+			
+			for(int userId : courseReviewKingUserIds) {
+				userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+				if(userNickname == null) {
+					courseReviewKingUserNicknames.add("---");
+				}else {
+					courseReviewKingUserNicknames.add(userNickname);				
+				}
+			}
+			
+			for(int userId : placeReviewKingUserIds) {
+				userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+				if(userNickname == null) {
+					placeReviewKingUserNicknames.add("---");
+				}else {
+					placeReviewKingUserNicknames.add(userNickname);				
+				}
+			}
+			
 			
 			//임시방편
 			List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
 			List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
+
+
+			model.addAttribute("courseReviewKingUserIds", courseReviewKingUserIds);
+			model.addAttribute("placeReviewKingUserIds", placeReviewKingUserIds);
+			
+			model.addAttribute("courseReviewKingUserNicknames", courseReviewKingUserNicknames);
+			model.addAttribute("placeReviewKingUserNicknames", placeReviewKingUserNicknames);		
 			
 			model.addAttribute("courseInformDTOList", courseInformDTOSubList);
-			model.addAttribute("placeDTOList", placeDTOSubList);
-			
+			model.addAttribute("courseDetailPageList", courseDetailPageList);
+			model.addAttribute("placeDTOList", placeDTOSubList);			
 			
 			return "home";
 		}	

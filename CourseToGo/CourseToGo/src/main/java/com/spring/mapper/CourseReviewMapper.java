@@ -33,6 +33,9 @@ public interface CourseReviewMapper {
     // userId와 courseId로 CourseReview 객체 리스트 반환
     public CourseReview getCourseReviewByUserIdAndCourseId(@Param("userId") int userId, @Param("courseId") int courseId) throws SQLException;
 
+    // 코스리뷰왕
+	public List<Integer> getReviewTop3() throws SQLException;
+
 	
 
 }
