@@ -76,7 +76,13 @@ public class CtgUserService {
 		return result;
 	}
 	
-
+	// 닉네임 중복 검증
+	public int nicknameCheck(String userNickname) {
+		int result = 0;
+		result = mapper.nicknameCheck(userNickname);
+		
+		return result;
+	}
 
 
 }

@@ -2,9 +2,9 @@
 
 /* 추천 장소 위치 */
 .recommendPlace {
-    position: fixed;
+    position: absolute;
     bottom: 30px;
-    left: 1090px;
+    left: 790px;
     width: 780px;
     height: 380px;
     padding: 20px;
@@ -50,6 +50,7 @@
 	flex-basis: 25%; /* flex 설정된 display 내부에 가로 너비를 25%로 설정(4개로 나눔) */
 	padding: 10px; /* 요소들 사이의 간격 설정 */
 	font-size: 18px;
+	
 }
 
 .placeImg {

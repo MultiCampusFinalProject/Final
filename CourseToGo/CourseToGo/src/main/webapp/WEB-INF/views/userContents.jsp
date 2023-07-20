@@ -19,6 +19,10 @@
 			  background-color: #fff;
 			  width: 170px;	
 		}
+		.button:hover {
+		cursor: pointer;
+		background-color: #daeefe;
+		}
 		
 		footer {
 	    border-top: 1px solid #e4e4e4;

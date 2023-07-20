@@ -63,19 +63,19 @@ font-weight: bold;
   }
   
   .favorite, .cancel {
-        width: 30px;
-        height: 30px;
+        width: 50px;
+        height: 50px;
         padding: 0;
         border: none;
         background: none;
         cursor: pointer;
-		transform: translateY(-10px);
+		transform: translate(15px, -25px);
     }
     
     .favorite > img, 
     .cancel > img {
-    	width: 30px;
-    	height: 30px;
+    	width: 50px;
+    	height: 50px;
     }
       .well:hover {
   	cursor: pointer;
@@ -99,10 +99,6 @@ font-weight: bold;
   	justify-content: center;
   	transform: scale(1.5);
   }
-/*   @font-face {
-  	font-family: 'maple';
-  	src: url('/font/Maplestory Light.ttf') format('truetype');
-  } */
   
   .recommendCourse{
   	position:absolute;
@@ -671,11 +667,6 @@ window.addEventListener('scroll', function() {
     });
   }
 });
-
-	
-	function notLogin() {
-		  alert("로그인을 해주세요.");
-		}
 </script>
 </body>
 </html>

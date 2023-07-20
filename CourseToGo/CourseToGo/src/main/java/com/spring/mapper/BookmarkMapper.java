@@ -16,5 +16,5 @@ public interface BookmarkMapper {
 	public int deleteCourseBookmarkById(@Param("userId") int userId, @Param("courseId") int courseId) throws SQLException;
 
 	// 유저 아이디를 통해 유저가 북마크한 코스 객체 리스트 반환 ----------------------------------
-	public List<UserBookmarkCourseDTO> getUserBookmarkListByUserId(int userId) throws SQLException;	
+	public List<UserBookmarkCourseDTO> getUserBookmarkListByUserId(int userId) throws SQLException;
 }

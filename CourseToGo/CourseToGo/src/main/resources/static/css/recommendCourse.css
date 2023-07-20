@@ -2,7 +2,7 @@
 
 /* 추천 코스 위치 */
 .recommendCourse {
-    position: fixed;
+    position: absolute;
     bottom: 30px;
     left: 280px;
     width: 780px;
