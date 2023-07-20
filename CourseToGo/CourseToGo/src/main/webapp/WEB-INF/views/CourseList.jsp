@@ -12,6 +12,7 @@
     <title class="searchList" >Searching Courses</title>
  <link rel="stylesheet" type="text/css" href="http://localhost:8090/css/modal.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link rel="stylesheet" type="text/css" href="http://localhost:8090/css/banner.css">
 </head>
 <style>
 
@@ -31,7 +32,7 @@ body{
  overflow: auto;.
  overflow-y: scroll;
  overflow-x: hidden;
- width: 1350px;
+ width: 1500px;
 }
   .searchList{
  position: relative;
@@ -49,19 +50,39 @@ font-weight: bold;
     transform: translateX(-50%);
   }
   
- .recommendedSearchList{
- position: relative;
-
+ .recommendedSearchList {
+  display: flex;
+  flex-wrap: nowrap; 
+  position: relative;
   font-weight: bold;
-
-
    top: 0;
     left: 220px;
     right: 600px;
     bottom: 0;
-
   }
   
+ .list-group-item {
+  display: inline-block;
+  width:auto;
+  flex: 0 0 auto;
+  width: auto;
+  white-space: nowrap; 
+}
+
+
+
+.list-group-item span {
+  display: inline-block;
+  text-align: center;
+  align-items: flex-start;
+
+}
+.list-group-item h1,
+.list-group-item h3{
+  white-space: nowrap;
+
+}
+
   .favorite, .cancel {
         width: 30px;
         height: 30px;
@@ -84,7 +105,7 @@ font-weight: bold;
     position: absolute;
   	right: 0;
   	top: 180px;
-  	width: 300px;
+  	width: 260px;
   	height: 1300px;
   	overflow: hidden;
   }
@@ -321,7 +342,7 @@ window.addEventListener('scroll', function() {
 %>
 
     <div class="recommendedSearchList">
-<li class="list-group-item" style=" width:1400px;animation: spin 2s linear infinite; background-color: #87CEEB;	border-radius: 20px 20px 20px 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
+<li class="list-group-item" style=" width:1450px;animation: spin 2s linear infinite; background-color: #87CEEB;	border-radius: 20px 20px 20px 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
   <div class=" " >
     <a  style="color: navy; font-family: 'Sunflower', sans-serif;" href="/courseList/Map?<%= query %>">
       <h1>No. <span class="course-id"><%= courseId %></span> &nbsp <span> 
@@ -348,7 +369,7 @@ window.addEventListener('scroll', function() {
 <% for (int i = 0; i < placeNames.length; i++) { %>
   <% if (i > 0) { %>
     &nbsp;
-    <img src="/images/dot2.png" alt="이미지_설명" width="50" height="auto" style="transform: rotate(90deg);">
+    <img src="/images/dot2.png" alt="이미지_설명" width="30" height="auto" style="transform: rotate(90deg);">
     &nbsp;
  
   <% } %>
@@ -358,11 +379,11 @@ window.addEventListener('scroll', function() {
     &nbsp;
   <% } %>
   
-  <span onclick="openModal(<%=placeIds[i] %>)" style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" padding: 20px; class="well" style="padding: 20px;"><img src="/images/point.png" alt="이미지_설명" width="30" height="auto" ><%= placeNames[i] %></span>
+  <span onclick="openModal(<%=placeIds[i] %>)" style="border: 2px solid blue; border-radius: 10px; background-color: white;" padding: 20px; class="well" style="padding: 20px;"><img src="/images/point.png" alt="이미지_설명" width="30" height="auto" ><%= placeNames[i] %></span>
   
   <% if (i == placeNames.length - 1) { %>
     &nbsp;
-  <img src="/images/end2.png" alt="이미지_설명" width="50" height="auto">
+  <img src="/images/end2.png" alt="이미지_설명" width="40" height="auto">
   <% } %>
   
 <% } %>
@@ -453,7 +474,7 @@ window.addEventListener('scroll', function() {
 %>
 
     <div class="searchList">
-<li class="list-group-item"  style=" width:1400px;animation: spin 2s linear infinite; background-color: #6495ed;	border-radius: 20px 20px 20px 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
+<li class="list-group-item"  style=" width:1450px; background-color: #6495ed;	border-radius: 20px 20px 20px 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);">
   <div class=" ">
     <a style="color: navy; font-family: 'Sunflower', sans-serif;" href="/courseList/Map?<%= query %>">
       <h1>No. <span class="course-id"><%= courseId %></span> &nbsp 
@@ -479,7 +500,7 @@ window.addEventListener('scroll', function() {
 <% for (int i = 0; i < placeNames.length; i++) { %>
   <% if (i > 0) { %>
     &nbsp;
-    <img src="/images/dot2.png" alt="이미지_설명" width="50" height="auto" style="transform: rotate(90deg);">
+    <img src="/images/dot2.png" alt="이미지_설명" width="30" height="auto" style="transform: rotate(90deg);">
     &nbsp;
  
   <% } %>
@@ -489,13 +510,13 @@ window.addEventListener('scroll', function() {
     &nbsp;
   <% } %>
   
-  <span style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" padding: 20px; class="well" style="padding: 20px;">
+  <span style="border: 2px solid blue; border-radius: 10px; padding: 20px; background-color: white;" class="well" style="padding: 20px;">
   <img src="/images/point.png" alt="이미지_설명" width="30" height="auto">
   <%= placeNames[i] %></span>
   
   <% if (i == placeNames.length - 1) { %>
     &nbsp;
-  <img src="/images/end2.png" alt="이미지_설명" width="50" height="auto">
+  <img src="/images/end2.png" alt="이미지_설명" width="40" height="auto">
   <% } %>
   
 <% } %>
