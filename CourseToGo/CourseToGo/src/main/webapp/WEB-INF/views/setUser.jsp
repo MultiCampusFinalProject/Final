@@ -12,7 +12,7 @@
 <body>
 	<%@ include file="sidebar.jsp" %>
 	
-	<form action="/myPageInformModify" method="POST">
+	<form action="/signupDone" method="POST">
 		<div class="myPageInform">
 			<table>
 				<tr>
