@@ -11,30 +11,57 @@
 		<div class="sidebar">
 		    <div class="logo">Course To Go</div>
 		    <ul>
-		    	<!-- 전체적인 링크 수정해야함(onclick) -->
-		    	<li><input type="button" class="home" value="홈" onclick="location.href='/home'"></li>
-		    	<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'"></li>
+		    	<li><input type="button" class="home" value="홈" onclick="location.href='/home'" id="homebtn"></li>
+		    	<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'" id="coursebtn"></li>
 		    	<c:if test="${empty sessionScope.user.userId}">
-		    		<li><input type="button" class="create-course" value="코스 제작" onclick="showAlertAndRedirect()"></li>
-                    <li><input type="button" class="mypage" value="마이페이지" onclick="showAlertAndRedirect()"></li>
+		    		<li><input type="button" class="create-course" value="코스 제작" onclick="notLogin()"></li>
+		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'" id="mypagebtb"></li>
 		    	</c:if>
+		    	
 		    	<c:if test="${not empty sessionScope.user.userId}">
-		    		<li><input type="button" class="create-course" value="코스 제작" onclick="location.href='/naverMap'"></li>
-		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
+		    		<li><input type="button" class="create-course" value="코스 제작" onclick="location.href='/naverMap'" id="createbtn"></li>
+		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'" id="mypagebtn"></li>
 		    		<li class="profile"><img src="${sessionScope.user.userPhoto}" alt="프로필 사진"></li>
 			        <li class="name">${sessionScope.user.userNickname} 님</li>
-			        <li class="email">${sessionScope.user.userEmail}</li>
 			        <li><input type="button" class="logout-btn" value="로그아웃" onclick="location.href='/logout'"></li>
-			        <li><input type="button" class="edit-profile-btn" value="개인정보 수정" onclick="location.href='/myPageInformModify'"></li>
+			        <li><input type="button" class="edit-profile-btn" value="개인정보 수정" onclick="location.href='/myPageInformModify'" id="informbtn"></li>
 		    	</c:if>
 		    </ul>
 		</div>
 	</form>
 	
 	<script>
-		function showAlertAndRedirect() {
+		function notLogin() {
 		  alert("로그인을 해주세요.");
 		}
+		
+		// 버튼 클릭 시 해당 버튼 focus 적용
+ 		var currentUrl = window.location.href;;
+		
+		var homebtn = '/home';
+		var coursebtn = '/courseListWithPagination';
+		var createbtn = '/naverMap';
+		var mypagebtn = '/userContents';
+		var informbtn = '/myPageInformModify';
+		
+		function setFocusOnButton(buttonId) {
+	        var button = document.getElementById(buttonId);
+	        button.focus();
+	    }
+		
+		if(currentUrl.includes(homebtn)) {
+			setFocusOnButton('homebtn');
+		} else if(currentUrl.includes(coursebtn)) {
+			setFocusOnButton('coursebtn');
+		} else if(currentUrl.includes(createbtn)) {
+			setFocusOnButton('createbtn');
+		} else if(currentUrl.includes(mypagebtn)) {
+			setFocusOnButton('mypagebtn');
+		} else if(currentUrl.includes(informbtn)) {
+			setFocusOnButton('informbtn');
+		}
+		
+
 	</script>
 </body>
 </html>

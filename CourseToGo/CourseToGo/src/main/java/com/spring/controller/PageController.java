@@ -19,14 +19,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.dto.CourseInformDTO;
 import com.spring.dto.CourseReview;
 import com.spring.dto.CtgUserDTO;
 import com.spring.dto.PlaceDTO;
 import com.spring.dto.UserBookmarkCourseDTO;
+import com.spring.mapper.CtgUserMapper;
 import com.spring.service.CourseReviewService;
 import com.spring.service.CourseService;
+import com.spring.service.CtgUserService;
 import com.spring.service.PlaceService;
 import com.spring.service.RankingService;
 
@@ -45,6 +48,9 @@ public class PageController {
 	private CourseService courseService;
 	
 	@Autowired
+	private CtgUserService userService;
+	
+	@Autowired
 	private PlaceService placeService;
 	
 	@Autowired
@@ -52,6 +58,9 @@ public class PageController {
 	
 	@Autowired
 	private CourseReviewService courseReviewService;
+	
+	@Autowired
+	private CtgUserMapper ctgUserMapper;
 	
 	
 	@Autowired
@@ -157,9 +166,43 @@ public class PageController {
 	}
 	
 	// 회원 정보를 수정하는 페이지로 이동하는 메서드----------------------------------------------------
+	// 나의 코스, 찜한코스, 나의 리뷰 개수를 가져오는 코드 추가
 	@GetMapping(value = "/myPageInformModify")
-	public String updateCtgUserForm(){
+	public String updateCtgUserForm(HttpSession session){
+		CtgUserDTO user =  (CtgUserDTO) session.getAttribute("user");
+		int userId = user.getUserId();
+		int myCourseCount = 0;
+		int myBookmarkCount = 0;
+		int myReviewCount = 0;
+		
+		try {
+			myCourseCount = ctgUserMapper.getMyCourseCount(userId);
+			myBookmarkCount = ctgUserMapper.getMyBookmarkCount(userId);
+			myReviewCount = ctgUserMapper.getMyReviewCount(userId);
+			
+			session.setAttribute("myCourseCount", myCourseCount);
+			session.setAttribute("myBookmarkCount", myBookmarkCount);
+			session.setAttribute("myReviewCount", myReviewCount);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		return "myPageInformModify";
+	}
+	
+	// 닉네임 중복 확인 메서드------------------------------------------------------------------
+	@RequestMapping(value = "/myPageInformModify/nicknameCheck")
+	@ResponseBody
+	public int nicknameCheck(String userNickname) {
+		int res = 0;
+		
+		if(userNickname == null || userNickname == "") {
+			res = -1;
+			return res;
+		} else {
+			res =  userService.nicknameCheck(userNickname);
+			return res;
+		}
 	}
 	
 	@PostMapping(value = "/signupDone")

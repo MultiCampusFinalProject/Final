@@ -35,8 +35,17 @@ public interface CtgUserMapper {
 	// 회원 탈퇴를 진행하는 메서드---------------------------------------------------------------------------------------
 	// 성공하면 : true / 실패하면 : false
 	public int unsignCtgUserByUserId(int userId) throws SQLException;
-
-
-
+	
+	// 닉네임 중복 검증 메서드-------------------------------------------------------------------
+	public int nicknameCheck(@Param("userNickname") String userNickname);
+	
+	// 나의 코스 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyCourseCount(int userId) throws SQLException;
+	
+	// 찜한 코스 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyBookmarkCount(int userId) throws SQLException;
+	
+	// 나의 리뷰 개수 가져오는 메서드--------------------------------------------------------------
+	public int getMyReviewCount(int userId) throws SQLException;
 
 }
