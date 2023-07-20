@@ -154,13 +154,17 @@ public class PageController {
 		}
 		
 		//임시방편
-		List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
-		List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
+		if(courseInformDTOList.size() >=3)	{
+			List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
+			model.addAttribute("courseInformDTOList", courseInformDTOSubList);
+		}
 		
-		model.addAttribute("courseInformDTOList", courseInformDTOSubList);
+		if(placeDTOList.size() >=3)	{
+			List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
+			model.addAttribute("placeDTOList", placeDTOSubList);
+		}
+		
 		model.addAttribute("courseDetailPageList", courseDetailPageList);
-		model.addAttribute("placeDTOList", placeDTOSubList);
-		
 		
 		return "home";		
 	}
