@@ -47,6 +47,10 @@ ul li {
     margin-bottom: 10px;
 }
 
+ul li input:focus {
+	background-color: #daeefe;
+}
+
 .home, .course, .create-course, .mypage {
     display: block;
     text-decoration: none;
@@ -66,6 +70,13 @@ ul li {
 	background-color: #daeefe;
 	color: black;
 	font-weight: bold;
+}
+
+#homebtn:focus, #coursebtn:focus, #createbtn:focus, #mypagebtn:focus, #informbtn:focus {
+	background-color: #daeefe;
+	color: black;
+	font-weight: bold;
+	outline: none;
 }
 
 .profile {

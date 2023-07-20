@@ -24,6 +24,10 @@
 		background-color: #daeefe;
 		}
 		
+		#mycourse:focus, #myreview:focus, #mybookmark:focus {
+		background-color: #daeefe;
+		}
+		
 		footer {
 	    border-top: 1px solid #e4e4e4;
 	    background-color:#f8f9fa;
@@ -80,9 +84,9 @@
 		 style = "margin-left: 200px;
 		 		  display: flex;
 		 		  justify-content: space-between;" >
-		<button class="button" style="margin-left:10%;" onclick="changeContent('/userCourse')" >나의 코스</button>
-		<button class="button" onclick="changeContent('/userReview')">나의 리뷰</button>
-		<button class="button" style="margin-right:10%;" onclick="changeContent('/userBookmarkList')" >내가 찜한 코스</button>
+		<button class="button" style="margin-left:10%;" onclick="changeContent('/userCourse')" id="mycourse">나의 코스</button>
+		<button class="button" onclick="changeContent('/userReview')" id="myreview">나의 리뷰</button>
+		<button class="button" style="margin-right:10%;" onclick="changeContent('/userBookmarkList')" id="mybookmark">내가 찜한 코스</button>
 	</div>
 	<br>
 	
@@ -113,10 +117,8 @@
 		</div>
 	  </div>
 	</footer>
-	
-	
-	
-		<script>
+
+	<script>
 		function changeContent(page) {
 			  var contentsBox = document.querySelector('.contentsBox');
 	
@@ -132,11 +134,23 @@
 			  xhttp.open('GET', page, true);
 			  xhttp.send();
 			}
+		
+		// 버튼 클릭 시 해당 버튼 focus 적용
+ 		var currentUrl = window.location.href;;
+		
+		var mycourse = '/userCourse';
+		var myreview = '/userReview';
+		var mybookmark = '/userBookmarkList';
+
+		
+		if(currentUrl.includes(mycourse)) {
+			document.getElementById('mycourse').focus();
+		} else if(currentUrl.includes(myreview)) {
+			document.getElementById('myreview').focus();
+		} else if(currentUrl.includes(mybookmark)) {
+			document.getElementById('mybookmark').focus();
+		}
 	</script>
-
-	
-
-
 
 </body>
 </html>

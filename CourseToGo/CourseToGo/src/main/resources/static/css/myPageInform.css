@@ -13,35 +13,63 @@
 /* 프로필 사진 관련 영역============================================================= */
 
 .imgArea {
-	width:250px;
-	height: 420px;
+	width: 400px;
+	height: 500px;
 	border-radius:20px;
 	background-color:#ebebeb;
-	padding-top: 10px;
-	padding-bottom: 10px;
 	box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3);
 	transform:scale(1.3);
 	position: fixed;
-	top: 270px;
-	left: 600px;
+	top: 230px;
+	left: 550px;
 }
 
 .title {
 	background-color:white;
-	width: 250px;
+	width: 100%;
+}
+
+.user-count {
+	display: flex;
+	justify-content: sapce-between;
+	align-items: center;
+	height: 100px;
+}
+
+.user-count div {
+	margin: 0;
+	padding: 0;
+	flex-basis: 33%;
+}
+
+#my-course, #bookmark-course, #my-review {
+	font-family: 'maple';
+/* 	margin-bottom: 10px; */
+}
+
+#my-course, #bookmark-course {
+	border-top: none;
+	border-left: none;
+	border-right: 3px solid black;
+	border-bottom: none;
+}
+
+#fix, #delete {
+	margin-bottom: 10px;
 }
 
 /* 텍스트 작성 관련 영역=========================================================== */
 
 .textArea {
-	height: 420px;
+	width:400px;
+	height: 500px;
 	border-radius:20px;
 	background-color:#ebebeb;
 	box-shadow: 5px 0px 10px rgba(0, 0, 0, 0.3);
 	transform: scale(1.3);
 	position: fixed;
-	top: 270px;
-	right: 400px;
+	top: 230px;
+	right: 350px;
 }
 
 .profileH3 {
@@ -78,6 +106,18 @@ input[type="text"] {
 	border-left: none;
 	border-right: none;
 	border-bottom: 3px solid #87ceeb;
+}
+
+.userNickname {
+	height: 35px;
+}
+
+.introduce {
+	height: 100px;
+}
+
+#editcomplete, #unsign {
+	margin-bottom: 10px;
 }
 
 /* =========================================================================== */

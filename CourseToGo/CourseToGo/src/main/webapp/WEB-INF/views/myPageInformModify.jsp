@@ -30,27 +30,28 @@
 			<table>
 				<tr>
  					<td style="width: 500px;">
-						<div align="center" id="left-column" width="500px">
+ 						<div align="center" id="left-column" width="500px">
 							<div class="imgArea">
 								<div class="title"><h1>프로필</h1></div>
 								<img id="profileImage" src="${sessionScope.user.userPhoto}" alt="profileImage" width="80" height="80">
-								<p><h3>${sessionScope.userName}</h3></p>
+								<p><h3>${sessionScope.user.userName}</h3></p>
 								<p><h4 style="color: grey;">${sessionScope.user.userEmail}</h4></p>
 								<div class = "user-count">
-									<p><h4 style="color: grey;">나의 코스 : ${sessionScope.myCourseCount}</h4></p>
-									<p><h4 style="color: grey;">찜한 코스 : ${sessionScope.myBookmarkCount}</h4></p>
-									<p><h4 style="color: grey;">나의 리뷰 : ${sessionScope.myReviewCount}</h4></p>
+									<div id="my-course"><h4>${sessionScope.myCourseCount}</h4><h4 style="color: grey;">나의 코스</h4></div>
+									<div id="bookmark-course"><h4>${sessionScope.myBookmarkCount}</h4><h4 style="color: grey;">찜한 코스</h4></div>
+									<div id="my-review"><h4>${sessionScope.myReviewCount}</h4><h4 style="color: grey;">나의 리뷰</h4></div>
+								</div><br/>
+								<div class="img-btn">
+									<button class="button" id="fix" onclick="showSampleImages()">프로필 사진 수정하기</button>
+									<button class="button" id="delete" onclick="deleteProfileImage()">프로필 사진 삭제하기</button>
 								</div>
-								<button class="button" id="fix" onclick="showSampleImages()">프로필 사진 수정하기</button>
-								<br>
-								<button class="button" id="delete" onclick="deleteProfileImage()">프로필 사진 삭제하기</button>
-								<br><br>
 							</div>
 						</div>
 					</td>
 					<td>
-						<div align="center" id="right-column" class="textArea">
+ 						<div align="center" id="right-column" class="textArea">
 							<div >
+							<div class="title"><h1>User Info</h1></div>
 								<h3 class="profileH3">닉네임</h3>
 								<input id="userNickname" class="userNickname" type="text" name="userNickname" value="${sessionScope.user.userNickname}" maxlength="6">
 								<span id="userNickname-check" style="display:block; font-size: 2px; width:400px; height:20px;"></span>
@@ -60,9 +61,8 @@
 							</div>
 							<br/>
 							<div>
-								<input class="button" type="submit" value="프로필 수정 완료" onclick="updateProfile()">
-								<br>
-								<input class="button" type="button" value="회원 탈퇴" onclick="unsignConfirm()">
+								<input id="editcomplete" class="button" type="submit" value="프로필 수정 완료" onclick="updateProfile()">
+								<input id="unsign" class="button" type="button" value="회원 탈퇴" onclick="unsignConfirm()">
 							</div>
 						</div>
 					</td>
@@ -94,7 +94,7 @@
 					} else if(res == 0) {
 						$("#userNickname-check").html('사용 가능한 닉네임입니다.');
 						$("#userNickname-check").css({
-							  'color': '#87ceeb',
+							  'color': '#4c92b1',
 							  'font-weight': 'bold'
 							});
 					} else if(res == -1) {
