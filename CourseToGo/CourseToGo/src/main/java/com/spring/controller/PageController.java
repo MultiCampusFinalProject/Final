@@ -168,6 +168,15 @@ public class PageController {
 		
 		String userNickname = null;
 		
+		for(int userId : courseMakeKingUserIds) {
+			 userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+			 if(userNickname == null) {
+				 courseMakeKingUserNicknames.add("---");
+			 }else {
+				 courseMakeKingUserNicknames.add(userNickname);
+			 }
+		}
+		
 		for(int userId : courseReviewKingUserIds) {
 			userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
 			if(userNickname == null) {
@@ -186,14 +195,6 @@ public class PageController {
 			}
 		}
 		
-		for(int userId : courseMakeKingUserIds) {
-			 userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
-			 if(userNickname == null) {
-				 courseMakeKingUserNicknames.add("---");
-			 }else {
-				 courseMakeKingUserNicknames.add(userNickname);
-			 }
-		}
 
 		//임시방편
 		if(courseInformDTOList.size() >=3)	{

@@ -201,13 +201,16 @@ public class NaverAPIController {
 				placeDTOList.add(place);
 			}
 
+			List<Integer> courseMakeKingUserIds = new ArrayList<Integer>();
 			List<Integer> courseReviewKingUserIds = new ArrayList<Integer>();
 			List<Integer> placeReviewKingUserIds = new ArrayList<Integer>();
+			List<String> courseMakeKingUserNicknames = new ArrayList<String>();
 			List<String> courseReviewKingUserNicknames = new ArrayList<String>();
 			List<String> placeReviewKingUserNicknames = new ArrayList<String>();
 			
 			
 			try {
+				courseMakeKingUserIds = courseService.getCourseTop3();
 				courseReviewKingUserIds = courseReviewService.getReviewTop3();
 				placeReviewKingUserIds = placeReviewService.getReviewTop3();
 				
@@ -216,6 +219,15 @@ public class NaverAPIController {
 			}
 			
 			String userNickname = null;
+			
+			for(int userId : courseMakeKingUserIds) {
+				 userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+				 if(userNickname == null) {
+					 courseMakeKingUserNicknames.add("---");
+				 }else {
+					 courseMakeKingUserNicknames.add(userNickname);
+				 }
+			}
 			
 			for(int userId : courseReviewKingUserIds) {
 				userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
@@ -240,10 +252,10 @@ public class NaverAPIController {
 			List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
 			List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
 
-
+			model.addAttribute("courseMakeKingUserIds", courseMakeKingUserIds);
 			model.addAttribute("courseReviewKingUserIds", courseReviewKingUserIds);
 			model.addAttribute("placeReviewKingUserIds", placeReviewKingUserIds);
-			
+			model.addAttribute("courseMakeKingUserNicknames", courseMakeKingUserNicknames);			
 			model.addAttribute("courseReviewKingUserNicknames", courseReviewKingUserNicknames);
 			model.addAttribute("placeReviewKingUserNicknames", placeReviewKingUserNicknames);		
 			
