@@ -30,5 +30,10 @@ public interface CourseMapper {
 	public List<CourseInformDTO> getCourseInformByUserId(int userId)throws SQLException;
 
 	
+	
+	// 코스작성왕
+	public List<Integer> getCourseTop3();
+
+	
 
 }

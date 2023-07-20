@@ -101,9 +101,11 @@ public class PageController {
 		List<String> courseDetailPageList = new ArrayList<String>();
 		List<PlaceDTO> placeDTOList = new ArrayList<PlaceDTO>();
 		
-		// 코스왕, 리뷰왕
+		// 코스작성왕, 코스리뷰왕, 장소리뷰왕		
+		List<Integer> courseMakeKingUserIds = new ArrayList<Integer>();
 		List<Integer> courseReviewKingUserIds = new ArrayList<Integer>();
 		List<Integer> placeReviewKingUserIds = new ArrayList<Integer>();
+		List<String> courseMakeKingUserNicknames = new ArrayList<String>();
 		List<String> courseReviewKingUserNicknames = new ArrayList<String>();
 		List<String> placeReviewKingUserNicknames = new ArrayList<String>();
 		
@@ -154,6 +156,7 @@ public class PageController {
 		}
 		
 		try {
+			courseMakeKingUserIds = courseService.getCourseTop3();
 			courseReviewKingUserIds = courseReviewService.getReviewTop3();
 			placeReviewKingUserIds = placeReviewService.getReviewTop3();
 			
@@ -183,6 +186,15 @@ public class PageController {
 			}
 		}
 		
+		for(int userId : courseMakeKingUserIds) {
+			 userNickname = userController.getCtgUserByUserId(userId).getUserNickname();
+			 if(userNickname == null) {
+				 courseMakeKingUserNicknames.add("---");
+			 }else {
+				 courseMakeKingUserNicknames.add(userNickname);
+			 }
+		}
+
 		//임시방편
 		if(courseInformDTOList.size() >=3)	{
 			List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
@@ -193,9 +205,11 @@ public class PageController {
 			List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
 			model.addAttribute("placeDTOList", placeDTOSubList);
 		}
-		
+				
+		model.addAttribute("courseMakeKingUserIds", courseMakeKingUserIds);
 		model.addAttribute("courseReviewKingUserIds", courseReviewKingUserIds);
 		model.addAttribute("placeReviewKingUserIds", placeReviewKingUserIds);
+		model.addAttribute("courseMakeKingUserNicknames", courseMakeKingUserNicknames);
 		model.addAttribute("courseReviewKingUserNicknames", courseReviewKingUserNicknames);
 		model.addAttribute("placeReviewKingUserNicknames", placeReviewKingUserNicknames);		
 	

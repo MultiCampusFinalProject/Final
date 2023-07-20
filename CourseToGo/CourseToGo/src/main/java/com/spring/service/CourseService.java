@@ -112,4 +112,10 @@ public class CourseService {
 
 
 
+	
+	
+	// 코스작성왕
+	public List<Integer> getCourseTop3() throws SQLException	{
+		return courseMapper.getCourseTop3();
+	}
 }

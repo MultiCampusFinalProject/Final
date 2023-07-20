@@ -33,13 +33,47 @@
     <div style="display: flex;
     			margin-left: 250px;">
     			
-	    <div class = "kingAward"
+	    <div class = "courseMakeKing"
 	    	 style = "background-color: #DAF3FD;
 	    			  margin-top:50px;
 	    			  width: 200px;
 	    			  border-radius: 5px;
 	    			  border: 2px solid #85C6E2;
 	    			  text-align: center;">
+	    	<b>코스 작성 TOP3</b><br>
+				<div class="courseReviewTop3">
+				    <c:forEach items="${requestScope.courseMakeKingUserIds}" var="userId" varStatus="kingSt">
+				        <c:choose>
+				            <c:when test="${kingSt.index == 0}">
+				                <img src="/images/goldMedal.png" alt="gold">
+				            </c:when>
+				            <c:when test="${kingSt.index == 1}">
+				                <img src="/images/silverMedal.png" alt="silver">
+				            </c:when>
+				            <c:when test="${kingSt.index == 2}">
+				                <img src="/images/bronzeMedal.png" alt="bronze">
+				            </c:when>
+				        </c:choose>
+				        <span>
+				            <c:forEach items="${requestScope.courseMakeKingUserNicknames}" var="courseKingNick" varStatus="courseKingNickSt">
+				                <c:if test="${kingSt.index eq courseKingNickSt.index}">
+				                    ${courseKingNick}
+				                </c:if>
+				            </c:forEach>
+				        </span>
+				        <br>
+				    </c:forEach>
+				</div>
+	    </div>
+
+	    <div class = "courseReveiwKing"
+    		 style = "background-color: #DAF3FD;
+	    			  margin-top:50px;
+	    			  width: 200px;
+	    			  border-radius: 5px;
+	    			  border: 2px solid #85C6E2;
+	    			  text-align: center;
+	    			  margin-left:50px;">
 	    	<b>코스 리뷰 TOP3</b><br>
 				<div class="courseReviewTop3">
 				    <c:forEach items="${requestScope.courseReviewKingUserIds}" var="userId" varStatus="kingSt">
@@ -64,10 +98,10 @@
 				        <br>
 				    </c:forEach>
 				</div>
-	    </div>
+	    </div>	    
 	    
-	    
-	    <div style = "background-color: #DAF3FD;
+	    <div class = "placeReveiwKing" 
+	    	 style = "background-color: #DAF3FD;
 	    			  margin-top:50px;
 	    			  width: 200px;
 	    			  border-radius: 5px;
