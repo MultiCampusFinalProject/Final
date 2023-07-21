@@ -325,7 +325,7 @@ function moveMap(minlat, minlong, maxlat, maxlong) {
 
 <!-- footer -->
 
-<footer style="margin: 10px auto; height: 350px;">
+<footer style="margin: 10px auto; height: auto;">
 
 <h2 style="margin-left:220px; margin-right:220px;">코스 소개글 : ${Course.courseContent}</h2>
 </footer>
