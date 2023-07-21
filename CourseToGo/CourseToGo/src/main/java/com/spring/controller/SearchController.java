@@ -57,37 +57,17 @@ public class SearchController {
         return "searchEngine";
     }
     
-    @GetMapping("/jSearchA")
-    public ResponseEntity<String> searchPlacesByArea(@RequestParam("areaName") String areaName) {
-        
-    	List<PlaceDTO> searchResults2 = placeService.searchPlacesByArea(areaName);
-        StringBuilder sb = new StringBuilder();
-        for (PlaceDTO place : searchResults2) {
-            sb.append("Place ID: ").append(place.getPlaceId()).append("<br>");
-            sb.append("Place Name: ").append(place.getPlaceName()).append("<br>");
-            sb.append("Latitude: ").append(place.getLatitude()).append("<br>");
-            sb.append("Longitude: ").append(place.getLongitude()).append("<br>");
-            sb.append("Address: ").append(place.getAddress()).append("<br>");
-            sb.append("Average Score: ").append(place.getPlaceAvgScore()).append("<br>");
-            sb.append("<br>");
-        }
-        System.out.println("jSearchA");
-        if (searchResults2.isEmpty()) {
-            System.out.println("검색결과 없음.");
-        }
-        
-        return new ResponseEntity<>(sb.toString(), HttpStatus.OK);
-    }
+
    
 
     
     @GetMapping("/jSearchAC")
     public String searchPlacesByAreaOrCategory(@RequestParam("areaName") String areaName, @RequestParam("categoryName") String categoryName, Model model3) {
-    	System.out.println("jSearchAC");
-
-    	System.out.println(areaName);
-    	System.out.println(categoryName);
-    	
+//    	System.out.println("jSearchAC");
+//
+//    	System.out.println(areaName);
+//    	System.out.println(categoryName);
+//    	
     	List<PlaceDTO> searchResults4 = placeService.searchPlacesByAreaOrCategory(areaName, categoryName);
     	model3.addAttribute("placesByAreaOrCategory", searchResults4);
     	System.out.println(searchResults4);

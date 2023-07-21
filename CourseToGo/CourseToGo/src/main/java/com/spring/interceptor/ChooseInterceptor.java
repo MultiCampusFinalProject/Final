@@ -49,8 +49,8 @@ public class ChooseInterceptor implements HandlerInterceptor {
         if(placeId4 != null)placeIdList.add(placeId4);
         String placeId5 = request.getParameter("placeId5");
         if(placeId5 != null)placeIdList.add(placeId5);
-        System.out.println("courseId = " + courseId);
-        System.out.println(placeIdList);
+//        System.out.println("courseId = " + courseId);
+//        System.out.println(placeIdList);
        
         	
            

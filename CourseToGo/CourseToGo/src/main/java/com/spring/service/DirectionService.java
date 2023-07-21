@@ -41,7 +41,7 @@ public class DirectionService {
 	                    directionDTOList.add(directionDTO);
 	                }
 	            }
-	            System.out.println(directionDTOList);
+//	            System.out.println(directionDTOList);
 	            directionMapper.insertDirectionList(directionDTOList);
 	}
 		 catch (IOException e) {

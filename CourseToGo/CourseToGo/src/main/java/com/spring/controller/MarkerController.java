@@ -76,7 +76,7 @@ public class MarkerController {
         int userId = (int)user.getUserId();
 //        int userId = 1;
         int courseId = -1;
-        System.out.println(courseContent);
+//        System.out.println(courseContent);
         //CourseDTO 생성
         CourseDTO course = CourseDTO.builder().userId(userId)
         					.courseName(courseName)
@@ -159,9 +159,9 @@ public class MarkerController {
        
        
     	String encodedWaypoints=null;
-	      System.out.println(goal);
-          System.out.println(start);
-          System.out.println(waypoints);
+//	      System.out.println(goal);
+//          System.out.println(start);
+//          System.out.println(waypoints);
           if(waypoints !=null) {
           try {
 			encodedWaypoints = URLEncoder.encode(waypoints, "UTF-8");
@@ -196,12 +196,12 @@ public class MarkerController {
             e.printStackTrace();
             return "CourseList";
         }
-        System.out.println("start=" + start + "&goal=" + goal + "&waypoints=" + waypoints);
+//        System.out.println("start=" + start + "&goal=" + goal + "&waypoints=" + waypoints);
         RequestEntity<?> requestEntity = new RequestEntity<>(headers, HttpMethod.GET, uri);
         
         ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
         String responseBody = responseEntity.getBody();
-        System.out.println(responseBody);
+//        System.out.println(responseBody);
         if(responseBody !=null){directionService.insertDirections(responseBody, courseId);}// 경로 저장}
 //        redirectAttributes.addAttribute("placeId1", placeId1);
         return "redirect:/courseList/Map";

@@ -56,19 +56,7 @@ public class CourseController {
 	final PlaceService placeService;
 	final private CourseService courseService;
 	final private CourseReviewService reviewService;
-	@RequestMapping( value = "/courseList")
-	public String naverMap(Model model) {
-		List<CourseInformDTO> courseInformList=new ArrayList<>();
-		try {
-		courseInformList	 =  courseService.getAllCourses();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		model.addAttribute("CourseInformList", courseInformList);
 	
-		return "CourseList";
-	}
 
 //	@RequestMapping( value = "/courseList/keyword")
 	@RequestMapping( value = "/courseListWithPagination")
@@ -96,13 +84,13 @@ public class CourseController {
 //			e.printStackTrace();
 		}	
 		PageResponseDTO pageResponse = new PageResponseDTO(total, 10, pageRequest);
-		System.out.println(pageResponse);
+//		System.out.println(pageResponse);
 		model.addAttribute("CourseInformList", courseInformList);
 		model.addAttribute("pageInfo", pageResponse);
 		//추천 코스 id
 		List<String> recommandedCourses = rankingService.sortCourseIdByCount();
 		List<CourseInformDTO> recommandedCourseInformList = new ArrayList<CourseInformDTO>();
-		System.out.println(recommandedCourses);
+//		System.out.println(recommandedCourses);
 		
 		for(String temp : recommandedCourses) {
 			try {
@@ -113,7 +101,7 @@ public class CourseController {
 //				e.printStackTrace();
 			}
 		}
-		System.out.println(recommandedCourseInformList);
+//		System.out.println(recommandedCourseInformList);
 		model.addAttribute("recommandedCourseInformList",recommandedCourseInformList);
 		
 		return "CourseList";
