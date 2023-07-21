@@ -101,7 +101,7 @@
 				  align-items: center;">
 				  
 		<div class = "courseInfo"
-			 style = "height: 200px;
+			 style = "height: auto;
 			 		  width: 500px;
 			 		  background-color: #fafafa;
 			 		  border-radius: 5px;
@@ -114,7 +114,7 @@
 			<img width = "100px" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/95acfb73-d521-42c2-b85d-49a6f22af4ca"><br>
 
 			<span style = "width: 480px;
-						   height: 45px;
+						   height: auto;
 						   background-color: white;
 						   text-align: center;
 	   			 		   border-radius: 5px;
