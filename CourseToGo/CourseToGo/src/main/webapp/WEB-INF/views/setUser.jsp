@@ -50,14 +50,14 @@
 		</div>
 	</form>
 	
-		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
-		// 닉네임 중복 검사==============================================================================
+	$(document).ready(function() {
+  		// 닉네임 중복 검사==============================================================================
 		$('#userNickname').keyup(function() {
 			var userNickname = $('#userNickname').val();
-			
 			$.ajax({
-				url: "/myPageInformModify/nicknameCheck",
+				url: "/signupDone/nicknameCheck",
 				type: "get",
 				data: {
 					userNickname: userNickname
@@ -69,26 +69,57 @@
 						$("#userNickname-check").css({
 							  'color': 'red',
 							  'font-weight': 'bold'
-							});
+						});
+						duplicateNickname();
 					} else if(res == 0) {
 						$("#userNickname-check").html('사용 가능한 닉네임입니다.');
 						$("#userNickname-check").css({
 							  'color': '#4c92b1',
 							  'font-weight': 'bold'
-							});
+						});
+						updateProfile();
 					} else if(res == -1) {
 						$("#userNickname-check").html('닉네임을 입력해주세요.(닉네임은 비어있을 수 없습니다.)');
 						$("#userNickname-check").css({
 							  'color': 'red',
 							  'font-weight': 'bold'
-							});
+						});
+						duplicateNickname();
 					}
 				},
-  				error: function() {
+					error: function() {
 					alert("서버 요청 실패");
 				}
 			});
 		});
+  		
+		  // 프로필 수정 완료 버튼 클릭 시 현재 이미지 태그의 src 값을 userPhoto에 저장
+		  function updateProfile() {
+			var editCompleteButton = document.getElementById("editcomplete");
+		    editCompleteButton.setAttribute("type", "submit");
+		    editCompleteButton.setAttribute("onclick", "updateProfile()");
+		  }
+
+		  function duplicateNickname() {
+			var editCompleteButton = document.getElementById("editcomplete");
+			editCompleteButton.setAttribute("type", "button");
+			editCompleteButton.setAttribute("onclick", "duplicateNickname()");
+		  }
+	});
+	
+		// 사용 가능한 닉네임일 때 프로필 수정 완료 버튼 클릭 시 현재 이미지 태그의 src 값을 userPhoto에 저장	
+		function updateProfile() {
+		    var confirmResult = confirm("가입하시겠습니까?");
+		    if (confirmResult) {
+			    var userPhoto = document.getElementById("userPhoto").value;
+			    document.getElementById("profileImage").src = userPhoto;
+		    }
+		}
+		
+		// 사용 불가능 닉네임일 때 alert 경고창이 나온 후, 페이지 redirect
+		function duplicateNickname() {
+			alert("닉네임을 확인해주세요");
+		}
 	</script>
 </body>
 </html>
