@@ -27,7 +27,7 @@ public class CourseService {
 				
 		 courseMapper.insertCourse(course);
 		 courseId = course.getCourseId();	
-		 System.out.println();
+//		 System.out.println();
 			if(courseId == -1) {
 				throw new Exception("no sequence");
 			} else {
@@ -41,7 +41,7 @@ public class CourseService {
 	
 		List<CourseInformDTO> res=new ArrayList<>();
 				 res= courseMapper.getAllCourses();
-				System.out.println(res);
+//				System.out.println(res);
 				if(!res.isEmpty()) {
 					
 				} else {
@@ -55,7 +55,7 @@ public class CourseService {
 		
 		CourseInformDTO res=null;
 				 res= courseMapper.getCourseInformByCourseId(courseId);
-				System.out.println(res);
+//				System.out.println(res);
 				if(res!=null) {
 					
 				} else {
@@ -69,7 +69,7 @@ public class CourseService {
 		
 		List<CourseInformDTO> res=null;
 				 res= courseMapper.getCourseInformByUserId(userId);
-				System.out.println(res);
+//				System.out.println(res);
 				if(res!=null) {
 					
 				} else {
