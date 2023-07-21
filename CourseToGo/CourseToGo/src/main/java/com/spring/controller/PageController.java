@@ -240,10 +240,25 @@ public class PageController {
 		return "myPageInformModify";
 	}
 	
-	// 닉네임 중복 확인 메서드------------------------------------------------------------------
+	// 닉네임 중복 확인 메서드(개인정보 수정 페이지)------------------------------------------------------------------
 	@RequestMapping(value = "/myPageInformModify/nicknameCheck")
 	@ResponseBody
-	public int nicknameCheck(String userNickname) {
+	public int nicknameCheck1(String userNickname, HttpSession session) {
+		int res = 0;
+		
+		if(userNickname == null || userNickname == "") {
+			res = -1;
+			return res;
+		} else {
+			res = userController.nicknameCheck(userNickname);
+			return res;
+		}
+	}
+	
+	// 닉네임 중복 확인 메서드(회원가입 페이지)------------------------------------------------------------------
+	@RequestMapping(value = "/signupDone/nicknameCheck")
+	@ResponseBody
+	public int nicknameCheck2(String userNickname) {
 		int res = 0;
 		
 		if(userNickname == null || userNickname == "") {
