@@ -175,7 +175,7 @@ public class CourseController {
 	    if(placeId3!=null)placeIdList[2]= Float.valueOf(placeId3).intValue();
 	    if(placeId4!=null)placeIdList[3]= Float.valueOf(placeId4).intValue();
 	    if(placeId5!=null)placeIdList[4]= Float.valueOf(placeId5).intValue();
-	   System.out.println(placeIdList);
+//	   System.out.println(placeIdList);
 	   
 	   List<PlaceDTO> placeList = new ArrayList<>();
 	    for(int i = 0 ; i < courseNum; i++) {
@@ -187,7 +187,7 @@ public class CourseController {
 				e.printStackTrace();
 			}
 	    }
-	    System.out.println("---");
+	 
 
 		List<DirectionDTO> DirectionList = directionService.getDirectionsByCourseId(Integer.parseInt(courseId));
 
@@ -195,12 +195,12 @@ public class CourseController {
 		List<CourseReview> courseReview = null;
 		try {
 			courseReview = reviewService.getCourseReviewByCourseId(Integer.parseInt(courseId));
-			System.out.println(courseReview);
+//			System.out.println(courseReview);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(DirectionList);
+//		System.out.println(DirectionList);
 		model.addAttribute("DirectionList", DirectionList);
 
 		model.addAttribute("PlaceList", placeList);
