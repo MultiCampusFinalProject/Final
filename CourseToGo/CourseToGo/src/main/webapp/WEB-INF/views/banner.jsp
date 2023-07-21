@@ -6,18 +6,18 @@
 	<link rel="stylesheet" type="text/css" href="../css/banner.css">
 </head>
 <body>
-	<div class="banner">
+	<div class="banner" style = "margin-left: 200px;">
 		<div class="imgcontanier">
-			<img class="slideImg" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/836352eb-85d1-41f1-8e81-027690cca410">
+			<img class="slideImg" src="/images/advertise2.png">
 		</div>
 		<div class="imgcontanier">
-			<img class="slideImg" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/38d1f492-fb74-4592-bff5-f04a92ab1395">
+			<img class="slideImg" src="/images/advertise2.png">
 		</div>
 		<div class="imgcontanier">
-			<img class="slideImg" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/836352eb-85d1-41f1-8e81-027690cca410">
+			<img class="slideImg" src="/images/advertise2.png">
 		</div>
 		<div class="imgcontanier">
-			<img class="slideImg" src="https://github.com/Paprika0290/Paprika0290/assets/59499235/38d1f492-fb74-4592-bff5-f04a92ab1395">
+			<img class="slideImg" src="/images/advertise2.png">
 		</div>
 		<a class="prev" onclick="plusSlides(-1)">❮</a>
 		<a class="next"onclick="plusSlides(1)">❯</a>
