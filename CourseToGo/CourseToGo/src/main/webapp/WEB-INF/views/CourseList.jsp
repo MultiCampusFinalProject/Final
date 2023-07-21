@@ -50,37 +50,40 @@ font-weight: bold;
     transform: translateX(-50%);
   }
   
- .recommendedSearchList {
+.recommendedSearchList {
   display: flex;
-  flex-wrap: nowrap; 
+  flex-wrap: wrap;
   position: relative;
   font-weight: bold;
-   top: 0;
-    left: 220px;
-    right: 600px;
-    bottom: 0;
-  }
-  
- .list-group-item {
-  display: inline-block;
-  width:auto;
-  flex: 0 0 auto;
-  width: auto;
-  white-space: nowrap; 
+  top: 0;
+  left: 220px;
+  right: 600px;
+  bottom: 0;
 }
 
-
+.list-group-item {
+  display: inline-block;
+  width: auto;
+  flex: 0 0 auto;
+  width: auto;
+}
 
 .list-group-item span {
   display: inline-block;
   text-align: center;
   align-items: flex-start;
-
 }
-.list-group-item h1,
-.list-group-item h3{
-  white-space: nowrap;
 
+.list-group-item h1 {
+  white-space: normal;
+}
+
+.list-group-item h3 {
+  word-wrap: break-word;
+  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
   .favorite, .cancel {
@@ -389,11 +392,12 @@ window.addEventListener('scroll', function() {
     <br>
     
        <br>
-      
     <h3>소개글: <%= courseContent %></h3>
+      
   </div> 
-  
-  
+ 
+ 
+ 
   <div class="recommendCourse">
   	<h3 style="font-size:30px; font-weight: 900;">Recommend</h3>
   </div>
