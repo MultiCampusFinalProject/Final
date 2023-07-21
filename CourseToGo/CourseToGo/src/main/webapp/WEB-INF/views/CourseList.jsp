@@ -601,7 +601,7 @@ window.addEventListener('scroll', function() {
     </div>
     
     <div class="ADBanner">
-    	<img src="https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/banner1.png?raw=true">
+    	<img src="/images/advertise3.png">
     </div>
    <script type="text/javascript">
 	//step01 : 페이징 버튼 클릭시 지정 url 요청갈수 있도록 이벤트 등록

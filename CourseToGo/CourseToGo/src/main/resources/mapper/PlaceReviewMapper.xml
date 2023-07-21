@@ -33,7 +33,7 @@
     <!-- 장소 별점 등록 -->
  	<insert id="insertPlaceReview" parameterType="com.spring.dto.PlaceReview">
  		INSERT INTO place_review (place_review_id, place_id, user_id, review_date,place_score) 
- 		VALUES (place_review_id_seq.nextval, #{placeId}, #{userId}, TO_CHAR(sysdate, 'YYYYMMDD'), #{placeScore} )
+ 		VALUES (place_review_id_seq.nextval, #{placeId}, #{userId}, sysdate, #{placeScore} )
 
  	</insert>
  	
@@ -41,7 +41,7 @@
  	<update id="updatePlaceReview" parameterType="com.spring.dto.PlaceReview">
  		UPDATE place_review
  		SET place_score = #{placeScore}, 
- 	        review_date = TO_CHAR(sysdate, 'YYYYMMDD')
+ 	        review_date = sysdate
  		WHERE place_id = #{placeId}
  	</update>
  	
