@@ -49,5 +49,46 @@
 			</table>
 		</div>
 	</form>
+	
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		// 닉네임 중복 검사==============================================================================
+		$('#userNickname').keyup(function() {
+			var userNickname = $('#userNickname').val();
+			
+			$.ajax({
+				url: "/myPageInformModify/nicknameCheck",
+				type: "get",
+				data: {
+					userNickname: userNickname
+				},
+				success: function(res) {
+					console.log(res);
+					if(res == 1) {
+						$("#userNickname-check").html('이미 사용중인 닉네임입니다.');
+						$("#userNickname-check").css({
+							  'color': 'red',
+							  'font-weight': 'bold'
+							});
+					} else if(res == 0) {
+						$("#userNickname-check").html('사용 가능한 닉네임입니다.');
+						$("#userNickname-check").css({
+							  'color': '#4c92b1',
+							  'font-weight': 'bold'
+							});
+					} else if(res == -1) {
+						$("#userNickname-check").html('닉네임을 입력해주세요.(닉네임은 비어있을 수 없습니다.)');
+						$("#userNickname-check").css({
+							  'color': 'red',
+							  'font-weight': 'bold'
+							});
+					}
+				},
+  				error: function() {
+					alert("서버 요청 실패");
+				}
+			});
+		});
+	</script>
 </body>
 </html>
