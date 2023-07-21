@@ -20,7 +20,7 @@
  						<div align="center" id="left-column" width="500px">
 							<div class="imgArea">
 								<div class="title"><h1>프로필</h1></div>
-								<img id="profileImage" src="https://github.com/MultiCampusFinalProject/Final/blob/main/CourseToGo/CourseToGo/src/main/resources/static/example/userProfile1.png?raw=true" alt="profileImage" width="80" height="80">
+								<img id="profileImage" src="/images/userProfile1.png" alt="profileImage" width="80" height="80">
 								<p><h3>${sessionScope.newUser.userName}</h3></p>
 								<p><h4 style="color: grey;">${sessionScope.newUser.userEmail}</h4></p>
 								<div class="img-btn">
