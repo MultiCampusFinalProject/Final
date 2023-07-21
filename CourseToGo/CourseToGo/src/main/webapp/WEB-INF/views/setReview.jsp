@@ -204,17 +204,7 @@
            	</div>	
            	<br> 
 			<!-- courseReview 작성 칸 -->		  
-			<input class = "CourseReview" type = "text" name= "content"
-				   style = "height: 20vh;
-					 	    width: 500px; 
-				 	 	    border-radius: 10px;
-				 	 	    border: 2px solid #ccc;
-						    display: flex;
-			  			    flex-direction: column;
-						    justify-content: left;
-						    overflow: auto;">
-	
-					  
+			<textarea rows="15" cols="70" name= "content" class = "CourseReview" maxlength="400"></textarea>			
 			<input type="hidden" name="userId" id ="userId" value="${user.userId}">
 			<input type="hidden" name="courseId" id = "courseId" value="${courseId}">
 			
