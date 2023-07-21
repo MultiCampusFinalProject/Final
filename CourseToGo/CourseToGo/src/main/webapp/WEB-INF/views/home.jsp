@@ -139,10 +139,6 @@
         <div class="sidebar">
             <%@ include file="sidebar.jsp" %>
         </div>
-        <!-- 메인 상단부(검색바 + 로그인버튼 + 회원가입 버튼) // class 및 include file(jsp) 변경-->
-        <div class="searchbar">
-            <%@ include file="search.jsp" %>
-        </div>
         <div class="loginAndSignup">
             <%@ include file="loginbtn.jsp" %>
         </div>

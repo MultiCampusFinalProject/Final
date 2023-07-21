@@ -42,7 +42,6 @@
 							<br/>
 							<div>
 								<input id="editcomplete" class="button" type="submit" value="프로필 수정 완료" onclick="updateProfile()">
-								<input id="unsign" class="button" type="button" value="회원 탈퇴" onclick="unsignConfirm()">
 							</div>
 						</div>
 					</td>
@@ -50,8 +49,5 @@
 			</table>
 		</div>
 	</form>
-	
-
-	
 </body>
 </html>
