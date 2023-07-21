@@ -250,7 +250,7 @@ public class PageController {
 			res = -1;
 			return res;
 		} else {
-			userController.nicknameCheck(userNickname);
+			res = userController.nicknameCheck(userNickname);
 			return res;
 		}
 	}
