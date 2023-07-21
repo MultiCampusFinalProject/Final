@@ -41,7 +41,7 @@
 							</div>
 							<br/>
 							<div>
-								<input id="editcomplete" class="button" type="submit" value="프로필 수정 완료" onclick="updateProfile()">
+								<input id="editcomplete" class="button" type="submit" value="회원 가입" onclick="updateProfile()">
 							</div>
 						</div>
 					</td>
