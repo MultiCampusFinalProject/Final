@@ -90,7 +90,7 @@ public class NaverAPIProfileController {
 			requestHeaders.put("Authorization", header);
 			String responseBody = get(memberProfileApiURL,requestHeaders);
 			  
-			System.out.println(responseBody);
+//			System.out.println(responseBody);
 			JSONObject jsonObject = new JSONObject(responseBody.toString());
 			  
 			ObjectMapper objMapper = new ObjectMapper();
