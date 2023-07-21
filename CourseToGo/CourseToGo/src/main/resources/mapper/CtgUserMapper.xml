@@ -48,7 +48,7 @@
 		SET user_nickname = #{userNickname},
             user_introduce = #{userIntroduce},
             user_photo = #{userPhoto}
-		WHERE user_email = #{userEmail}
+		WHERE user_id = #{userId}
 	</update>
  	
      <!-- 회원 탈퇴(user_name, user_signdate 외에 모두 null 설정 및 unsigndate 값 저장) -->
