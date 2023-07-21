@@ -33,10 +33,10 @@
 							<div >
 							<div class="title"><h1>User Info</h1></div>
 								<h3 class="profileH3">닉네임</h3>
-								<input id="userNickname" class="userNickname" type="text" name="userNickname" value="${sessionScope.newUser.userNickname}" maxlength="6">
+								<input id="userNickname" class="userNickname" type="text" name="userNickname" value="${sessionScope.newUser.userNickname}" maxlength="8">
 								<span id="userNickname-check" style="display:block; font-size: 2px; width:400px; height:20px;"></span>
 								<h3 class="profileH3">자기소개</h3>
-								<input class="introduce" type="text" name="userIntroduce" value="${sessionScope.newUser.userIntroduce}" maxlength="15"><br>
+								<input class="introduce" type="text" name="userIntroduce" value="${sessionScope.newUser.userIntroduce}" maxlength="50"><br>
 								<input type="hidden" name="userPhoto" id="userPhoto" value="${sessionScope.newUser.userPhoto}">
 							</div>
 							<br/>
