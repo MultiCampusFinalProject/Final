@@ -72,7 +72,7 @@
   <div class = "mainpage">
       <!-- 배너 -->    
          <div class = "banner" style = "margin-left: 200px;">
-            <img src="https://github.com/Paprika0290/Paprika0290/assets/59499235/3e6dcc8a-648e-4727-8474-1aee71a99cb4">
+            <img src="/images/advertise.png">
         </div>     
     <!-- 로그인/회원정보 -->
          <div class = "loginAndSignup">
