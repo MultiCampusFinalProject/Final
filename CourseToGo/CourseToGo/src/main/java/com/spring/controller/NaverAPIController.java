@@ -147,7 +147,6 @@ public class NaverAPIController {
 			
 			
 			
-			
 			// 코스 추천	
 			List<String> courseIdList = rankingService.sortCourseIdByCount();
 			List<String> placeIdList = rankingService.sortPlaceIdByCount();
@@ -156,6 +155,14 @@ public class NaverAPIController {
 			List<String> courseDetailPageList = new ArrayList<String>();
 			List<PlaceDTO> placeDTOList = new ArrayList<PlaceDTO>();
 			
+			// 코스작성왕, 코스리뷰왕, 장소리뷰왕		
+			List<Integer> courseMakeKingUserIds = new ArrayList<Integer>();
+			List<Integer> courseReviewKingUserIds = new ArrayList<Integer>();
+			List<Integer> placeReviewKingUserIds = new ArrayList<Integer>();
+			List<String> courseMakeKingUserNicknames = new ArrayList<String>();
+			List<String> courseReviewKingUserNicknames = new ArrayList<String>();
+			List<String> placeReviewKingUserNicknames = new ArrayList<String>();
+			
 			for(String courseId : courseIdList) {
 				CourseInformDTO courseInform = null;
 				
@@ -163,11 +170,12 @@ public class NaverAPIController {
 					courseInform = courseService.getCourseInformByCourseId(Integer.parseInt(courseId));
 				} catch (Exception e) {
 					e.printStackTrace();
-				}			
+				}	
+				//임시방편. 무조건 5점으로 출력됨. 추후 테이블 수정봐야 함.
 				courseInform.setCourseAvgScore(5.0);
 				courseInformDTOList.add(courseInform);
 			}
-
+			
 			for (CourseInformDTO course : courseInformDTOList) {
 	        	int courseId = course.getCourseId();
 	            int courseNumber = course.getCourseNumber();   
@@ -200,14 +208,6 @@ public class NaverAPIController {
 				
 				placeDTOList.add(place);
 			}
-
-			List<Integer> courseMakeKingUserIds = new ArrayList<Integer>();
-			List<Integer> courseReviewKingUserIds = new ArrayList<Integer>();
-			List<Integer> placeReviewKingUserIds = new ArrayList<Integer>();
-			List<String> courseMakeKingUserNicknames = new ArrayList<String>();
-			List<String> courseReviewKingUserNicknames = new ArrayList<String>();
-			List<String> placeReviewKingUserNicknames = new ArrayList<String>();
-			
 			
 			try {
 				courseMakeKingUserIds = courseService.getCourseTop3();
@@ -217,6 +217,8 @@ public class NaverAPIController {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+
+		
 			
 			String userNickname = null;
 			
@@ -247,21 +249,26 @@ public class NaverAPIController {
 				}
 			}
 			
-			
-			//임시방편
-			List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
-			List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
 
+			//임시방편
+			if(courseInformDTOList.size() >=3)	{
+				List<CourseInformDTO> courseInformDTOSubList = courseInformDTOList.subList(0, 3);
+				model.addAttribute("courseInformDTOList", courseInformDTOSubList);
+			}
+			
+			if(placeDTOList.size() >=3)	{
+				List<PlaceDTO> placeDTOSubList = placeDTOList.subList(0, 3);
+				model.addAttribute("placeDTOList", placeDTOSubList);
+			}
+					
 			model.addAttribute("courseMakeKingUserIds", courseMakeKingUserIds);
 			model.addAttribute("courseReviewKingUserIds", courseReviewKingUserIds);
 			model.addAttribute("placeReviewKingUserIds", placeReviewKingUserIds);
-			model.addAttribute("courseMakeKingUserNicknames", courseMakeKingUserNicknames);			
+			model.addAttribute("courseMakeKingUserNicknames", courseMakeKingUserNicknames);
 			model.addAttribute("courseReviewKingUserNicknames", courseReviewKingUserNicknames);
 			model.addAttribute("placeReviewKingUserNicknames", placeReviewKingUserNicknames);		
-			
-			model.addAttribute("courseInformDTOList", courseInformDTOSubList);
+		
 			model.addAttribute("courseDetailPageList", courseDetailPageList);
-			model.addAttribute("placeDTOList", placeDTOSubList);			
 			
 			return "home";
 		}	
