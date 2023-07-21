@@ -65,7 +65,7 @@
 				      
 				<img src="/example/recommend.png" alt="recommend"
 					width= "20px" style= "margin: 10px;">
-				<h3 style = "display: inline-block; /* 폼 요소를 인라인 블록으로 표시 */
+				<h3 style = "display: inline-block;
 	    				 	 white-space: nowrap;
 	    				 	 color: white;
 	    				 	 font-size: 15pt;">

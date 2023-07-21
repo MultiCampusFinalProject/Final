@@ -136,7 +136,7 @@ function insertAddress(address, latitude, longitude) {
     });
     
     markers.push(marker);
-    console.log(dis); // 결과 출력 (단위: km)
+   /*  console.log(dis); // 결과 출력 (단위: km) */
 	var contentString = [
 	    '<div class="iw_inner">', '<p>place Name: ${place.placeName}</p>',
 	   ${place.latitude}, ${place.longitude},
@@ -202,7 +202,7 @@ function getClickHandler(seq) {
         	
         	
             infoWindow.open(map, marker); // 표출
-            console.log(map, marker,infoWindow);
+         /*    console.log(map, marker,infoWindow); */
         }
 	}
 }

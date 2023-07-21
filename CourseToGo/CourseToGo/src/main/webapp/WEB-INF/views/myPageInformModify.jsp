@@ -9,7 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>개인 정보 수정</title>
-	<link rel="stylesheet" href="css/myPageInform.css">
+	<link rel="stylesheet" href="../css/myPageInform.css">
 </head>
 <body>
 	<!-- 사이드바 -->

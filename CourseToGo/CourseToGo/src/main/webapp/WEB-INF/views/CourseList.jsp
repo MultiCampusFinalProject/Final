@@ -10,9 +10,9 @@
 <html>
 <head>
     <title class="searchList" >Searching Courses</title>
- <link rel="stylesheet" type="text/css" href="http://localhost:8090/css/modal.css">
+ <link rel="stylesheet" type="text/css" href="../css/modal.css">
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-  <link rel="stylesheet" type="text/css" href="http://localhost:8090/css/banner.css">
+  <link rel="stylesheet" type="text/css" href="../css/banner.css">
 </head>
 <style>
 
@@ -209,7 +209,7 @@ window.addEventListener('scroll', function() {
     	      // 예: 위도와 경도를 얻어온 후 다른 기능에 활용
     	      var latitude = position.coords.latitude;
     	      var longitude = position.coords.longitude;
-    	      console.log(latitude, longitude);
+    	     /*  console.log(latitude, longitude); */
     	      // 여기서 필요한 로직을 추가하세요.
     	    });
     	  } else {
@@ -221,7 +221,7 @@ window.addEventListener('scroll', function() {
    <script>
   function openModal(placeId) {
     document.getElementById("myModal").style.display = "block";
-    console.log(placeId);
+/*     console.log(placeId); */
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
       if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -605,7 +605,7 @@ window.addEventListener('scroll', function() {
     </div>
    <script type="text/javascript">
 	//step01 : 페이징 버튼 클릭시 지정 url 요청갈수 있도록 이벤트 등록
-	console.log()
+
 	
 	Array.from(document.getElementsByClassName('page-link'))
 		.forEach((pagingButton) => {
@@ -613,12 +613,12 @@ window.addEventListener('scroll', function() {
 			pagingButton.addEventListener('click', function(e){
 				// 해당 객체의 기본적인 이벤트(a:href 로 이동) 를 방지
 				e.preventDefault();
-				console.log("---");
+				/* console.log("---"); */
 				//step02 : 등록 후, action : '/main' 으로 요청 시, keyword 값 유무에 따라 queryString 변경
-				console.log(e)
+				/* console.log(e) */
 				//step03 : 
 				let mainForm = document.getElementById('mainForm');
-				console.log(e.target.innerHTML);
+				/* console.log(e.target.innerHTML); */
 				// 현재 페이지 값으로 변경하여 /main 요청하도록 지정
 			/*	mainForm.pageNum = */
 			mainForm.pageNum.value = e.target.innerHTML;

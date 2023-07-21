@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="css/loginbtn.css">
+    <link rel="stylesheet" href="../css/loginbtn.css">
 </head>
 <body>
 	<div class="loginAndSignup">

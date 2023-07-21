@@ -41,7 +41,7 @@
    <c:forEach var="direction" items="${DirectionList}">
    polylinePath.push(new naver.maps.LatLng( ${direction.mapYCoordinate}, ${direction.mapXCoordinate}));
    </c:forEach>
-   console.log(polylinePath);
+   /* console.log(polylinePath); */
    
 
 

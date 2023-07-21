@@ -12,7 +12,6 @@
     <meta charset="EUC-KR">
     <title>Marker Test</title>
     <link rel="stylesheet" type="text/css" href="css/Map.css">
-
     <style>
   ul {
     list-style-type: none;
@@ -125,8 +124,8 @@ document.getElementById("area").innerHTML = areaName;
 			  document.getElementById("placeId4").value = placeId.length >=4  ? placeId[3] : null;
 			  document.getElementById("placeId5").value = placeId.length >=5  ? placeId[4] : null;
 	        event.preventDefault();
-	        console.log("전송 버튼이 눌렸습니다!");
-	        console.log(placeId);
+			console.log("전송 버튼이 눌렸습니다!");
+			/*console.log(placeId); */
 	        
 	        var courseNameInput = document.getElementById("courseName");
 	        
@@ -293,11 +292,11 @@ document.getElementById("area").innerHTML = areaName;
         selectedMarker = null;
         updateMarkers();
         updateMarkerOrder();
-        console.log("Marker removed");
+/*         console.log("Marker removed");
         console.log("markerList:", markerList);
         console.log("placeName:", placeName);
         console.log("placeId:", placeId);
-        console.log("myList:", myList);
+        console.log("myList:", myList); */
       }
     });
   
@@ -319,11 +318,11 @@ document.getElementById("area").innerHTML = areaName;
         myList.splice(clickedIndex, 1);
         updateMarkers();
         updateMarkerOrder();
-        console.log("Marker removed");
+/*         console.log("Marker removed");
         console.log("markerList:", markerList);
         console.log("placeName:", placeName);
         console.log("placeId:", placeId);
-        console.log("myList:", myList);
+        console.log("myList:", myList); */
       }
     }
   }
@@ -332,7 +331,7 @@ document.getElementById("area").innerHTML = areaName;
     if (myList === null) {
       myList = [];
     } else if (myList.length >= MAX_MARKER_COUNT) {
-      console.log(myList);
+      /* console.log(myList); */
       return; // 마커 개수가 제한에 도달한 경우 마커 생성하지 않음
     }
 
@@ -343,7 +342,7 @@ document.getElementById("area").innerHTML = areaName;
       }
     }
 
-    console.log(myList);
+/*     console.log(myList); */
     var newPlace = [name, lat, lng];
     placeName.push(name);
     myList.push(newPlace);

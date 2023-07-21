@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="css/banner.css">
+	<link rel="stylesheet" type="text/css" href="../css/banner.css">
 </head>
 <body>
 	<div class="banner">

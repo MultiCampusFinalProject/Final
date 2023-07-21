@@ -7,8 +7,8 @@
 <%@ page import="com.spring.dto.CourseReview" %>
 <!DOCTYPE html>
 <html>
-<link rel="stylesheet" href="http://localhost:8090/css/sidebar2.css">
-<link rel="stylesheet" href="http://localhost:8090/css/infowindow.css">
+<link rel="stylesheet" href="../css/sidebar2.css">
+<link rel="stylesheet" href="../css/infowindow.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
  <style>
@@ -497,7 +497,7 @@ function init(){
       var minlat= <%= minlat %>;
       var maxlong= <%= maxlong %>;
       var minlong= <%= minlong %>;
-      console.log(minlat, minlong);
+      /* console.log(minlat, minlong); */
       moveMap(minlat, minlong, maxlat, maxlong);      
          
     
