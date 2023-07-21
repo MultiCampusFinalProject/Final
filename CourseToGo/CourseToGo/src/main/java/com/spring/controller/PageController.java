@@ -74,7 +74,7 @@ public class PageController {
 	// "접근 토큰 요청" 메서드
 	@GetMapping(value = "/home")			
 	public String login(HttpSession session, Model model) {			
-		log.info("home 화면 출력");	
+//		log.info("home 화면 출력");	
 			
 		String redirectURI="";			
 				
