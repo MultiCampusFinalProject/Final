@@ -84,7 +84,6 @@
 					userNickname: userNickname
 				},
 				success: function(res) {
-					console.log(res);
 					if(res == 1) {
 						$("#userNickname-check").html('이미 사용중인 닉네임입니다.');
 						$("#userNickname-check").css({

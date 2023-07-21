@@ -114,7 +114,7 @@ public class NaverAPIController {
 			  res.append(inputLine);
 			}
 			log.info("접근 토근 응답 json 확인 :" + res); // <- 응답받은 접근 '토큰 내용' 확인
-			log.info("여기까지 접근 토큰 요청 과정");
+//			log.info("여기까지 접근 토큰 요청 과정");
 		            
 		    br.close();
 			 
