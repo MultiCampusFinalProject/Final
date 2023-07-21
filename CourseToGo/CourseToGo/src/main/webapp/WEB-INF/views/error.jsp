@@ -26,9 +26,8 @@
             <%@ include file="sidebar.jsp" %>
         </div>
         <div id="error" style="  position: relative;left:220px">
-    <h1>지도 이용은 로그인 후에 사용가능합니다.</h1>
-    <br>
- <h1>홈 버튼눌러 메인 페이지로 이동해주세요.</h1>
+		
+		<img src="/images/error.png">
    <%--  <p>An unexpected error occurred.</p>
     <p>Status Code: ${status}</p>
     <p>Error Message: ${message}</p>
