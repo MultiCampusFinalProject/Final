@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="http://localhost:8090/css/sidebar.css">
+	<link rel="stylesheet" href="../css/sidebar.css">
 </head>
 <body>
 	<form action="/home" method="GET" name="sidebarForm" id="sidebarForm">
@@ -19,7 +19,7 @@
 		    	</c:if>
 		    	
 		    	<c:if test="${not empty sessionScope.user.userId}">
-		    		<li><input type="button" class="create-course" value="코스 제작" onclick="location.href='/naverMap'" id="createbtn"></li>
+		    		<li><input type="button" class="create-course" value="코스 제작" onclick="location.href='/courseMake'" id="createbtn"></li>
 		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'" id="mypagebtn"></li>
 		    		<li class="profile"><img src="${sessionScope.user.userPhoto}" alt="프로필 사진"></li>
 			        <li class="name">${sessionScope.user.userNickname} 님</li>

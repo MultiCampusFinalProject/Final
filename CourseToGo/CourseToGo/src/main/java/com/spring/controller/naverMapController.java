@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class naverMapController {
 	
-	@RequestMapping(value = "/naverMap")
+	@RequestMapping(value = "/courseMake")
 	public String naverMap() {
 		
 		return "naverMap";
