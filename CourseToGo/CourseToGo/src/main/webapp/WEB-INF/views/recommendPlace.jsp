@@ -130,13 +130,9 @@
 								   margin-bottom: 10px;
 								   font-weight: normal;
 								   color: black;">${place.address}</h4>
-
-					</div>
-					
-				</c:forEach>
-			
-   		</div>		
-	
+					</div>					
+				</c:forEach>			
+   		</div>			
 	</div>
 </body>
 </html>
