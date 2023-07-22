@@ -48,8 +48,9 @@
 window.onload = function() {
 var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
+document.getElementById('areaName');
 
-var areaName = urlParams.get('areaName'); // "홍대"
+
 if (areaName === null) {
     // areaName이 null일 때 처리
     areaName = ""; // 원하는 기본값을 설정할 수 있습니다.
@@ -168,7 +169,7 @@ function openLocationModal() {
 	
 	
 function displayResults(data) {
-	
+
 const placeList = document.getElementById("placeList");
 placeList.innerHTML = ""; // 이전 검색 결과를 지웁니다.
 
@@ -350,7 +351,14 @@ if (data && data.length > 0) {
 	
 	</div>
 
-	<div class="searchResults" id ="placeList"></div>
+<div class="searchResults">
+   
+    <div>
+        <ul id="placeList" style="display: flex; flex-direction: column; align-items: center;">
+            <!-- 여기에 장소 목록이 동적으로 생성될 것입니다. -->
+        </ul>
+    </div>
+</div>
 
 <script>
 function removeAllChildElements() {
