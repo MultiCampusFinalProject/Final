@@ -11,6 +11,11 @@
 	<title>개인 정보 수정</title>
 	<link rel="stylesheet" href="css/myPageInform.css">
 	<link rel="stylesheet" href="css/sidebar.css">
+	<style>
+	#on {
+	background-color: #daeefe;
+}
+	</style>
 </head>
 <body>
 	<!-- 사이드바 -->
@@ -20,14 +25,9 @@
 		    <ul>
 		    	<li><input type="button" class="home" value="홈" onclick="location.href='/home'"></li>
 	       		<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'"></li>
-		    	<c:if test="${empty sessionScope.user.userId}">
-		    		<li><input type="button" class="create-course" value="코스 제작" onclick="notLogin()"></li>
-		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'" ></li>
-		    	</c:if>
-		    	
+	    		<li><input type="button" class="create-course" value="코스 제작"  onclick="location.href='/naverMap'"></li>
+       			<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
 		    	<c:if test="${not empty sessionScope.user.userId}">
-		    		<li><input type="button" class="create-course" value="코스 제작"  onclick="location.href='/naverMap'"></li>
-	       			<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
 		    		<li class="profile"><img src="${sessionScope.user.userPhoto}" alt="프로필 사진"></li>
 			        <li class="name">${sessionScope.user.userNickname} 님</li>
 			        <li><input type="button" class="logout-btn" value="로그아웃" onclick="location.href='/logout'"></li>
@@ -215,17 +215,14 @@
 				"/images/userProfile16.png"
 			];
 			
-			// 팝업 창 화면 중앙에 출력
 			var popupWidth = 500;
 			var popupHeight = 500;
 			var screenWidth = window.screen.width;
 			var screenHeight = window.screen.height;
+			var top = (screenHeight - popupHeight) / 1.5 - (screenHeight * 0.3);
 			var left = (screenWidth - popupWidth) / 2;
-			var top = (screenHeight - popupHeight) / 2;
-			
-			top = (screenHeight - popupHeight) / 2 - (screenHeight * 0.3); // 10%의 상단 여백을 추가
-			
-			var popup = window.open("", "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + left + ",top=" + top);
+	
+			var popup = window.open("", "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",top=" + top + ",left=" + left);
 			var html = "<html><body><div align='center'><h1>프로필 사진 선택</h1>";
 			
 			// 팝업창에 이미지 반목문으로 1~16출력

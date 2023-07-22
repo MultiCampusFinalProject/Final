@@ -62,20 +62,21 @@ public class SearchController {
 
     
     @GetMapping("/jSearchAC")
-    public String searchPlacesByAreaOrCategory(@RequestParam("areaName") String areaName, @RequestParam("categoryName") String categoryName, Model model3) {
+    @ResponseBody
+    public List<PlaceDTO> searchPlacesByAreaOrCategory(@RequestParam("areaName") String areaName, @RequestParam("categoryName") String categoryName, Model model3) {
 //    	System.out.println("jSearchAC");
 //
-//    	System.out.println(areaName);
-//    	System.out.println(categoryName);
+    	System.out.println(areaName);
+    	System.out.println(categoryName);
 //    	
     	List<PlaceDTO> searchResults4 = placeService.searchPlacesByAreaOrCategory(areaName, categoryName);
-    	model3.addAttribute("placesByAreaOrCategory", searchResults4);
-    	System.out.println(searchResults4);
+    
+    
     	if (searchResults4.isEmpty()) {
     		System.out.println("검색결과 없음.");
     	}
     	
-    	return "naverMap";
+    	return searchResults4;
     }
       
 

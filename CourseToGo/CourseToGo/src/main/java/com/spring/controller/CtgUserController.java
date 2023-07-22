@@ -25,6 +25,7 @@ public class CtgUserController {
 	public boolean insertCtgUser(CtgUserDTO user) {
 		user.setUserPhoto("/images/userProfile1.png");
 		user.setUserAdmin(1);
+		user.setUserBirthYear(0000);
 		boolean result = false;
 		
 		try {
