@@ -223,7 +223,7 @@
 			var left = (screenWidth - popupWidth) / 2;
 	
 			var popup = window.open("", "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",top=" + top + ",left=" + left);
-			var html = "<html><body><div align='center'><h1>프로필 사진 선택</h1>";
+			var html = "<html><body><div align='center'><h1>프로필 사진 선택</h1></br><h3>프로필 수정 완료 버튼을 클릭해야 최종 변경됩니다!</h3>";
 			
 			// 팝업창에 이미지 반목문으로 1~16출력
 			for (var i = 0; i < imageUrls.length; i++) {
