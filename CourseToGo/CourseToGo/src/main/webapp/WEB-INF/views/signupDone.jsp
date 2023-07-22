@@ -7,6 +7,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/myPageInform.css">
 </head>
+<style>
+	.signupDone{
+		position: fixed;
+		left: 700px;
+	}
+</style>
 <body>
 	<%@ include file="sidebar.jsp" %>
 	<div class="signupDone" style="margin-left: 100px;">

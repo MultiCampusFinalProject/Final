@@ -34,34 +34,6 @@
 		function notLogin() {
 		  alert("로그인을 해주세요.");
 		}
-		
-		// 버튼 클릭 시 해당 버튼 focus 적용
- 		var currentUrl = window.location.href;;
-		
-		var homebtn = '/home';
-		var coursebtn = '/courseListWithPagination';
-		var createbtn = '/naverMap';
-		var mypagebtn = '/userContents';
-		var informbtn = '/myPageInformModify';
-		
-		function setFocusOnButton(buttonId) {
-	        var button = document.getElementById(buttonId);
-	        button.focus();
-	    }
-		
-		if(currentUrl.includes(homebtn)) {
-			setFocusOnButton('homebtn');
-		} else if(currentUrl.includes(coursebtn)) {
-			setFocusOnButton('coursebtn');
-		} else if(currentUrl.includes(createbtn)) {
-			setFocusOnButton('createbtn');
-		} else if(currentUrl.includes(mypagebtn)) {
-			setFocusOnButton('mypagebtn');
-		} else if(currentUrl.includes(informbtn)) {
-			setFocusOnButton('informbtn');
-		}
-		
-
 	</script>
 </body>
 </html>
