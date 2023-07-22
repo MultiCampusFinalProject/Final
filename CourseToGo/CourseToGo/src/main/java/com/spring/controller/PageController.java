@@ -70,6 +70,12 @@ public class PageController {
 	@Value("${naver.api.login.apiURL}")			
 	private String apiURL;	
 	
+	@GetMapping(value = "/")
+	public String home() {
+		return "redirect:/home";
+	}
+	
+	
 	// /home으로 접속시 네이버 로그인 화면으로 이동하는  "apiURL"주소를 세션에 저장하여 home.jsp로 이동.
 	// "접근 토큰 요청" 메서드
 	@GetMapping(value = "/home")			
