@@ -64,6 +64,10 @@ ul li input:focus {
     margin:auto;
 }
 
+#on {
+	background-color: #daeefe;
+}
+
 .home:hover, .course:hover, .create-course:hover, .mypage:hover,
 .logout-btn:hover, .edit-profile-btn:hover {
 	cursor: pointer;

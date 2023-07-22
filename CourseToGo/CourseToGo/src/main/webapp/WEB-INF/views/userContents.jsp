@@ -63,13 +63,32 @@
 		}
 		
 	</style>	
-	
+	<link rel="stylesheet" href="css/sidebar.css">	
 </head>
 <body>
 	<!-- 사이드바 -->
-	<div class = "sidebar">
-		<%@ include file = "sidebar.jsp" %>
-	</div>
+	<form action="/userContents" method="GET" name="sidebarForm" id="sidebarForm">
+		<div class="sidebar">
+		    <div class="logo">Course To Go</div>
+		    <ul>
+		    	<li><input type="button" class="home" value="홈" onclick="location.href='/home'"></li>
+	       		<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'"></li>
+		    	<c:if test="${empty sessionScope.user.userId}">
+		    		<li><input type="button" class="create-course" value="코스 제작" onclick="notLogin()"></li>
+		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'" ></li>
+		    	</c:if>
+		    	
+		    	<c:if test="${not empty sessionScope.user.userId}">
+		    		<li><input type="button" class="create-course" value="코스 제작" onclick="location.href='/naverMap'"></li>
+	       			<li><input type="button" class="mypage" value="마이페이지" id="on" onclick="location.href='/userContents'"></li>
+		    		<li class="profile"><img src="${sessionScope.user.userPhoto}" alt="프로필 사진"></li>
+			        <li class="name">${sessionScope.user.userNickname} 님</li>
+			        <li><input type="button" class="logout-btn" value="로그아웃" onclick="location.href='/logout'"></li>
+			        <li><input type="button" class="edit-profile-btn" value="개인정보 수정" onclick="location.href='/myPageInformModify'" ></li>
+		    	</c:if>
+		    </ul>
+		</div>
+	</form>
 	<!-- 배너 -->	
 	<div class = "banner" style = "margin-left: 200px;">
 		<img src="/images/advertise.png">
