@@ -4,6 +4,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %> 
 <%@ page import="javax.servlet.http.HttpServletRequest" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,14 +44,84 @@
 </style>
 </head>
 <script>
+
 window.onload = function() {
 var queryString = window.location.search;
 var urlParams = new URLSearchParams(queryString);
 
 var areaName = urlParams.get('areaName'); // "홍대"
-document.getElementById("area").innerHTML = areaName;
+if (areaName === null) {
+    // areaName이 null일 때 처리
+    areaName = ""; // 원하는 기본값을 설정할 수 있습니다.
+  }
+ document.getElementById("area").innerHTML = areaName;
 
 };
+function searchPlaces() {
+	  const areaName = document.getElementById("areaName").value;
+	  const categoryName = document.getElementById("categoryName").value;
+		console.log(areaName);
+		console.log(categoryName);
+	  // areaName이 비어있을 경우 검색 요청을 전송하지 않음
+	  if (areaName.trim() === "") {
+	    alert("지역명을 입력해주세요.");
+	    return;
+	  }
+		
+	  // AJAX 요청을 생성합니다.
+	  const xhr = new XMLHttpRequest();
+	  xhr.open("GET", "/jSearchAC?areaName="+areaName+"&categoryName="+categoryName, true);
+
+
+	  // 서버 응답 처리
+	  xhr.onreadystatechange = function () {
+	    if (xhr.readyState === XMLHttpRequest.DONE) {
+	      if (xhr.status === 200) {
+	        // 서버로부터 받은 데이터를 처리하는 로직을 작성합니다.
+	        const response = JSON.parse(xhr.responseText);
+	        console.log(response);
+	        displayResults(response);
+	      } else {
+	        console.error("Error occurred while fetching data.");
+	      }
+	    }
+	  };
+
+	  // AJAX 요청을 보냅니다.
+	  xhr.send();
+	}
+function displayResults(data) {
+	
+const placeList = document.getElementById("placeList");
+placeList.innerHTML = ""; // 이전 검색 결과를 지웁니다.
+
+if (data && data.length > 0) {
+  // 받아온 데이터를 이용하여 결과를 생성하고 표시합니다.
+  for (const place of data) {
+    const placeDiv = document.createElement("div");
+    placeDiv.style.display = "flex";
+    placeDiv.style.justifyContent = "center";
+    placeDiv.style.alignItems = "center";
+    placeDiv.style.width = "200px";
+    placeDiv.style.height = "60px";
+    placeDiv.classList.add("box", "in");
+
+    const placeContentDiv = document.createElement("div");
+    placeContentDiv.onclick = function() {
+      placeClicked(place.placeId, place.latitude, place.longitude, place.placeName);
+    };
+    placeContentDiv.textContent = place.placeName;
+    
+    placeDiv.appendChild(placeContentDiv);
+   placeList.appendChild(placeDiv);
+  }
+} else {
+  // 검색 결과가 없는 경우 메시지를 표시합니다.
+  const noResultsDiv = document.createElement("div");
+  noResultsDiv.textContent = "검색 결과가 없습니다.";
+  placeList.appendChild(noResultsDiv);
+}
+}
 </script>
 <body>
 
@@ -60,14 +132,9 @@ document.getElementById("area").innerHTML = areaName;
 		    <ul>
 		    	<li><input type="button" class="home" value="홈" onclick="location.href='/home'"></li>
 	       		<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'"></li>
-		    	<c:if test="${empty sessionScope.user.userId}">
-		    		<li><input type="button" class="create-course" value="코스 제작" onclick="notLogin()"></li>
-		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'" ></li>
-		    	</c:if>
-		    	
+	    		<li><input type="button" class="create-course" value="코스 제작"  id="on" onclick="location.href='/naverMap'"></li>
+       			<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
 		    	<c:if test="${not empty sessionScope.user.userId}">
-		    		<li><input type="button" class="create-course" value="코스 제작" id="on" onclick="location.href='/naverMap'"></li>
-	       			<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
 		    		<li class="profile"><img src="${sessionScope.user.userPhoto}" alt="프로필 사진"></li>
 			        <li class="name">${sessionScope.user.userNickname} 님</li>
 			        <li><input type="button" class="logout-btn" value="로그아웃" onclick="location.href='/logout'"></li>
@@ -94,10 +161,11 @@ document.getElementById("area").innerHTML = areaName;
 
 <div class="middle">
   <div class="left">
-    <form id="searchForm" method="get" action="/jSearchAC" accept-charset="utf-8">
+    <form id="searchForm" method="get" accept-charset="utf-8">
       <input class="left input" type="text" id="areaName" name="areaName" placeholder="지역명 ex)홍대">
       <input class="left input" type="text" id="categoryName" name="categoryName" placeholder="업종명 ex)음식점">
-      <button class="left button" type="submit">검색</button>
+     <button class="left button" type="button" onclick="searchPlaces()">검색</button>
+
     </form>
   </div>
   
@@ -205,7 +273,7 @@ document.getElementById("area").innerHTML = areaName;
 	
 	</div>
 
-
+	<div class="searchResults" id ="placeList"></div>
 
 <script>
 function removeAllChildElements() {
@@ -219,75 +287,30 @@ function removeAllChildElements() {
     
 
 }
-	document.getElementById("areaName").addEventListener("mouseenter", function(){
-		
-		const locations = [
-			  "홍대", "강남역", "이태원", "명동", "가로수길", "신림", "서래마을", "연남동", "신촌", "압구정",
-			  "역삼", "잠실", "인사동", "광화문", "청담동", "성수동", "신당", "대학로", "신사", "종로3가",
-			  "이촌", "서초", "광장시장", "신촌로터리", "잠실나루", "신논현", "강남구청", "압구정로데오",
-			  "역삼역", "삼성동", "건대입구", "선릉", "잠실새내", "잠실역", "한남동", "고속터미널", "여의도",
-			  "대치동", "천호", "성수", "신사동", "동대문", "사당", "고려대", "동대문역사문화공원",
-			  "역삼동", "상수", "대한민국 역사박물관", "명동역", "이태원로데오", "고덕", "을지로", "명동거리",
-			  "신당동", "잠실새내역", "선릉역", "서울대입구", "강동", "노량진", "사당역", "강남역점",
-			  "종로5가", "대명동", "삼성역", "홍대입구", "경복궁역", "신대방", "강동구청", "이태원역",
-			  "교대", "잠실종합운동장", "남산", "서울역", "사당로", "잠실경기장", "역삼동역", "명동시장",
-			  "서울시청", "서울중앙시장"
-			];
-		
-		const locationContainer = document.getElementById("locationContainer");
-		
-		for (let i = 0; i < locations.length; i++) {
-			  const locationDiv = document.createElement("span");
-			  locationDiv.className = "location";
-			  locationDiv.textContent = locations[i]+", ";
-			  locationContainer.appendChild(locationDiv);
-			}
-		 locationContainer.dataset.populated = true;
-	});
 
-	   document.getElementById("areaName").addEventListener("mouseleave", function() {
-           // 마우스가 영역 밖으로 이동하여 hover가 아닐 때의 동작
-           removeAllChildElements();
-       });
 
-    document.getElementById("searchForm").addEventListener("submit", function(event) {
+	 
+//    document.getElementById("searchForm").addEventListener("submit", function(event) {
         // 추가 동작을 수행합니다.
-        event.preventDefault(); 
-        console.log("검색 버튼이 눌렸습니다!");
-        var elements = document.getElementsByClassName("well well-sm");
-        while (elements.length > 0) {
-            elements[0].parentNode.removeChild(elements[0]);
-          }
-        this.submit();
+  //      event.preventDefault(); 
+    
+    //    var elements = document.getElementsByClassName("well well-sm");
+      //  while (elements.length > 0) {
+        //    elements[0].parentNode.removeChild(elements[0]);
+         // }
+        //this.submit();
       
         // 폼을 서버로 제출합니다.
       
 
         
        // 기본 동작을 막기 위해 이벤트의 기본 동작을 취소합니다.
-    });
+   // });
+       
 </script>
 	<div  id="locationContainer"></div>
 
-	<% 
-	  List<PlaceDTO> places = (List<PlaceDTO>) request.getAttribute("placesByAreaOrCategory");
-	  if (places != null && !places.isEmpty()) { 
-	%>
-	<div class="searchResults">
-	  <h2 class= "resultsarea" id="area"></h2>
-	  <div>
-	    <ul style="display: flex; flex-direction: column; align-items: center;">
-	      <% for (PlaceDTO place : places) { %>
-	        <div style="display: flex; justify-content: center; align-items: center; width: 200px; height: 60px;" class="box in">
-	          <div onclick="placeClicked('<%= place.getPlaceId()%>',' <%= place.getLatitude() %>', '<%= place.getLongitude() %>','<%=place.getPlaceName()%>', );">
-	            <li><%= place.getPlaceName() %></li>
-	          </div>
-	        </div>
-	      <% } %>
-	    </ul>
-	  </div>
-	</div>
-	<% } %>
+
 	
 	<div class="markerInputs" onclick="deleteMarker(event)">
 	  <ul id="markerInputs" class="horizontal-list"></ul>
