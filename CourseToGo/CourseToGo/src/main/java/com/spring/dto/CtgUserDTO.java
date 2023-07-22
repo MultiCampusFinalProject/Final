@@ -50,7 +50,7 @@ public class CtgUserDTO {
     	this.userName = userName;
     	this.userNickname = userNickname;
 		this.userEmail = userEmail;
-		this.userBirthYear = userBirthYear;
+//		this.userBirthYear = userBirthYear;
     }
     
     @Builder // 회원가입용 builder
@@ -60,7 +60,7 @@ public class CtgUserDTO {
     	this.userName = userName;
     	this.userNickname = userNickname;
 		this.userEmail = userEmail;
-		this.userBirthYear = userBirthYear;
+//		this.userBirthYear = userBirthYear;
 		this.userIntroduce = userIntroduce;
     }
     
