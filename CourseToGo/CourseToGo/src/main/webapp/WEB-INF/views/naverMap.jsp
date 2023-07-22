@@ -57,39 +57,116 @@ if (areaName === null) {
  document.getElementById("area").innerHTML = areaName;
 
 };
-function searchPlaces() {
-	  const areaName = document.getElementById("areaName").value;
-	  const categoryName = document.getElementById("categoryName").value;
-		console.log(areaName);
-		console.log(categoryName);
-	  // areaName이 비어있을 경우 검색 요청을 전송하지 않음
-	  if (areaName.trim() === "") {
-	    alert("지역명을 입력해주세요.");
-	    return;
-	  }
-		
-	  // AJAX 요청을 생성합니다.
-	  const xhr = new XMLHttpRequest();
-	  xhr.open("GET", "/jSearchAC?areaName="+areaName+"&categoryName="+categoryName, true);
 
 
-	  // 서버 응답 처리
-	  xhr.onreadystatechange = function () {
-	    if (xhr.readyState === XMLHttpRequest.DONE) {
-	      if (xhr.status === 200) {
-	        // 서버로부터 받은 데이터를 처리하는 로직을 작성합니다.
-	        const response = JSON.parse(xhr.responseText);
-	        console.log(response);
-	        displayResults(response);
-	      } else {
-	        console.error("Error occurred while fetching data.");
+function openModal(locations, categories, isLocationModal) {
+	  var popupWidth = 500;
+	  var popupHeight = 500;
+	  var screenWidth = window.screen.width;
+	  var screenHeight = window.screen.height;
+	  var top = (screenHeight - popupHeight) / 1.5 - (screenHeight * 0.3);
+	  var left = (screenWidth - popupWidth) / 2;
+
+	  var popup = window.open("", "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",top=" + top + ",left=" + left);
+	  var html = "<html><body><div align='center'><h1>";
+	  html += isLocationModal ? "지역 선택" : "카테고리 선택";
+	  html += "</h1>";
+	  html += "<table style='border-collapse: collapse;'><tr>";
+
+	  if (isLocationModal) {
+	    for (var i = 0; i < locations.length; i++) {
+	      var location = locations[i];
+	      html += "<td style='border: 1px solid #000; padding: 5px;'><div onclick='selectLocation(\"" + location + "\")' style='cursor: pointer;'>" + location + "</div></td>";
+	      if ((i + 1) % 4 === 0) {
+	        html += "</tr><tr>";
 	      }
 	    }
-	  };
+	  } else {
+	    for (var i = 0; i < categories.length; i++) {
+	      var category = categories[i];
+	      html += "<td style='border: 1px solid #000; padding: 5px;'><div onclick='selectCategory(\"" + category + "\")' style='cursor: pointer; '>" + category + "</div></td>";
+	      if ((i + 1) % 3 === 0) {
+	        html += "</tr><tr>";
+	      }
+	    }
+	  }
 
-	  // AJAX 요청을 보냅니다.
-	  xhr.send();
+	  html += "</tr></table></div></body></html>";
+	  popup.document.write(html);
+
+	  popup.selectLocation = function(location) {
+	    document.getElementById("areaName").value = location;
+	    popup.close();
+	  }
+
+	  popup.selectCategory = function(category) {
+	    document.getElementById("categoryName").value = category;
+	    popup.close();
+	  }
 	}
+	
+function openLocationModal() {
+	  const locations = [
+		  "홍대", "강남역", "이태원", "명동", "가로수길", "신림", "서래마을", "연남동", "신촌", "압구정",
+		  "역삼", "잠실", "인사동", "광화문", "청담동", "성수동", "신당", "대학로", "신사", "종로3가",
+		  "이촌", "서초", "광장시장", "신촌로터리", "잠실나루", "신논현", "강남구청", "압구정로데오",
+		  "역삼역", "삼성동", "건대입구", "선릉", "잠실새내", "잠실역", "한남동", "고속터미널", "여의도",
+		  "대치동", "천호", "성수", "신사동", "동대문", "사당", "고려대", "동대문역사문화공원",
+		  "역삼동", "상수", "대한민국 역사박물관", "명동역", "이태원로데오", "고덕", "을지로", "명동거리",
+		  "신당동", "잠실새내역", "선릉역", "서울대입구", "강동", "노량진", "사당역", "강남역점",
+		  "종로5가", "대명동", "삼성역", "홍대입구", "경복궁역", "신대방", "강동구청", "이태원역",
+		  "교대", "잠실종합운동장", "남산", "서울역", "사당로", "잠실경기장", "역삼동역", "명동시장",
+		  "서울시청", "서울중앙시장"
+	  ];
+	  openModal(locations, null, true);
+	}
+
+	// 업종명 모달 열기
+	function openCategoryModal() {
+	  const categories = [
+		  "카페", "영화관", "음식점", "공연장", "공원", "등산로"
+	  ];
+	  openModal(null, categories, false);
+	}
+
+
+  function searchPlaces() {
+    // 검색 기능을 구현하는 함수
+    const areaName = document.getElementById("areaName").value;
+    const categoryName = document.getElementById("categoryName").value;
+    console.log(areaName);
+    console.log(categoryName);
+    // areaName이 비어있을 경우 검색 요청을 전송하지 않음
+    if (areaName.trim() === "") {
+      alert("지역명을 입력해주세요.");
+      return;
+    }
+
+    // AJAX 요청을 생성합니다.
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/jSearchAC?areaName=" + areaName + "&categoryName=" + categoryName, true);
+
+    // 서버 응답 처리
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          // 서버로부터 받은 데이터를 처리하는 로직을 작성합니다.
+          const response = JSON.parse(xhr.responseText);
+          console.log(response);
+          displayResults(response);
+        } else {
+          console.error("Error occurred while fetching data.");
+        }
+      }
+    };
+
+    // AJAX 요청을 보냅니다.
+    xhr.send();
+  }
+	
+	
+	
+	
 function displayResults(data) {
 	
 const placeList = document.getElementById("placeList");
@@ -162,12 +239,12 @@ if (data && data.length > 0) {
 <div class="middle">
   <div class="left">
     <form id="searchForm" method="get" accept-charset="utf-8">
-      <input class="left input" type="text" id="areaName" name="areaName" placeholder="지역명 ex)홍대">
-      <input class="left input" type="text" id="categoryName" name="categoryName" placeholder="업종명 ex)음식점">
-     <button class="left button" type="button" onclick="searchPlaces()">검색</button>
-
+      <input class="left input" type="text" id="areaName" name="areaName" placeholder="지역명 ex)홍대" onclick="openLocationModal()">
+      <input class="left input" type="text" id="categoryName" name="categoryName" placeholder="업종명 ex)음식점" onclick="openCategoryModal()">
+      <button class="left button" type="button" onclick="searchPlaces()">검색</button>
     </form>
   </div>
+</div>
   
    <div class="sidebar2" >
     <form id="saveMark" action="/saveMarker" method="POST" accept-charset="UTF-8">

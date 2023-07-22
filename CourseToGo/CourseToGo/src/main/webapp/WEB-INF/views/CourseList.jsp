@@ -152,7 +152,7 @@ window.addEventListener('scroll', function() {
 	<!-- 사이드바 -->
 	<form action="/courseListWithPagination" method="GET" name="sidebarForm" id="sidebarForm">
 		<div class="sidebar">
-		    <div class="logo">Course To Go</div>
+		    <div class="logo"><a href="/"><img src="/images/logo.png"></a></div>
 		    <ul>
 		    	<li><input type="button" class="home" value="홈" onclick="location.href='/home'"></li>
 	       		<li><input type="button" class="course" value="코스" id="on" onclick="location.href='/courseListWithPagination'"></li>
