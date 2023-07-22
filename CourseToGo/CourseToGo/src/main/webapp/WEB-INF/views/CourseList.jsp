@@ -36,10 +36,7 @@ body{
 }
   .searchList{
  position: relative;
-
-  
 font-weight: bold;
-
    top: 0;
     left: 220px;
     right: 600px;
@@ -307,7 +304,8 @@ window.addEventListener('scroll', function() {
 
     	<form id="mainForm" class="row justify-content-center g-3" action="/courseListWithPagination" method="GET">
 			<div class="col-auto" style="display: flex; ">
-					<input	 style="margin-left:500px; width: 400px; height: 40px;"
+					<input  type="submit" class="btn btn-primary  " style="margin-left: 400px;background-color: navy;" value="검색" />
+					<input	 style="margin-left:10px; width: 400px; height: 40px;"
 					
 						type="text" 
 						class="form-control" 
@@ -317,7 +315,6 @@ window.addEventListener('scroll', function() {
 						value="${pageInfo.pageRequest.keyword}"><div id="suggestions"></div>
 					
 			</div>
-					<input  type="submit" class="btn btn-primary  " style="margin-left: 10px;background-color: navy;" value="검색" />
 			<div class="col-auto">
 				<input type="hidden" name="pageNum" value="${pageInfo.pageRequest.pageNum}" />
 				<input type="hidden" name="amount" value="${pageInfo.pageRequest.amount}" />
