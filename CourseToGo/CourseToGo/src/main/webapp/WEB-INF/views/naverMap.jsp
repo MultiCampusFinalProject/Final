@@ -12,13 +12,33 @@
     <meta charset="EUC-KR">
     <title>Marker Test</title>
     <link rel="stylesheet" type="text/css" href="css/Map.css">
+
     <link rel="stylesheet" href="css/sidebar.css">
+
     <style>
   ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
   }
+  #locationContainer {
+ 	position: absolute;
+	z-index: 5;
+	text-align: center;
+	margin-left: 230px;
+	margin-top: 60px;
+	font-weight: bold;
+
+	width: 245px;
+	
+	color:#00008b;
+	background-color: #6495ed;
+	background-color: rgba( 135, 206, 235, 0.7);
+	border-radius: 10px;
+	font-weight: bold;
+  /* Add any other styling you want for the location elements */
+  transform: translateZ(200px); /* Adjust the value to control the forward positioning */
+}
 </style>
 </head>
 <script>
@@ -149,8 +169,8 @@ document.getElementById("area").innerHTML = areaName;
 			  document.getElementById("placeId4").value = placeId.length >=4  ? placeId[3] : null;
 			  document.getElementById("placeId5").value = placeId.length >=5  ? placeId[4] : null;
 	        event.preventDefault();
-			console.log("전송 버튼이 눌렸습니다!");
-			/*console.log(placeId); */
+	        console.log("전송 버튼이 눌렸습니다!");
+	        console.log(placeId);
 	        
 	        var courseNameInput = document.getElementById("courseName");
 	        
@@ -188,6 +208,48 @@ document.getElementById("area").innerHTML = areaName;
 
 
 <script>
+function removeAllChildElements() {
+    const locationContainer = document.getElementById("locationContainer");
+    while (locationContainer.firstChild) {
+        locationContainer.removeChild(locationContainer.firstChild);
+    }
+
+    // "populated" 속성 초기화
+    locationContainer.dataset.populated = false;
+    
+
+}
+	document.getElementById("areaName").addEventListener("mouseenter", function(){
+		
+		const locations = [
+			  "홍대", "강남역", "이태원", "명동", "가로수길", "신림", "서래마을", "연남동", "신촌", "압구정",
+			  "역삼", "잠실", "인사동", "광화문", "청담동", "성수동", "신당", "대학로", "신사", "종로3가",
+			  "이촌", "서초", "광장시장", "신촌로터리", "잠실나루", "신논현", "강남구청", "압구정로데오",
+			  "역삼역", "삼성동", "건대입구", "선릉", "잠실새내", "잠실역", "한남동", "고속터미널", "여의도",
+			  "대치동", "천호", "성수", "신사동", "동대문", "사당", "고려대", "동대문역사문화공원",
+			  "역삼동", "상수", "대한민국 역사박물관", "명동역", "이태원로데오", "고덕", "을지로", "명동거리",
+			  "신당동", "잠실새내역", "선릉역", "서울대입구", "강동", "노량진", "사당역", "강남역점",
+			  "종로5가", "대명동", "삼성역", "홍대입구", "경복궁역", "신대방", "강동구청", "이태원역",
+			  "교대", "잠실종합운동장", "남산", "서울역", "사당로", "잠실경기장", "역삼동역", "명동시장",
+			  "서울시청", "서울중앙시장"
+			];
+		
+		const locationContainer = document.getElementById("locationContainer");
+		
+		for (let i = 0; i < locations.length; i++) {
+			  const locationDiv = document.createElement("span");
+			  locationDiv.className = "location";
+			  locationDiv.textContent = locations[i]+", ";
+			  locationContainer.appendChild(locationDiv);
+			}
+		 locationContainer.dataset.populated = true;
+	});
+
+	   document.getElementById("areaName").addEventListener("mouseleave", function() {
+           // 마우스가 영역 밖으로 이동하여 hover가 아닐 때의 동작
+           removeAllChildElements();
+       });
+
     document.getElementById("searchForm").addEventListener("submit", function(event) {
         // 추가 동작을 수행합니다.
         event.preventDefault(); 
@@ -205,6 +267,8 @@ document.getElementById("area").innerHTML = areaName;
        // 기본 동작을 막기 위해 이벤트의 기본 동작을 취소합니다.
     });
 </script>
+	<div  id="locationContainer"></div>
+
 	<% 
 	  List<PlaceDTO> places = (List<PlaceDTO>) request.getAttribute("placesByAreaOrCategory");
 	  if (places != null && !places.isEmpty()) { 
@@ -317,11 +381,11 @@ document.getElementById("area").innerHTML = areaName;
         selectedMarker = null;
         updateMarkers();
         updateMarkerOrder();
-/*         console.log("Marker removed");
+        console.log("Marker removed");
         console.log("markerList:", markerList);
         console.log("placeName:", placeName);
         console.log("placeId:", placeId);
-        console.log("myList:", myList); */
+        console.log("myList:", myList);
       }
     });
   
@@ -343,11 +407,11 @@ document.getElementById("area").innerHTML = areaName;
         myList.splice(clickedIndex, 1);
         updateMarkers();
         updateMarkerOrder();
-/*         console.log("Marker removed");
+        console.log("Marker removed");
         console.log("markerList:", markerList);
         console.log("placeName:", placeName);
         console.log("placeId:", placeId);
-        console.log("myList:", myList); */
+        console.log("myList:", myList);
       }
     }
   }
@@ -356,7 +420,7 @@ document.getElementById("area").innerHTML = areaName;
     if (myList === null) {
       myList = [];
     } else if (myList.length >= MAX_MARKER_COUNT) {
-      /* console.log(myList); */
+      console.log(myList);
       return; // 마커 개수가 제한에 도달한 경우 마커 생성하지 않음
     }
 
@@ -367,7 +431,7 @@ document.getElementById("area").innerHTML = areaName;
       }
     }
 
-/*     console.log(myList); */
+    console.log(myList);
     var newPlace = [name, lat, lng];
     placeName.push(name);
     myList.push(newPlace);

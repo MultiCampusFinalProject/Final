@@ -114,13 +114,13 @@ public class NaverAPIController {
 			  res.append(inputLine);
 			}
 			log.info("접근 토근 응답 json 확인 :" + res); // <- 응답받은 접근 '토큰 내용' 확인
-//			log.info("여기까지 접근 토큰 요청 과정");
+			log.info("여기까지 접근 토큰 요청 과정");
 		            
 		    br.close();
 			 
 			if(responseCode==200) { // 정상 호출시 응답받은 토큰을 JSONObject로 변환  
 		          json = new JSONObject(res.toString());
-		          System.out.println("json : " + json);
+//		          System.out.println("json : " + json);
 		    }	    			            
 		} catch (Exception e) {
 		    System.out.println(e);
