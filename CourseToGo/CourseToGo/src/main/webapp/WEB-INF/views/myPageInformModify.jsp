@@ -215,17 +215,14 @@
 				"/images/userProfile16.png"
 			];
 			
-			// 팝업 창 화면 중앙에 출력
 			var popupWidth = 500;
 			var popupHeight = 500;
 			var screenWidth = window.screen.width;
 			var screenHeight = window.screen.height;
+			var top = (screenHeight - popupHeight) / 1.5 - (screenHeight * 0.3);
 			var left = (screenWidth - popupWidth) / 2;
-			var top = (screenHeight - popupHeight) / 2;
-			
-			top = (screenHeight - popupHeight) / 2 - (screenHeight * 0.3); // 10%의 상단 여백을 추가
-			
-			var popup = window.open("", "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",left=" + left + ",top=" + top);
+	
+			var popup = window.open("", "_blank", "width=" + popupWidth + ",height=" + popupHeight + ",top=" + top + ",left=" + left);
 			var html = "<html><body><div align='center'><h1>프로필 사진 선택</h1>";
 			
 			// 팝업창에 이미지 반목문으로 1~16출력
