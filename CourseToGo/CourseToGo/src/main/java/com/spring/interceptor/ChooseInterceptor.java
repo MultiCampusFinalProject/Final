@@ -35,7 +35,12 @@ public class ChooseInterceptor implements HandlerInterceptor {
  
     	HttpSession session = request.getSession();
     	CtgUserDTO user = (CtgUserDTO) session.getAttribute("user");
-    	int userId = (int)user.getUserId();
+    	int userId = -1;
+
+    	if (user != null) {
+    	    // If the "user" session attribute exists, retrieve the user ID.
+    	    userId = user.getUserId();
+    	}
     	List<String> placeIdList = new ArrayList<>();
         String courseId = request.getParameter("courseId");
        

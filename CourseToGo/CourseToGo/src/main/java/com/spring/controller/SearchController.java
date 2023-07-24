@@ -40,7 +40,7 @@ public class SearchController {
     public List<String> getSearchSuggestions(@RequestParam("query") String query) {
         // 검색어를 기반으로 추천 결과 생성
     	List<String> suggestions= new ArrayList<String>();
-    	System.out.println(query);
+//    	System.out.println(query);
     	try {
 			suggestions = areaService.getRecommendations(query);
 			
@@ -51,12 +51,7 @@ public class SearchController {
   
         return suggestions;
     }
-    @GetMapping("/searchEngine")
-    public String searchEngineTest() {
-   
-        return "searchEngine";
-    }
-    
+
 
    
 

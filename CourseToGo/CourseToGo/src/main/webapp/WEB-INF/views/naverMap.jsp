@@ -41,6 +41,11 @@
   /* Add any other styling you want for the location elements */
   transform: translateZ(200px); /* Adjust the value to control the forward positioning */
 }
+    .disabled {
+        pointer-events: none; /* 클릭 이벤트 비활성화 */
+        opacity: 0.5; /* 반투명 처리 */
+        cursor: not-allowed; /* 금지 커서 아이콘 */
+    }
 </style>
 </head>
 <script>
@@ -266,11 +271,19 @@ if (data && data.length > 0) {
 &#10114;선택한 장소를 확인 후 우측 사이드바에서 코스이름 코스에 대한 설명을 작성해주세요.
 
 &#10115;작성이 끝나면 코스만들기를 눌러서 자신만의 코스를 만들어주세요.
+
+⚠️코스 제작은 로그인을 하셔야 이용이 가능합니다.
+
     </textarea>
     <input class="Coursename" id="courseName" type="text" name="courseName" value="코스 이름을 입력해주세요." onfocus="clearInputValue(this)">
 	<input id="courseNumber" type="hidden" name="courseNumber">
 	<textarea id="courseContent" class="courseContent" name="courseContent" required onfocus="clearTextareaValue(this)" maxlength="400">코스에 대한 설명을 작성해주세요.</textarea>
-    <button class = "submit" type="submit">코스 제작하기!</button>
+ <c:if test="${not empty sessionScope.user.userId}">
+    <button class="submit" type="submit">코스 제작하기!</button>
+</c:if>
+<c:if test="${empty sessionScope.user.userId}">
+    <button class="submit disabled" disabled>로그인 후 이용해주세요.</button>
+</c:if>
     </form>
   </div> 
 </div>
