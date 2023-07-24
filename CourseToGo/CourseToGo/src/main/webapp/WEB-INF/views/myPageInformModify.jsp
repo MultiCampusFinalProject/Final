@@ -13,8 +13,47 @@
 	<link rel="stylesheet" href="css/sidebar.css">
 	<style>
 	#on {
-	background-color: #daeefe;
-}
+		background-color: #daeefe;
+	}
+
+	footer {
+	    position: absolute;
+	    bottom: 0;
+	    left: 0;
+	    width: 100%;
+	    border-top: 1px solid #e4e4e4;
+	    background-color:#f8f9fa;
+	    padding:1rem 0;
+	    margin:1rem 0;
+	    transform: translateY(150px);
+	}
+	
+	.footer-message {
+	    font-weight: bold;
+	    font-size:0.9rem;
+	    color:#545e6f;
+	    margin-bottom:0.3rem;
+	    margin:0 0 0 0.6rem;
+	}
+	
+	.footer-contact {
+	    font-size:0.9rem;
+	    color:#545e6f;
+	    margin:0.6rem;
+	}
+	
+	.footer-copyright {
+	    font-size:0.9rem;
+	    color:#545e6f;
+	    margin:0.6rem;
+	}
+	
+	.withoutSidebar {
+		margin-left: calc(5vw + 200px);
+		display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	}
 	</style>
 </head>
 <body>
@@ -293,5 +332,15 @@
 	        form.submit();
 		}
 	</script>
+	
+   	<footer>
+	  <div class="inner">
+	  	<div class = "withoutSidebar">
+		    <div class="footer-message">당신의 휴일이 즐거움으로 가득하도록. 즐거운 CourseToGo 되세요.</div>
+		    <div class="footer-contact">📧  p0209y@gmail.com</div>
+		    <div class="footer-copyright">© 2023 6CanDoIt All rights reserved</div>
+		</div>
+	  </div>
+	</footer>
 </body>
 </html>
