@@ -14,7 +14,6 @@
     <meta charset="EUC-KR">
     <title>Marker Test</title>
     <link rel="stylesheet" type="text/css" href="css/Map.css">
-
     <link rel="stylesheet" href="css/sidebar.css">
 
     <style>
@@ -46,6 +45,10 @@
         opacity: 0.5; /* 반투명 처리 */
         cursor: not-allowed; /* 금지 커서 아이콘 */
     }
+    
+	#on {
+		background-color: #daeefe;
+	}
 </style>
 </head>
 <script>
@@ -207,7 +210,6 @@ if (data && data.length > 0) {
 }
 </script>
 <body>
-
 	<!-- 사이드바 -->
 	<form action="/naverMap" method="GET" name="sidebarForm" id="sidebarForm">
 		<div class="sidebar">
@@ -221,7 +223,7 @@ if (data && data.length > 0) {
 		    		<li class="profile"><img src="${sessionScope.user.userPhoto}" alt="프로필 사진"></li>
 			        <li class="name">${sessionScope.user.userNickname} 님</li>
 			        <li><input type="button" class="logout-btn" value="로그아웃" onclick="location.href='/logout'"></li>
-			        <li><input type="button" class="edit-profile-btn" value="개인정보 수정" onclick="location.href='/myPageInformModify'" ></li>
+			        <li><input type="button" class="edit-profile-btn" value="개인정보 수정" onclick="location.href='/myPageInformModify'"></li>
 		    	</c:if>
 		    </ul>
 		</div>
@@ -625,8 +627,5 @@ function removeAllChildElements() {
 
 	</div>   
 </div>
-
-<jsp:include page="sidebar.jsp"></jsp:include>
-   
 </body>
 </html>

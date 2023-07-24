@@ -136,7 +136,7 @@
 		<div class="sidebar">
 		    <div class="logo">Course To Go</div>
 		    <ul>
-		    	<li><input type="button" class="home" value="홈" id="on" onclick="location.href='/home'"></li>
+		    	<li><input id="on" type="button" class="home" value="홈" onclick="location.href='/home'"></li>
 	       		<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'"></li>
 	    		<li><input type="button" class="create-course" value="코스 제작"  onclick="location.href='/naverMap'"></li>
        			<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
@@ -255,10 +255,6 @@
 	    </div>
     </div>
     <div class="container">
-        <!-- 사이드바 -->
-        <div class="sidebar">
-            <%@ include file="sidebar.jsp" %>
-        </div>
         <div class="loginAndSignup">
             <%@ include file="loginbtn.jsp" %>
         </div>
