@@ -19,16 +19,17 @@ public class DirectionService {
 	DirectionMapper directionMapper;
 	
 
-	public void insertDirections(String responseBody, int courseId) {
+	public int insertDirections(String responseBody, int courseId, int startnum) {
 		// TODO Auto-generated method stub
 		 ObjectMapper objectMapper = new ObjectMapper();
+		 int directionOrder = startnum;	
 		 try {
 	            JsonNode rootNode = objectMapper.readTree(responseBody);
 	            JsonNode pathNode = rootNode.path("route").path("traoptimal").get(0).path("path");
 	            List<DirectionDTO> directionDTOList = new ArrayList<>();
-
+	            
 	            if (pathNode.isArray()) {
-	                int directionOrder = 1;
+	                
 	                for (JsonNode coordinateNode : pathNode) {
 	                    double longitude = coordinateNode.get(0).asDouble();
 	                    double latitude = coordinateNode.get(1).asDouble();
@@ -47,6 +48,8 @@ public class DirectionService {
 		 catch (IOException e) {
 	            e.printStackTrace();
 	        }
+		 
+		 return directionOrder++;
 }
 	
 	  public List<DirectionDTO> getDirectionsByCourseId(int courseId) {
