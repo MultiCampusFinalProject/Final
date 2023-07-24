@@ -56,9 +56,6 @@ public class ChooseInterceptor implements HandlerInterceptor {
         if(placeId5 != null)placeIdList.add(placeId5);
 //        System.out.println("courseId = " + courseId);
 //        System.out.println(placeIdList);
-       
-        	
-           
 
             // 가져온 값을 로깅 또는 다른 처리에 활용
       
