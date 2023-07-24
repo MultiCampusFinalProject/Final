@@ -124,9 +124,8 @@ public class MarkerController {
     	
     	PlaceDTO place= null;
     	
-    	String start= null;
-    	String goal =null;
-    	  String waypoints = null;
+   
+ 
     	  String[] longLatList = new String[5];
     	  
     	String apiUrl = "https://naveropenapi.apigw.ntruss.com/map-direction-15/v1/driving";
@@ -139,71 +138,48 @@ public class MarkerController {
 				e.printStackTrace();
 			}
     	}
-    	start = longLatList[0];
-    	if(courseNumber > 1)goal = longLatList[courseNumber-1];
-    	
-    	for(int i = 0 ; i < courseNumber-2;i++) {
-    		
-    		
-    		if(waypoints == null)waypoints ="";
-    		waypoints =waypoints+ longLatList[i] +":" + longLatList[i+1];
-    		if(i != courseNumber-2)waypoints+="|";
-    	}
-    	
-    	
-    		
-    		
-    	
-    	
-        
-       
-       
-    	String encodedWaypoints=null;
-//	      System.out.println(goal);
-//          System.out.println(start);
-//          System.out.println(waypoints);
-          if(waypoints !=null) {
-          try {
-			encodedWaypoints = URLEncoder.encode(waypoints, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-          }
+
+ 
+    
+    
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-NCP-APIGW-API-KEY-ID",  "eeovn23rmv");
-        headers.set("X-NCP-APIGW-API-KEY", "u1LzIow7CE8uktkBnVz6oPo4utFP9fYgNMeP64zZ");
+        headers.set("X-NCP-APIGW-API-KEY-ID",  "8be51s2rte");
+        headers.set("X-NCP-APIGW-API-KEY", "QszKDDmeBk91RsYDfJlHIZxQ5y8iyLyfc9KcJE8V");
         
-        MultiValueMap<String, String> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("start", start);
-        requestBody.add("goal", goal);
-        requestBody.add("waypoints", waypoints);
+
+
         RestTemplate restTemplate = new RestTemplate();
         URI uri= null;
         
         try {
-        	if(courseNumber > 2) {
-        		  uri = new URI(apiUrl + "?start=" + start + "&goal=" + goal + "&waypoints=" + encodedWaypoints);
+        	if(courseNumber >= 2) {
+        		
+        		for(int i = 0 ; i < courseNumber-1; i++) {
+        		  uri = new URI(apiUrl + "?start=" + longLatList[i] + "&goal=" + longLatList[i+1] );
+        	
+        		
+        		  RequestEntity<?> requestEntity = new RequestEntity<>(headers, HttpMethod.GET, uri);
+        	        
+        	        ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
+        	        String responseBody = responseEntity.getBody();
+
+        	        int startNumb = 1;
+        	        if(responseBody !=null){startNumb = directionService.insertDirections(responseBody, courseId, startNumb);}// 경로 저장}
+        		}
+        	        
+        	        
+        	        return "redirect:/courseList/Map";
         	}
+        	
         	if(courseNumber ==1) {
         		 return "redirect:/courseList/Map";
         	}
-        	if(courseNumber == 2) {
-        		  uri = new URI(apiUrl + "?start=" + start + "&goal=" + goal);
-        	}
+   
          
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return "CourseList";
         }
-//        System.out.println("start=" + start + "&goal=" + goal + "&waypoints=" + waypoints);
-        RequestEntity<?> requestEntity = new RequestEntity<>(headers, HttpMethod.GET, uri);
-        
-        ResponseEntity<String> responseEntity = restTemplate.exchange(requestEntity, String.class);
-        String responseBody = responseEntity.getBody();
-//        System.out.println(responseBody);
-        if(responseBody !=null){directionService.insertDirections(responseBody, courseId);}// 경로 저장}
-//        redirectAttributes.addAttribute("placeId1", placeId1);
         return "redirect:/courseList/Map";
     }
 }
