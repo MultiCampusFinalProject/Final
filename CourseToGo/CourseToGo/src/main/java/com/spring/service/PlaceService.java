@@ -35,7 +35,7 @@ public class PlaceService {
 
 	public PlaceDTO getPlaceByPlaceId(int placeId) throws Exception { 
 		PlaceDTO placedto = mapper.getPlaceByPlaceId(placeId);
-		System.out.println(placedto);		
+//		System.out.println(placedto);		
 						
 	//	if(dept == null) {
 	//		throw new Exception("");

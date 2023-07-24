@@ -28,6 +28,7 @@ font-size:40px;
   display: flex;
 
 }
+
 body{
 	overflow: auto;.
 	overflow-y: scroll;

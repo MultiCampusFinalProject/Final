@@ -104,7 +104,7 @@ public class CourseService {
 		List<CourseInformDTO> res;
 //		System.out.println("service = " +courseId);
 		 res= courseMapper. getCourseWithPageRequest(pageRequest);
-		System.out.println(res);
+//		System.out.println(res);
 	
 		
 		return res;

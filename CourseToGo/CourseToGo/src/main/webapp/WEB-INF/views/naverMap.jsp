@@ -17,6 +17,12 @@
     <link rel="stylesheet" href="css/sidebar.css">
 
     <style>
+  .submit {
+        opacity: 0.5;
+    }
+   .submit:hover {
+        opacity: 1.0;
+    }
   ul {
     list-style-type: none;
     padding: 0;

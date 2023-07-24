@@ -81,7 +81,7 @@ public class RankingService {
         	String id = document.getString("_id");
             idList.add(id);
         }
-        System.out.println("idList =" + idList);
+//        System.out.println("idList =" + idList);
         return idList;
     }
     private List<Document> getRandomDocuments(List<Document> documents, int count) {

@@ -98,8 +98,12 @@ background-clip: content-box;
     width: 170px;
     margin:auto;
 	}
+    .disabled {
+        pointer-events: none; /* 클릭 이벤트 비활성화 */
+        opacity: 0.5; /* 반투명 처리 */
+        cursor: not-allowed; /* 금지 커서 아이콘 */
+    }
    
-
 }
   </style>
     <meta charset="UTF-8">
@@ -297,8 +301,15 @@ function moveMap(minlat, minlong, maxlat, maxlong) {
         
               <div style="" class="">
            <form id="review" action="/setReview" method="GET" accept-charset="UTF-8">
-           
-            <li><input id="slider-button" type="button" class="create-course" value="리뷰 작성 버튼" ></li>
+      
+   
+
+<c:if test="${not empty sessionScope.user.userId}">
+    <li><input id="slider-button" type="button" class="create-course" value="리뷰 작성 버튼"></li>
+</c:if>
+<c:if test="${empty sessionScope.user.userId}">
+    <li disabled><input id="slider-button" type="button" class="create-course submit disabled"  value="로그인 후 리뷰 작성하기" disabled></li>
+</c:if>
       <input type="hidden" id="placeId1" name="placeId1" value=>
       <input type="hidden" id="placeId2" name="placeId2" value=>
       <input type="hidden" id="placeId3" name="placeId3" value=>
@@ -371,11 +382,12 @@ let markers = new Array(); //마커 정보를 담는 배열
          
    
     
-   
+           var isLoggedIn = ${not empty sessionScope.user.userId};
+           if (isLoggedIn) {
           
            
            submitForm(); // 폼 제출
-          
+           }
        };
 init();
 
