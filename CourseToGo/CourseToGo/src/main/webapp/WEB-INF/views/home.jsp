@@ -139,8 +139,12 @@
 		    	<li><input id="on" type="button" class="home" value="홈" onclick="location.href='/home'"></li>
 	       		<li><input type="button" class="course" value="코스" onclick="location.href='/courseListWithPagination'"></li>
 	    		<li><input type="button" class="create-course" value="코스 제작"  onclick="location.href='/naverMap'"></li>
-       			<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
+	    		<c:if test="${empty sessionScope.user.userId}">
+	    			<li><input type="button" class="mypage" value="마이페이지" onclick="notLogin()"></li>
+	    		</c:if>
+       			
 		    	<c:if test="${not empty sessionScope.user.userId}">
+		    		<li><input type="button" class="mypage" value="마이페이지" onclick="location.href='/userContents'"></li>
 		    		<li class="profile"><img src="${sessionScope.user.userPhoto}" alt="프로필 사진"></li>
 			        <li class="name">${sessionScope.user.userNickname} 님</li>
 			        <li><input type="button" class="logout-btn" value="로그아웃" onclick="location.href='/logout'"></li>
@@ -441,6 +445,12 @@
 			</div>
         </div>
     </div>
+    
+    <script>
+    	function notLogin() {
+    		alert("로그인 시 이용가능한 서비스입니다.");
+    	}
+    </script>
     
    	<footer>
 	  <div class="inner">
