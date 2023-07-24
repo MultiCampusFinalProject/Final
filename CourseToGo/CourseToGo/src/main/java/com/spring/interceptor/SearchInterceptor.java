@@ -35,7 +35,7 @@ public class SearchInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
         String keyword = request.getParameter("keyword");
-        System.out.println("keyword = " + keyword);
+//        System.out.println("keyword = " + keyword);
         if (userId != null) {
             // 세션에서 userId 값이 존재하는 경우 처리
             // ...

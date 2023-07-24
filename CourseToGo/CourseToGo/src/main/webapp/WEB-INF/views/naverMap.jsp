@@ -17,9 +17,7 @@
     <link rel="stylesheet" href="css/sidebar.css">
 
     <style>
-  .submit {
-        opacity: 0.5;
-    }
+
    .submit:hover {
         opacity: 1.0;
     }
@@ -290,7 +288,7 @@ if (data && data.length > 0) {
     <button class="submit" type="submit">코스 제작하기!</button>
 </c:if>
 <c:if test="${empty sessionScope.user.userId}">
-    <button class="submit disabled" disabled>로그인 후 이용해주세요.</button>
+    <button class="submit disabled" disabled>로그인 후 이용해주세요</button>
 </c:if>
     </form>
   </div> 
